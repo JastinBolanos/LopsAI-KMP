@@ -1,5 +1,4 @@
-package lopsai.jastin.dashboard
-
+package lopsai.jastin.dashboard.core
 class JVMPlatform: Platform {
     override val name: String = "Java ${System.getProperty("java.version")}"
 }

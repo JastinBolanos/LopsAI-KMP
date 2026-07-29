@@ -1,4 +1,4 @@
-package lopsai.jastin.dashboard
+package lopsai.jastin.dashboard.core
 
 import web.navigator.navigator
 
