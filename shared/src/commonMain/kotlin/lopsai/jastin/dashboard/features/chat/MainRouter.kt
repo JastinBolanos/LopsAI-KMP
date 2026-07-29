@@ -7,6 +7,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -18,6 +22,7 @@ import lopsai.jastin.dashboard.core.models.ChatMessage
 import lopsai.jastin.dashboard.core.theme.TextPrimaryDark
 import lopsai.jastin.dashboard.features.chat.components.AITypingBubble
 import lopsai.jastin.dashboard.features.chat.components.SuggestionChips
+import lopsai.jastin.dashboard.features.settings.SettingsDialog
 import lopsai.jastin.dashboard.features.store.GptStoreScreen
 import lopsai.jastin.dashboard.shared_ui.inputs.OmniInput
 import lopsai.jastin.dashboard.shared_ui.layout.TopHeader
@@ -29,8 +34,15 @@ fun MainRouter(
     isChatActive: Boolean, messages: List<ChatMessage>, onMenuClick: () -> Unit,
     currentScreen: AppScreen, modifier: Modifier = Modifier
 ) {
+    var showSettingsDialog by remember { mutableStateOf(false) }
+
     Column(modifier = modifier.fillMaxHeight()) {
-        TopHeader(isSidebarVisible = showDesktopSidebar, isChatActive = isChatActive, onMenuClick = onMenuClick)
+        TopHeader(
+            isSidebarVisible = showDesktopSidebar,
+            isChatActive = isChatActive,
+            onMenuClick = onMenuClick,
+            onAvatarClick = { showSettingsDialog = true }
+        )
 
         Crossfade(targetState = currentScreen, label = "ScreenRouter", modifier = Modifier.weight(1f)) { screen ->
             when (screen) {
@@ -102,5 +114,11 @@ fun MainRouter(
                 }
             }
         }
+    }
+    if (showSettingsDialog) {
+        SettingsDialog(
+            isMobile = isMobile,
+            onClose = { showSettingsDialog = false }
+        )
     }
 }

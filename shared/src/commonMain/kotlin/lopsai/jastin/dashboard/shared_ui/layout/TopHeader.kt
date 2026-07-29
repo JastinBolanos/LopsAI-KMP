@@ -42,6 +42,7 @@ fun TopHeader(
     isSidebarVisible: Boolean,
     isChatActive: Boolean,
     onMenuClick: () -> Unit,
+    onAvatarClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     BoxWithConstraints(modifier = modifier.fillMaxWidth()) {
@@ -225,8 +226,13 @@ fun TopHeader(
 
                 Spacer(modifier = Modifier.width(16.dp))
 
+                // Avatar siempre fijo a la derecha
                 Box(
-                    modifier = Modifier.size(32.dp).clip(CircleShape).background(Color(0xFF10A37F)).clickable { },
+                    modifier = Modifier
+                        .size(32.dp)
+                        .clip(CircleShape)
+                        .background(Color(0xFF10A37F))
+                        .clickable { onAvatarClick() },
                     contentAlignment = Alignment.Center
                 ) {
                     Text("JA", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 12.sp)
