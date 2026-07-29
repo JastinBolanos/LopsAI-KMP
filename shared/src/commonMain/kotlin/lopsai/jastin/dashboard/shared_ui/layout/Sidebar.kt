@@ -20,7 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import lopsai.jastin.dashboard.core.models.AppScreen // Import corregido
+import lopsai.jastin.dashboard.core.models.AppScreen
 import lopsai.jastin.dashboard.core.theme.TextPrimaryDark
 import lopsai.jastin.dashboard.core.theme.TextSecondaryDark
 
@@ -30,6 +30,7 @@ fun Sidebar(
     onClose: () -> Unit,
     onNavigateToGpts: () -> Unit = {},
     onNavigateToHome: () -> Unit = {},
+    onNavigateToLibrary: () -> Unit = {}, // <-- NUEVO PARÁMETRO
     modifier: Modifier = Modifier
 ) {
     val sidebarBg = Color(0xFFF9F9F9)
@@ -106,10 +107,21 @@ fun Sidebar(
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
-                SidebarItem(icon = Icons.Outlined.LibraryBooks, text = "Library", trailingText = "11")
+
+                // Botón Library -> Se ilumina de gris SI estás en Library y navega
+                val libraryBg = if (currentScreen == AppScreen.Library) hoverBg else Color.Transparent
+                Box(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(libraryBg)
+                        .clickable { onNavigateToLibrary(); onClose() }
+                ) {
+                    SidebarItem(icon = Icons.Outlined.LibraryBooks, text = "Library", trailingText = "11")
+                }
+
                 SidebarItem(icon = Icons.Outlined.PlayCircleOutline, text = "Sora")
 
-                // Botón GPTs -> Se pinta de gris SI estás en la tienda y navega
+                // Botón GPTs -> Se ilumina de gris SI estás en la tienda y navega
                 val gptsBg = if (currentScreen == AppScreen.GptStore) hoverBg else Color.Transparent
                 Box(
                     modifier = Modifier

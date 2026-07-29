@@ -45,6 +45,7 @@ fun MainScreen() {
     }
 
     val navToGpts = { currentScreen = AppScreen.GptStore }
+    val navToLibrary = {currentScreen = AppScreen.Library }
     val navToHome = {
         currentScreen = AppScreen.Dashboard
         isChatActive = false
@@ -71,6 +72,7 @@ fun MainScreen() {
                                 onClose = { coroutineScope.launch { drawerState.close() } },
                                 onNavigateToGpts = navToGpts,
                                 onNavigateToHome = navToHome,
+                                onNavigateToLibrary = navToLibrary,
                                 modifier = Modifier.fillMaxSize()
                             )
                         }
@@ -97,6 +99,7 @@ fun MainScreen() {
                             onClose = { isDesktopSidebarOpen = false },
                             onNavigateToGpts = navToGpts,
                             onNavigateToHome = navToHome,
+                            onNavigateToLibrary = navToLibrary,
                             modifier = Modifier.width(260.dp)
                         )
                     }

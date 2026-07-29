@@ -22,6 +22,7 @@ import lopsai.jastin.dashboard.core.models.ChatMessage
 import lopsai.jastin.dashboard.core.theme.TextPrimaryDark
 import lopsai.jastin.dashboard.features.chat.components.AITypingBubble
 import lopsai.jastin.dashboard.features.chat.components.SuggestionChips
+import lopsai.jastin.dashboard.features.library.LibraryScreen
 import lopsai.jastin.dashboard.features.settings.SettingsDialog
 import lopsai.jastin.dashboard.features.store.GptStoreScreen
 import lopsai.jastin.dashboard.shared_ui.inputs.OmniInput
@@ -48,6 +49,9 @@ fun MainRouter(
             when (screen) {
                 AppScreen.GptStore -> {
                     GptStoreScreen(isMobile = isMobile)
+                }
+                AppScreen.Library -> {
+                    LibraryScreen(isMobile = isMobile, onProfileClick = { showSettingsDialog = true })
                 }
                 AppScreen.Dashboard -> {
                     Box(modifier = Modifier.fillMaxSize()) {
