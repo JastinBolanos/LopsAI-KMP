@@ -41,8 +41,9 @@ import lopsai.jastin.dashboard.core.theme.TextSecondaryDark
 fun TopHeader(
     isSidebarVisible: Boolean,
     isChatActive: Boolean,
-    onMenuClick: () -> Unit,
+    onMenuClick: () -> Unit = {},
     onAvatarClick: () -> Unit = {},
+    onShareClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     BoxWithConstraints(modifier = modifier.fillMaxWidth()) {
@@ -178,7 +179,7 @@ fun TopHeader(
                             modifier = Modifier
                                 .clip(RoundedCornerShape(50))
                                 .border(1.dp, InputBorderColor, RoundedCornerShape(50))
-                                .clickable { }
+                                .clickable { onShareClick() }
                                 .padding(horizontal = 12.dp, vertical = 8.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {

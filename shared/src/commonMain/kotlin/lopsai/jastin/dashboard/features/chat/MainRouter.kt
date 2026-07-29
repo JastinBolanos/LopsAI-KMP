@@ -24,6 +24,7 @@ import lopsai.jastin.dashboard.features.chat.components.AITypingBubble
 import lopsai.jastin.dashboard.features.chat.components.SuggestionChips
 import lopsai.jastin.dashboard.features.library.LibraryScreen
 import lopsai.jastin.dashboard.features.settings.SettingsDialog
+import lopsai.jastin.dashboard.features.share.ShareChatDialog
 import lopsai.jastin.dashboard.features.store.GptStoreScreen
 import lopsai.jastin.dashboard.shared_ui.inputs.OmniInput
 import lopsai.jastin.dashboard.shared_ui.layout.TopHeader
@@ -36,13 +37,15 @@ fun MainRouter(
     currentScreen: AppScreen, modifier: Modifier = Modifier
 ) {
     var showSettingsDialog by remember { mutableStateOf(false) }
+    var showShareDialog by remember { mutableStateOf(false) }
 
     Column(modifier = modifier.fillMaxHeight()) {
         TopHeader(
             isSidebarVisible = showDesktopSidebar,
             isChatActive = isChatActive,
             onMenuClick = onMenuClick,
-            onAvatarClick = { showSettingsDialog = true }
+            onAvatarClick = { showSettingsDialog = true },
+            onShareClick = { showShareDialog = true }
         )
 
         Crossfade(targetState = currentScreen, label = "ScreenRouter", modifier = Modifier.weight(1f)) { screen ->
@@ -119,10 +122,25 @@ fun MainRouter(
             }
         }
     }
+
+    // ==========================================
+    // MODALES GLOBALES (AJUSTES Y COMPARTIR)
+    // ==========================================
     if (showSettingsDialog) {
         SettingsDialog(
             isMobile = isMobile,
             onClose = { showSettingsDialog = false }
+        )
+    }
+
+    if (showShareDialog) {
+        ShareChatDialog(
+            onClose = { showShareDialog = false },
+            onUpdateLinkClick = {
+            },
+            onSettingsClick = {
+                showSettingsDialog = true
+            }
         )
     }
 }

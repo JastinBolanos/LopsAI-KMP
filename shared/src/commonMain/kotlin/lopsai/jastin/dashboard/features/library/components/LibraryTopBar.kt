@@ -7,14 +7,11 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -43,33 +40,18 @@ fun LibraryTopBar(
             fontWeight = FontWeight.Bold
         )
 
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Button(
-                onClick = onCreateImageClick,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = ChatBgColor,
-                    contentColor = TextPrimaryDark
-                ),
-                shape = RoundedCornerShape(50),
-                border = BorderStroke(1.dp, InputBorderColor),
-                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-                elevation = ButtonDefaults.buttonElevation(0.dp, 0.dp)
-            ) {
-                Text(text = "+ Create image", fontSize = 13.sp, fontWeight = FontWeight.Medium)
-            }
-
-            Spacer(modifier = Modifier.width(12.dp))
-
-            Box(
-                modifier = Modifier
-                    .size(32.dp)
-                    .clip(CircleShape)
-                    .background(Color(0xFF10A37F))
-                    .clickable(onClick = onProfileClick),
-                contentAlignment = Alignment.Center
-            ) {
-                Text("JA", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 12.sp)
-            }
+        Button(
+            onClick = onCreateImageClick,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = ChatBgColor,
+                contentColor = TextPrimaryDark
+            ),
+            shape = RoundedCornerShape(50),
+            border = BorderStroke(1.dp, InputBorderColor),
+            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+            elevation = ButtonDefaults.buttonElevation(0.dp, 0.dp)
+        ) {
+            Text(text = "+ Create image", fontSize = 13.sp, fontWeight = FontWeight.Medium)
         }
     }
 }

@@ -14,24 +14,24 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import lopsai.jastin.dashboard.core.theme.ActionButtonBlack
-import lopsai.jastin.dashboard.core.theme.ChatBgColor
-import lopsai.jastin.dashboard.core.theme.InputBorderColor
-import lopsai.jastin.dashboard.core.theme.SubtleShadowElevation
-import lopsai.jastin.dashboard.core.theme.TextPrimaryDark
-import lopsai.jastin.dashboard.core.theme.TextSecondaryDark
+import lopsai.jastin.dashboard.core.theme.*
+import lopsai.jastin.dashboard.features.chat.components.ChatTool
+import lopsai.jastin.dashboard.features.chat.components.ToolsTray
 
 @Composable
 fun OmniInput(
@@ -41,10 +41,21 @@ fun OmniInput(
     isChatActive: Boolean,
     modifier: Modifier = Modifier
 ) {
-    BoxWithConstraints(modifier = modifier.fillMaxWidth()) {
-        val isVerySmallScreen = maxWidth < 380.dp
-        val isCompactWidth = maxWidth < 440.dp
+    var showToolsTray by remember { mutableStateOf(false) }
+    var selectedTool by remember { mutableStateOf<ChatTool?>(null) }
+    val celesteColor = Color(0xFF007AFF)
 
+    // 1. BOX EXTERNO: Permite que la bandeja flote por encima sin deformar la caja blanca
+    Box(
+        modifier = modifier.fillMaxWidth(),
+        contentAlignment = Alignment.BottomStart
+    ) {
+        val isVerySmallScreen = 360.dp < 380.dp
+        val isCompactWidth = 360.dp < 440.dp
+
+        // =========================================================
+        // 2. TARJETA PRINCIPAL DEL INPUT (Fondo blanco con borde)
+        // =========================================================
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -57,9 +68,7 @@ fun OmniInput(
                 .border(1.dp, InputBorderColor, RoundedCornerShape(24.dp))
                 .padding(16.dp)
         ) {
-            // ==========================================
-            // 1. ÁREA DE TEXTO
-            // ==========================================
+            // Área de texto
             BasicTextField(
                 value = value,
                 onValueChange = onValueChange,
@@ -84,37 +93,90 @@ fun OmniInput(
                     innerTextField()
                 }
             )
+
             Spacer(modifier = Modifier.height(if (isChatActive) 16.dp else 32.dp))
 
-            // ==========================================
-            // 2. BOTONES INFERIORES ADAPTATIVOS
-            // ==========================================
+            // Fila inferior de botones
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // Grupo izquierdo (Cambia según el estado del chat)
+                // Grupo izquierdo (Acciones y herramientas)
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(6.dp),
+                    verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.weight(1f)
                 ) {
                     if (isChatActive) {
-                        // MODO CHAT: Interfaz minimalista (+ y Tools)
-                        Icon(
-                            imageVector = Icons.Outlined.Add,
-                            contentDescription = "Add",
-                            tint = TextSecondaryDark,
-                            modifier = Modifier.size(24.dp).padding(4.dp)
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Icon(Icons.Outlined.Tune, contentDescription = "Tools", tint = TextSecondaryDark, modifier = Modifier.size(18.dp))
+                        // --- MODO CHAT ---
+
+                        // Botón +
+                        IconButton(
+                            onClick = { /* Acción Attach */ },
+                            modifier = Modifier.size(32.dp)
+                        ) {
+                            Icon(Icons.Outlined.Add, contentDescription = "Add", tint = Color.Black)
+                        }
+
+                        // Botón con la palabra exacta "Tools"
+                        Row(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(16.dp))
+                                .clickable { showToolsTray = !showToolsTray }
+                                .padding(horizontal = 8.dp, vertical = 6.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "Tools",
+                                color = if (showToolsTray) celesteColor else TextPrimaryDark,
+                                fontSize = 14.sp,
+                                fontWeight = FontWeight.Medium
+                            )
+                        }
+
+                        selectedTool?.let { tool ->
                             Spacer(modifier = Modifier.width(4.dp))
-                            Text("Tools", color = TextSecondaryDark, fontSize = 14.sp)
+                            // Separador vertical gris suave |
+                            Box(
+                                modifier = Modifier
+                                    .size(width = 1.dp, height = 16.dp)
+                                    .background(Color(0xFFE0E0E0))
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+
+                            // Píldora Celeste [Icono] Nombre ×
+                            Row(
+                                modifier = Modifier
+                                    .clip(RoundedCornerShape(8.dp))
+                                    .clickable { selectedTool = null } // Al tocar se remueve
+                                    .padding(horizontal = 6.dp, vertical = 4.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Icon(
+                                    imageVector = tool.icon,
+                                    contentDescription = null,
+                                    tint = celesteColor,
+                                    modifier = Modifier.size(16.dp)
+                                )
+                                Spacer(modifier = Modifier.width(6.dp))
+                                Text(
+                                    text = tool.shortName,
+                                    color = celesteColor,
+                                    fontSize = 14.sp,
+                                    fontWeight = FontWeight.Medium
+                                )
+                                Spacer(modifier = Modifier.width(6.dp))
+                                Icon(
+                                    imageVector = Icons.Outlined.Close,
+                                    contentDescription = "Remove tool",
+                                    tint = celesteColor,
+                                    modifier = Modifier.size(14.dp)
+                                )
+                            }
                         }
                     } else {
-                        // MODO DASHBOARD: Píldoras grandes (Llamando a nuestro nuevo archivo)
+                        // --- MODO DASHBOARD ---
                         ActionPill(icon = Icons.Outlined.Add, text = "Attach")
                         ActionPill(icon = Icons.Outlined.Language, text = "Search")
 
@@ -131,12 +193,10 @@ fun OmniInput(
                     targetState = value.isNotEmpty(),
                     transitionSpec = {
                         scaleIn() togetherWith scaleOut()
-                    }, label = "SendButtonAnimation"
+                    },
+                    label = "SendButtonAnimation"
                 ) { hasText ->
                     if (hasText) {
-                        // ==================================
-                        // BOTÓN ENVIAR (Aparece al escribir)
-                        // ==================================
                         Box(
                             modifier = Modifier
                                 .size(32.dp)
@@ -153,9 +213,6 @@ fun OmniInput(
                             )
                         }
                     } else {
-                        // ==================================
-                        // BOTÓN VOICE (Por defecto)
-                        // ==================================
                         Row(
                             modifier = Modifier
                                 .clip(CircleShape)
@@ -182,6 +239,20 @@ fun OmniInput(
                     }
                 }
             }
+        }
+
+        // =========================================================
+        // 3. CAPA SUPERIOR: BANDEJA FLOTANTE INDEPENDIENTE
+        // =========================================================
+        if (showToolsTray) {
+            ToolsTray(
+                onToolSelected = { tool ->
+                    selectedTool = tool
+                    showToolsTray = false
+                },
+                modifier = Modifier
+                    .padding(start = 16.dp, bottom = 60.dp)
+            )
         }
     }
 }

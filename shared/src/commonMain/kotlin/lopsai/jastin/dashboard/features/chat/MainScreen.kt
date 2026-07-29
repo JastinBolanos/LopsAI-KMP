@@ -13,10 +13,16 @@ import kotlinx.coroutines.launch
 import lopsai.jastin.dashboard.core.models.AppScreen
 import lopsai.jastin.dashboard.core.models.ChatMessage
 import lopsai.jastin.dashboard.core.theme.ChatBgColor
+import lopsai.jastin.dashboard.features.search.SearchChatsDialog
+import lopsai.jastin.dashboard.features.share.ShareChatDialog
 import lopsai.jastin.dashboard.shared_ui.layout.Sidebar
 
 @Composable
 fun MainScreen() {
+    var showSettingsDialog by remember { mutableStateOf(false) }
+    var showSearchDialog by remember { mutableStateOf(false) }
+    var showShareDialog by remember { mutableStateOf(false) }
+
     var promptText by remember { mutableStateOf("") }
     var isDesktopSidebarOpen by remember { mutableStateOf(true) }
 
@@ -45,7 +51,7 @@ fun MainScreen() {
     }
 
     val navToGpts = { currentScreen = AppScreen.GptStore }
-    val navToLibrary = {currentScreen = AppScreen.Library }
+    val navToLibrary = { currentScreen = AppScreen.Library }
     val navToHome = {
         currentScreen = AppScreen.Dashboard
         isChatActive = false
@@ -53,7 +59,13 @@ fun MainScreen() {
     }
 
     MaterialTheme {
-        BoxWithConstraints(modifier = Modifier.fillMaxSize().background(ChatBgColor).systemBarsPadding()) {
+        BoxWithConstraints(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(ChatBgColor)
+                .systemBarsPadding()
+                .imePadding()
+        ) {
             val isMobile = maxWidth < 768.dp
             val titleSize = if (isMobile) 24.sp else 32.sp
 
@@ -73,6 +85,8 @@ fun MainScreen() {
                                 onNavigateToGpts = navToGpts,
                                 onNavigateToHome = navToHome,
                                 onNavigateToLibrary = navToLibrary,
+                                onSearchClick = { showSearchDialog = true },
+                                isMobile = true,
                                 modifier = Modifier.fillMaxSize()
                             )
                         }
@@ -100,6 +114,8 @@ fun MainScreen() {
                             onNavigateToGpts = navToGpts,
                             onNavigateToHome = navToHome,
                             onNavigateToLibrary = navToLibrary,
+                            onSearchClick = { showSearchDialog = true },
+                            isMobile = false,
                             modifier = Modifier.width(260.dp)
                         )
                     }
@@ -117,6 +133,27 @@ fun MainScreen() {
                         modifier = Modifier.weight(1f)
                     )
                 }
+            }
+
+            // ==========================================
+            // DIÁLOGOS FLOTANTES (MODALES GLOBALES)
+            // ==========================================
+            if (showSearchDialog) {
+                SearchChatsDialog(
+                    onClose = { showSearchDialog = false },
+                    onSelectChat = { /* ... */ }
+                )
+            }
+
+            if (showShareDialog) {
+                ShareChatDialog(
+                    onClose = { showShareDialog = false },
+                    onUpdateLinkClick = {
+                    },
+                    onSettingsClick = {
+                        showSettingsDialog = true
+                    }
+                )
             }
         }
     }
