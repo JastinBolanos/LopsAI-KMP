@@ -18,6 +18,15 @@ import lopsai.jastin.dashboard.features.search.SearchChatsDialog
 import lopsai.jastin.dashboard.features.settings.SettingsDialog
 import lopsai.jastin.dashboard.features.share.ShareChatDialog
 import lopsai.jastin.dashboard.shared_ui.layout.Sidebar
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandHorizontally
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkHorizontally
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.FastOutSlowInEasing
 
 @Composable
 fun MainScreen() {
@@ -116,7 +125,22 @@ fun MainScreen() {
                 }
             } else {
                 Row(modifier = Modifier.fillMaxSize()) {
-                    if (isDesktopSidebarOpen) {
+                    // =========================================================
+                    // ✨ EFECTO ÉPICO: SLIDE & EXPAND SIDEBAR (ESCRITORIO)
+                    // =========================================================
+                    AnimatedVisibility(
+                        visible = isDesktopSidebarOpen,
+                        enter = slideInHorizontally(
+                            animationSpec = tween(350, easing = FastOutSlowInEasing)
+                        ) { -it } + expandHorizontally(
+                            animationSpec = tween(350, easing = FastOutSlowInEasing)
+                        ) + fadeIn(tween(250)),
+                        exit = slideOutHorizontally(
+                            animationSpec = tween(300, easing = FastOutSlowInEasing)
+                        ) { -it } + shrinkHorizontally(
+                            animationSpec = tween(300, easing = FastOutSlowInEasing)
+                        ) + fadeOut(tween(200))
+                    ) {
                         Sidebar(
                             currentScreen = currentScreen,
                             onClose = { isDesktopSidebarOpen = false },

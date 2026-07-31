@@ -31,6 +31,9 @@ import androidx.compose.ui.unit.sp
 import lopsai.jastin.dashboard.core.theme.*
 import lopsai.jastin.dashboard.features.chat.components.ChatTool
 import lopsai.jastin.dashboard.features.chat.components.ToolsTray
+import androidx.compose.animation.core.*
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.geometry.Offset
 
 @Composable
 fun OmniInput(
@@ -43,6 +46,37 @@ fun OmniInput(
     var showToolsTray by remember { mutableStateOf(false) }
     var selectedTool by remember { mutableStateOf<ChatTool?>(null) }
     val celesteColor = Color(0xFF007AFF)
+
+    // =========================================================
+    // ✨ BORDE PREMIUM CIRCULANTE (SIN OLAS / GROSOR FIJO)
+    // =========================================================
+    val infiniteTransition = rememberInfiniteTransition(label = "CirculatingBorder")
+
+    // Desplazamiento lineal continuo alrededor del contorno
+    val borderOffset by infiniteTransition.animateFloat(
+        initialValue = 0f,
+        targetValue = 1000f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(durationMillis = 4000, easing = LinearEasing),
+            repeatMode = RepeatMode.Restart
+        ),
+        label = "BorderOffset"
+    )
+
+    // Paleta Premium (Índigo, Púrpura, Rosa Neón, Cian y cierre suave)
+    val circulatingBrush = remember(borderOffset) {
+        Brush.linearGradient(
+            colors = listOf(
+                Color(0xFF6366F1), // Índigo
+                Color(0xFFA855F7), // Púrpura
+                Color(0xFFEC4899), // Rosa Neón
+                Color(0xFF00F2FE), // Cian Eléctrico
+                Color(0xFF6366F1)  // Cierre de bucle sin salto
+            ),
+            start = Offset(borderOffset, 0f),
+            end = Offset(borderOffset + 400f, 400f)
+        )
+    }
 
     // 1. BOX EXTERNO: Permite que la bandeja flote por encima sin deformar la caja blanca
     Box(
@@ -64,7 +98,11 @@ fun OmniInput(
                     clip = false
                 )
                 .background(ChatBgColor, RoundedCornerShape(24.dp))
-                .border(1.dp, InputBorderColor, RoundedCornerShape(24.dp))
+                .border(
+                    width = 2.dp,
+                    brush = circulatingBrush,
+                    shape = RoundedCornerShape(24.dp)
+                )
                 .padding(16.dp)
         ) {
             // Área de texto
