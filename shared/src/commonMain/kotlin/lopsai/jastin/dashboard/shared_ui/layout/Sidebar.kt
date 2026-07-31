@@ -26,6 +26,14 @@ import lopsai.jastin.dashboard.core.models.AppScreen
 import lopsai.jastin.dashboard.core.theme.TextPrimaryDark
 import lopsai.jastin.dashboard.core.theme.TextSecondaryDark
 import lopsai.jastin.dashboard.features.chat.data.MockChatsData
+import androidx.compose.animation.core.*
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.graphicsLayer
 
 @Composable
 fun Sidebar(
@@ -96,33 +104,70 @@ fun Sidebar(
                 item {
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    // 1. Botón New Chat
-                    val newChatBg = if (currentScreen == AppScreen.Dashboard) hoverBg else Color.Transparent
+                    // 1. Botón New Chat (Estilo Linear App Active Accent)
+                    val isNewChatActive = currentScreen == AppScreen.Dashboard
+                    val activeBrush = if (isNewChatActive) {
+                        Brush.horizontalGradient(
+                            colors = listOf(
+                                Color(0xFF6366F1).copy(alpha = 0.12f),
+                                Color.Transparent
+                            )
+                        )
+                    } else {
+                        Brush.linearGradient(listOf(Color.Transparent, Color.Transparent))
+                    }
+
                     Box(
                         modifier = Modifier
+                            .fillMaxWidth()
                             .clip(RoundedCornerShape(8.dp))
-                            .background(newChatBg)
+                            .background(activeBrush)
                             .clickable {
                                 onNavigateToHome()
                                 if (isMobile) onClose()
                             }
                     ) {
-                        SidebarItem(icon = Icons.Outlined.Edit, text = "New chat")
-                    }
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            // PÍLDORA NEÓN VERTICAL
+                            if (isNewChatActive) {
+                                Box(
+                                    modifier = Modifier
+                                        .width(3.dp)
+                                        .height(24.dp)
+                                        .clip(RoundedCornerShape(topEnd = 4.dp, bottomEnd = 4.dp))
+                                        .background(Color(0xFF6366F1)) // Acento Índigo
+                                )
+                            } else {
+                                Spacer(modifier = Modifier.width(3.dp))
+                            }
 
+                            Box(modifier = Modifier.weight(1f)) {
+                                SidebarItem(icon = Icons.Outlined.Edit, text = "New chat")
+                            }
+                        }
+                    }
                     Spacer(modifier = Modifier.height(8.dp))
 
                     // 2. Search Box
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .clip(RoundedCornerShape(8.dp))
-                            .background(Color.Transparent)
+                            .clip(RoundedCornerShape(10.dp))
+                            .background(Color(0xFFFFFFFF), RoundedCornerShape(10.dp))
+                            .drawBehind {
+                                // Sutil contorno metálico/vidrio de 1px
+                                drawRoundRect(
+                                    color = Color(0xFFDCDCDC),
+                                    size = size,
+                                    cornerRadius = CornerRadius(10.dp.toPx()),
+                                    style = androidx.compose.ui.graphics.drawscope.Stroke(1.dp.toPx())
+                                )
+                            }
                             .clickable {
                                 onSearchClick()
                                 if (isMobile) onClose()
                             }
-                            .padding(horizontal = 12.dp, vertical = 8.dp),
+                            .padding(horizontal = 12.dp, vertical = 9.dp),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
@@ -131,12 +176,20 @@ fun Sidebar(
                                 imageVector = Icons.Outlined.Search,
                                 contentDescription = "Search",
                                 modifier = Modifier.size(16.dp),
-                                tint = TextPrimaryDark
+                                tint = Color(0xFF6366F1)
                             )
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text("Search chats", fontSize = 13.sp, color = TextPrimaryDark)
+                            Text("Search chats...", fontSize = 13.sp, color = TextPrimaryDark, fontWeight = FontWeight.Medium)
                         }
-                        Text("⌘K", fontSize = 12.sp, color = TextSecondaryDark)
+                        // Píldora de comando estilo teclado nativo
+                        Box(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(4.dp))
+                                .background(Color(0xFFF0F0F0))
+                                .padding(horizontal = 6.dp, vertical = 2.dp)
+                        ) {
+                            Text("⌘K", fontSize = 11.sp, color = TextSecondaryDark, fontWeight = FontWeight.SemiBold)
+                        }
                     }
 
                     Spacer(modifier = Modifier.height(16.dp))
@@ -223,23 +276,93 @@ fun Sidebar(
                 }
             }
 
-            // ==========================================
-            // 3. BOTTOM FIJO (Upgrade Plan)
-            // ==========================================
-            Row(
+            // =========================================================
+            // ✨ 3. BOTTOM FIJO: AURORA VIP UPGRADE CARD (ESTILO CHATGPT PLUS)
+            // =========================================================
+            val vipTransition = rememberInfiniteTransition(label = "VipCardAnim")
+
+            // 1. Rotación lenta y elegante de la estrella VIP
+            val starRotation by vipTransition.animateFloat(
+                initialValue = -10f,
+                targetValue = 10f,
+                animationSpec = infiniteRepeatable(
+                    animation = tween(2500, easing = FastOutSlowInEasing),
+                    repeatMode = RepeatMode.Reverse
+                ),
+                label = "StarRotate"
+            )
+
+            // 2. Desplazamiento del resplandor Aurora en el borde
+            val auroraOffset by vipTransition.animateFloat(
+                initialValue = 0f,
+                targetValue = 800f,
+                animationSpec = infiniteRepeatable(
+                    animation = tween(4500, easing = LinearEasing),
+                    repeatMode = RepeatMode.Restart
+                ),
+                label = "AuroraOffset"
+            )
+
+            val auroraBorderBrush = remember(auroraOffset) {
+                Brush.linearGradient(
+                    colors = listOf(
+                        Color(0xFF6366F1), // Índigo
+                        Color(0xFFA855F7), // Púrpura
+                        Color(0xFFEC4899), // Rosa Neón
+                        Color(0xFF00F2FE), // Cian
+                        Color(0xFF6366F1)  // Cierre de bucle
+                    ),
+                    start = Offset(auroraOffset, 0f),
+                    end = Offset(auroraOffset + 300f, 300f)
+                )
+            }
+
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(12.dp)
-                    .clip(RoundedCornerShape(8.dp))
+                    // Borde Aurora de 1.5.dp con esquinas de 12.dp
+                    .background(Color(0xFFFFFFFF), RoundedCornerShape(12.dp))
+                    .drawBehind {
+                        drawRoundRect(
+                            brush = auroraBorderBrush,
+                            size = size,
+                            cornerRadius = CornerRadius(12.dp.toPx()),
+                            // Dibujamos solo el contorno externo
+                            style = androidx.compose.ui.graphics.drawscope.Stroke(width = 1.5.dp.toPx())
+                        )
+                    }
+                    .clip(RoundedCornerShape(12.dp))
                     .clickable { }
-                    .padding(8.dp),
-                verticalAlignment = Alignment.CenterVertically
+                    .padding(12.dp)
             ) {
-                Icon(Icons.Outlined.AutoAwesome, contentDescription = "Upgrade", modifier = Modifier.size(24.dp), tint = TextPrimaryDark)
-                Spacer(modifier = Modifier.width(12.dp))
-                Column {
-                    Text("Upgrade plan", fontSize = 14.sp, fontWeight = FontWeight.SemiBold, color = TextPrimaryDark)
-                    Text("More access to the best models", fontSize = 11.sp, color = TextSecondaryDark)
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.AutoAwesome,
+                        contentDescription = "Upgrade",
+                        modifier = Modifier
+                            .size(24.dp)
+                            .graphicsLayer {
+                                rotationZ = starRotation
+                            },
+                        tint = Color(0xFF6366F1) // Color Índigo Premium
+                    )
+                    Spacer(modifier = Modifier.width(12.dp))
+                    Column {
+                        Text(
+                            text = "Upgrade plan",
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = TextPrimaryDark
+                        )
+                        Text(
+                            text = "More access to the best models",
+                            fontSize = 11.sp,
+                            color = TextSecondaryDark
+                        )
+                    }
                 }
             }
         }
