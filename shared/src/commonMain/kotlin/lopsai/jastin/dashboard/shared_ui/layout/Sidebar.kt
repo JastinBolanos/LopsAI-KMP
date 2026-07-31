@@ -25,6 +25,7 @@ import kotlinx.coroutines.delay
 import lopsai.jastin.dashboard.core.models.AppScreen
 import lopsai.jastin.dashboard.core.theme.TextPrimaryDark
 import lopsai.jastin.dashboard.core.theme.TextSecondaryDark
+import lopsai.jastin.dashboard.features.chat.data.MockChatsData
 
 @Composable
 fun Sidebar(
@@ -34,6 +35,7 @@ fun Sidebar(
     onNavigateToHome: () -> Unit = {},
     onNavigateToLibrary: () -> Unit = {},
     onSearchClick: () -> Unit = {},
+    onSelectChat: (String) -> Unit = {},
     isMobile: Boolean = false,
     modifier: Modifier = Modifier
 ) {
@@ -200,17 +202,12 @@ fun Sidebar(
                     Text("Chats", fontSize = 12.sp, color = TextSecondaryDark, modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
                 }
 
-                // Lista dinámica de chats
-                val dummyChats = listOf(
-                    "Typo Assistance Request", "Quadratic Function Plot", "Toyota Names Poetry",
-                    "Urban Green Spaces", "Historical Landmarks Guide", "Gourmet Food Truck Trends",
-                    "Digital Art Techniques", "Virtual Reality Experiences", "Local Music Scene"
-                )
+                val chatsList = MockChatsData.chatTitles
 
-                items(dummyChats) { chat ->
+                items(chatsList) { chatTitle ->
                     val interactionSource = remember { MutableInteractionSource() }
                     Text(
-                        text = chat,
+                        text = chatTitle,
                         fontSize = 13.sp,
                         color = TextPrimaryDark,
                         maxLines = 1,
@@ -218,6 +215,7 @@ fun Sidebar(
                             .fillMaxWidth()
                             .clip(RoundedCornerShape(8.dp))
                             .clickable(interactionSource = interactionSource, indication = null) {
+                                onSelectChat(chatTitle)
                                 if (isMobile) onClose()
                             }
                             .padding(horizontal = 8.dp, vertical = 8.dp)

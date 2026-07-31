@@ -1,6 +1,7 @@
 package lopsai.jastin.dashboard.features.chat
 
 import androidx.compose.animation.*
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -13,7 +14,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
@@ -28,6 +31,7 @@ import lopsai.jastin.dashboard.features.share.ShareChatDialog
 import lopsai.jastin.dashboard.features.store.GptStoreScreen
 import lopsai.jastin.dashboard.shared_ui.inputs.OmniInput
 import lopsai.jastin.dashboard.shared_ui.layout.TopHeader
+import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun MainRouter(
@@ -76,12 +80,43 @@ fun MainRouter(
                                             modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp),
                                             horizontalAlignment = if (msg.isUser) Alignment.End else Alignment.Start
                                         ) {
-                                            if (msg.isUser) {
-                                                Box(modifier = Modifier.background(Color(0xFFF4F4F4), RoundedCornerShape(20.dp)).padding(16.dp)) {
-                                                    Text(msg.text, color = TextPrimaryDark)
+                                            // =========================================================
+                                            // 1. TARJETA DE IMAGEN NATIVA MULTIPLATAFORMA
+                                            // =========================================================
+                                            msg.imageRes?.let { resource ->
+                                                val isUserImg = msg.isUser
+                                                val imgWidth = if (isUserImg) 180.dp else 360.dp
+                                                val imgHeight = if (isUserImg) 135.dp else 270.dp
+                                                val cornerRadius = if (isUserImg) 20.dp else 24.dp
+
+                                                Box(
+                                                    modifier = Modifier
+                                                        .padding(bottom = 8.dp)
+                                                        .size(width = imgWidth, height = imgHeight)
+                                                        .clip(RoundedCornerShape(cornerRadius))
+                                                        .background(Color(0xFF222222)),
+                                                    contentAlignment = Alignment.Center
+                                                ) {
+                                                    Image(
+                                                        painter = painterResource(resource),
+                                                        contentDescription = "Chat attachment image",
+                                                        modifier = Modifier.fillMaxSize(),
+                                                        contentScale = ContentScale.Crop
+                                                    )
                                                 }
-                                            } else {
-                                                AITypingBubble(msg.text, msg.isTyping)
+                                            }
+
+                                            // =========================================================
+                                            // 2. BURBUJA DE TEXTO (SOLO SE DIBUJA SI TIENE TEXTO)
+                                            // =========================================================
+                                            if (msg.text.isNotEmpty()) {
+                                                if (msg.isUser) {
+                                                    Box(modifier = Modifier.background(Color(0xFFF4F4F4), RoundedCornerShape(20.dp)).padding(16.dp)) {
+                                                        Text(msg.text, color = TextPrimaryDark)
+                                                    }
+                                                } else {
+                                                    AITypingBubble(msg.text, msg.isTyping)
+                                                }
                                             }
                                         }
                                     }

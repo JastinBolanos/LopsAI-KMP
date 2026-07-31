@@ -13,7 +13,9 @@ import kotlinx.coroutines.launch
 import lopsai.jastin.dashboard.core.models.AppScreen
 import lopsai.jastin.dashboard.core.models.ChatMessage
 import lopsai.jastin.dashboard.core.theme.ChatBgColor
+import lopsai.jastin.dashboard.features.chat.data.MockChatsData
 import lopsai.jastin.dashboard.features.search.SearchChatsDialog
+import lopsai.jastin.dashboard.features.settings.SettingsDialog
 import lopsai.jastin.dashboard.features.share.ShareChatDialog
 import lopsai.jastin.dashboard.shared_ui.layout.Sidebar
 
@@ -32,6 +34,12 @@ fun MainScreen() {
 
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val coroutineScope = rememberCoroutineScope()
+
+    val handleSelectChat = { title: String ->
+        isChatActive = true
+        currentScreen = AppScreen.Dashboard
+        messages = MockChatsData.getConversation(title)
+    }
 
     val handleSend = {
         if (promptText.isNotBlank()) {
@@ -86,6 +94,7 @@ fun MainScreen() {
                                 onNavigateToHome = navToHome,
                                 onNavigateToLibrary = navToLibrary,
                                 onSearchClick = { showSearchDialog = true },
+                                onSelectChat = handleSelectChat,
                                 isMobile = true,
                                 modifier = Modifier.fillMaxSize()
                             )
@@ -115,6 +124,7 @@ fun MainScreen() {
                             onNavigateToHome = navToHome,
                             onNavigateToLibrary = navToLibrary,
                             onSearchClick = { showSearchDialog = true },
+                            onSelectChat = handleSelectChat,
                             isMobile = false,
                             modifier = Modifier.width(260.dp)
                         )
@@ -141,7 +151,7 @@ fun MainScreen() {
             if (showSearchDialog) {
                 SearchChatsDialog(
                     onClose = { showSearchDialog = false },
-                    onSelectChat = { /* ... */ }
+                    onSelectChat = handleSelectChat
                 )
             }
 
@@ -153,6 +163,13 @@ fun MainScreen() {
                     onSettingsClick = {
                         showSettingsDialog = true
                     }
+                )
+            }
+
+            if (showSettingsDialog) {
+                SettingsDialog(
+                    isMobile = isMobile,
+                    onClose = { showSettingsDialog = false }
                 )
             }
         }
