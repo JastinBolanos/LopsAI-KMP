@@ -145,25 +145,36 @@ fun Sidebar(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // CONTENEDOR PRINCIPAL DEL LOGO (Ancho reservado para la animación)
-                val maxTextWidth = 88.dp // Ancho exacto donde cabe "LopsAI"
+                // =========================================================================
+                // 🚀 CABEZAL OPTIMIZADO POR GPU: 0 RECOMPOSICIONES (60/120 FPS FLUIDOS)
+                // =========================================================================
+                val maxTextWidthPx = with(androidx.compose.ui.platform.LocalDensity.current) { 88.dp.toPx() }
 
                 Box(
                     modifier = Modifier
                         .height(36.dp)
-                        .width(maxTextWidth + 32.dp), // Espacio para texto + tamaño de la estrella
+                        .width(120.dp),
+                    // Ancho fijo: cero cálculos de layout durante la animación
                     contentAlignment = Alignment.CenterStart
                 ) {
                     // =========================================================
-                    // CAPA 1 (ATRÁS): TEXTO "LopsAI" DESENMASCARÁNDOSE
+                    // CAPA 1 (ATRÁS): TEXTO REVELADO POR GPU (clipRect en Skia)
                     // =========================================================
-                    // Al usar clipToBounds() y un width animado, las letras no se aplastan;
-                    // simplemente se van revelando de izquierda a derecha detrás de la estrella.
                     Box(
                         modifier = Modifier
-                            .width(maxTextWidth * revealProgress)
                             .fillMaxHeight()
-                            .clipToBounds(),
+                            // Recorte directo en la tarjeta gráfica sin tocar la CPU
+                            .drawWithContent {
+                                val currentWidth = maxTextWidthPx * revealProgress
+                                clipRect(
+                                    left = 0f,
+                                    top = 0f,
+                                    right = currentWidth,
+                                    bottom = size.height
+                                ) {
+                                    this@drawWithContent.drawContent()
+                                }
+                            },
                         contentAlignment = Alignment.CenterStart
                     ) {
                         Text(
@@ -172,22 +183,27 @@ fun Sidebar(
                             fontWeight = FontWeight.ExtraBold,
                             maxLines = 1,
                             style = androidx.compose.ui.text.TextStyle(
-                                brush = lopsAiWashBrush
+                                brush = lopsAiWashBrush // La ola líquida negra/neón
                             ),
                             modifier = Modifier.padding(start = 4.dp)
                         )
                     }
 
                     // =========================================================
-                    // CAPA 2 (FRENTE/PUNTA): ESTRELLA RODANDO SIEMPRE ADELANTE
+                    // CAPA 2 (FRENTE): ESTRELLA EN FASE DE LAYOUT (LAMBDA OFFSET)
                     // =========================================================
-                    // La posición X de la estrella está sincronizada con el borde del texto revelado
                     Box(
                         modifier = Modifier
-                            .offset(x = (maxTextWidth * revealProgress))
+                            // USO DE LAMBDA { ... } -> Evita recomponer en cada frame
+                            .offset {
+                                val currentX = (maxTextWidthPx * revealProgress).roundToInt()
+                                IntOffset(x = currentX, y = 0)
+                            }
                             .size(28.dp)
                             .graphicsLayer {
                                 rotationZ = starWheelRotation
+                                // Forzamos composición en capa de hardware (GPU Render Node)
+                                clip = false
                             },
                         contentAlignment = Alignment.Center
                     ) {
