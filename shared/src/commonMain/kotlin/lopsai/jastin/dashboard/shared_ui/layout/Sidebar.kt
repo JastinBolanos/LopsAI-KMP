@@ -34,6 +34,22 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.animation.core.*
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.input.pointer.pointerInput
+import kotlinx.coroutines.launch
+import kotlin.math.cos
+import kotlin.math.sin
+import kotlin.math.PI
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.graphics.drawscope.clipRect
+import kotlin.math.roundToInt
 
 @Composable
 fun Sidebar(
@@ -64,32 +80,136 @@ fun Sidebar(
                 .fillMaxSize()
                 .background(sidebarBg)
         ) {
-            // ==========================================
-            // 1. TOP FIJO (Logo y Cerrar manualmente)
-            // ==========================================
+            // =========================================================================
+            // ✨ 1. TOP FIJO: ESTRELLA RODANTE + REVELADO CINEMÁTICO "LopsAI"
+            // =========================================================================
+            val headerTransition = rememberInfiniteTransition(label = "LopsAiRevealAnim")
+
+            // 1. Progreso maestro de revelado (0f = Oculto en la izquierda -> 1f = Todo revelado a la derecha)
+            val revealProgress by headerTransition.animateFloat(
+                initialValue = 0f,
+                targetValue = 1f,
+                animationSpec = infiniteRepeatable(
+                    animation = tween(durationMillis = 2800, easing = FastOutSlowInEasing),
+                    repeatMode = RepeatMode.Reverse // Va dibujando hacia la derecha y regresa suave
+                ),
+                label = "RevealProgress"
+            )
+
+            // 2. Rotación de las puntas de la estrella mientras rueda hacia la derecha
+            val starWheelRotation by headerTransition.animateFloat(
+                initialValue = 0f,
+                targetValue = 720f, // 2 vueltas completas de 360° durante el trayecto
+                animationSpec = infiniteRepeatable(
+                    animation = tween(durationMillis = 2800, easing = FastOutSlowInEasing),
+                    repeatMode = RepeatMode.Reverse
+                ),
+                label = "StarWheelRotate"
+            )
+
+            // =========================================================================
+            // 🌊 EL BAÑO LÍQUIDO: BASE NEGRA + OLA QUE MANCHA Y SE RETIRA
+            // =========================================================================
+            val washOffset by headerTransition.animateFloat(
+                initialValue = -350f, // Nace oculta a la izquierda (texto 100% negro)
+                targetValue = 550f,   // Termina a la derecha (texto vuelve a 100% negro)
+                animationSpec = infiniteRepeatable(
+                    animation = tween(durationMillis = 3500, easing = LinearEasing),
+                    repeatMode = RepeatMode.Restart
+                ),
+                label = "LiquidWashOffset"
+            )
+
+            // Pincel: Base NEGRA pura -> Ola líquida vibrante -> Retorno a NEGRO puro
+            val lopsAiWashBrush = remember(washOffset) {
+                Brush.linearGradient(
+                    colors = listOf(
+                        Color(0xFF111111), // 1. Negro profundo (antes de la ola)
+                        Color(0xFF111111), //    Margen negro
+                        Color(0xFF00F2FE), // 2. Entrada de agua (Cian cristalino)
+                        Color(0xFFA855F7), // 3. Centro vibrante (Púrpura perlado)
+                        Color(0xFFEC4899), // 4. Estela neón (Rosa)
+                        Color(0xFF111111), // 5. Negro profundo (después de la ola)
+                        Color(0xFF111111)  //    Retirada total
+                    ),
+                    start = Offset(washOffset, 0f),
+                    end = Offset(washOffset + 300f, 0f) // Ancho concentrado de la ola
+                )
+            }
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 12.dp)
-                    .padding(top = 16.dp, bottom = 8.dp),
+                    .padding(top = 16.dp, bottom = 12.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(
-                    imageVector = Icons.Outlined.AutoAwesome,
-                    contentDescription = "Logo",
-                    modifier = Modifier.size(24.dp).padding(4.dp),
-                    tint = TextPrimaryDark
-                )
+                // CONTENEDOR PRINCIPAL DEL LOGO (Ancho reservado para la animación)
+                val maxTextWidth = 88.dp // Ancho exacto donde cabe "LopsAI"
+
+                Box(
+                    modifier = Modifier
+                        .height(36.dp)
+                        .width(maxTextWidth + 32.dp), // Espacio para texto + tamaño de la estrella
+                    contentAlignment = Alignment.CenterStart
+                ) {
+                    // =========================================================
+                    // CAPA 1 (ATRÁS): TEXTO "LopsAI" DESENMASCARÁNDOSE
+                    // =========================================================
+                    // Al usar clipToBounds() y un width animado, las letras no se aplastan;
+                    // simplemente se van revelando de izquierda a derecha detrás de la estrella.
+                    Box(
+                        modifier = Modifier
+                            .width(maxTextWidth * revealProgress)
+                            .fillMaxHeight()
+                            .clipToBounds(),
+                        contentAlignment = Alignment.CenterStart
+                    ) {
+                        Text(
+                            text = "LopsAI",
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.ExtraBold,
+                            maxLines = 1,
+                            style = androidx.compose.ui.text.TextStyle(
+                                brush = lopsAiWashBrush
+                            ),
+                            modifier = Modifier.padding(start = 4.dp)
+                        )
+                    }
+
+                    // =========================================================
+                    // CAPA 2 (FRENTE/PUNTA): ESTRELLA RODANDO SIEMPRE ADELANTE
+                    // =========================================================
+                    // La posición X de la estrella está sincronizada con el borde del texto revelado
+                    Box(
+                        modifier = Modifier
+                            .offset(x = (maxTextWidth * revealProgress))
+                            .size(28.dp)
+                            .graphicsLayer {
+                                rotationZ = starWheelRotation
+                            },
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            imageVector = Icons.Outlined.AutoAwesome,
+                            contentDescription = "LopsAI Animated Star",
+                            modifier = Modifier.size(22.dp),
+                            tint = Color(0xFF6366F1) // Índigo Premium
+                        )
+                    }
+                }
+
+                // BOTÓN DE CERRAR BARRA LATERAL CON EXPLOSIÓN ÉPICA
                 Icon(
                     imageVector = Icons.Outlined.ViewSidebar,
                     contentDescription = "Close Sidebar",
                     tint = TextSecondaryDark,
                     modifier = Modifier
-                        .size(28.dp)
-                        .clip(RoundedCornerShape(6.dp))
-                        .clickable { onClose() }
-                        .padding(4.dp)
+                        .size(32.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .epicClickBurst { onClose() }
+                        .padding(6.dp)
                 )
             }
 
@@ -258,7 +378,6 @@ fun Sidebar(
                 val chatsList = MockChatsData.chatTitles
 
                 items(chatsList) { chatTitle ->
-                    val interactionSource = remember { MutableInteractionSource() }
                     Text(
                         text = chatTitle,
                         fontSize = 13.sp,
@@ -267,7 +386,7 @@ fun Sidebar(
                         modifier = Modifier
                             .fillMaxWidth()
                             .clip(RoundedCornerShape(8.dp))
-                            .clickable(interactionSource = interactionSource, indication = null) {
+                            .epicClickBurst {
                                 onSelectChat(chatTitle)
                                 if (isMobile) onClose()
                             }
@@ -404,4 +523,88 @@ fun Sidebar(
             }
         }
     }
+}
+
+// =====================================================================
+// 💥 MODIFICADOR ÉPICO: EXPLOSIÓN DE PARTÍCULAS + ONDA DE CHOQUE (SKIA)
+// =====================================================================
+@Composable
+fun Modifier.epicClickBurst(
+    onClick: () -> Unit
+): Modifier {
+    // 1. Estado para el rebote elástico (Scale)
+    val scale = remember { Animatable(1f) }
+    // 2. Estado para la expansión de la explosión (0f a 1f)
+    val burstProgress = remember { Animatable(0f) }
+    val coroutineScope = rememberCoroutineScope()
+
+    return this
+        .scale(scale.value)
+        .pointerInput(Unit) {
+            detectTapGestures(
+                onPress = {
+                    // Compresión inmediata al pulsar
+                    scale.animateTo(0.93f, tween(100, easing = FastOutSlowInEasing))
+                    tryAwaitRelease()
+                    // Rebote elástico al soltar
+                    coroutineScope.launch {
+                        scale.animateTo(
+                            targetValue = 1f,
+                            animationSpec = spring(
+                                dampingRatio = Spring.DampingRatioMediumBouncy,
+                                stiffness = Spring.StiffnessLow
+                            )
+                        )
+                    }
+                },
+                onTap = {
+                    onClick()
+                    // Disparo simultáneo de la explosión de partículas
+                    coroutineScope.launch {
+                        burstProgress.snapTo(0f)
+                        burstProgress.animateTo(
+                            targetValue = 1f,
+                            animationSpec = tween(450, easing = FastOutSlowInEasing)
+                        )
+                    }
+                }
+            )
+        }
+        .drawBehind {
+            val p = burstProgress.value
+            if (p > 0f && p < 1f) {
+                val maxRadius = size.width.coerceAtLeast(size.height) * 0.7f
+                val centerOffset = Offset(size.width / 2f, size.height / 2f)
+                val alpha = (1f - p).coerceIn(0f, 1f)
+
+                // CAPA 1: ONDA DE CHOQUE CIRCULAR (SHOCKWAVE RING)
+                drawCircle(
+                    color = Color(0xFF6366F1).copy(alpha = alpha * 0.7f),
+                    radius = maxRadius * p,
+                    center = centerOffset,
+                    style = Stroke(width = 3.dp.toPx() * (1f - p))
+                )
+
+                // CAPA 2: 6 PARTÍCULAS NEÓN DISPARADAS EN 360 GRADOS
+                val particleCount = 6
+                val angleStep = (2 * PI) / particleCount
+                val particleDistance = maxRadius * 1.1f * p
+
+                for (i in 0 until particleCount) {
+                    val angle = i * angleStep
+                    val dx = cos(angle).toFloat() * particleDistance
+                    val dy = sin(angle).toFloat() * particleDistance
+                    val particleCenter = centerOffset + Offset(dx, dy)
+
+                    // Alternamos colores premium entre Cian Eléctrico y Rosa Neón
+                    val particleColor = if (i % 2 == 0) Color(0xFF00F2FE) else Color(0xFFEC4899)
+
+                    drawCircle(
+                        color = particleColor.copy(alpha = alpha),
+                        radius = 4.dp.toPx() * (1f - (p * 0.5f)),
+                        center = particleCenter
+                    )
+                }
+            }
+        }
 }
