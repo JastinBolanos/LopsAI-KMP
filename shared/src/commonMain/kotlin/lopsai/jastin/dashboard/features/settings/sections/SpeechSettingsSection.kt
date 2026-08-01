@@ -12,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -22,10 +23,16 @@ import lopsai.jastin.dashboard.core.theme.TextSecondaryDark
 @Composable
 fun SpeechSettingsSection(
     modifier: Modifier = Modifier,
+    isDarkMode: Boolean = false,
     onVoiceClick: () -> Unit = {},
     onMainLanguageClick: () -> Unit = {}
 ) {
     val scrollState = rememberScrollState()
+
+    // 🎨 PALETA DINÁMICA
+    val textColor = if (isDarkMode) Color(0xFFF3F4F6) else TextPrimaryDark
+    val secondaryTextColor = if (isDarkMode) Color(0xFFA1A1AA) else TextSecondaryDark
+    val dividerColor = if (isDarkMode) Color(0xFF32323A) else InputBorderColor
 
     Column(modifier = modifier.verticalScroll(scrollState)) {
         // --- VOICE ROW ---
@@ -39,20 +46,20 @@ fun SpeechSettingsSection(
         ) {
             Text(
                 text = "Voice",
-                color = TextPrimaryDark,
+                color = textColor,
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Normal
             )
             Icon(
                 imageVector = Icons.Outlined.KeyboardArrowDown,
                 contentDescription = "Select Voice",
-                tint = TextPrimaryDark,
+                tint = textColor,
                 modifier = Modifier.size(20.dp)
             )
         }
 
         HorizontalDivider(
-            color = InputBorderColor,
+            color = dividerColor,
             thickness = 1.dp
         )
 
@@ -67,14 +74,14 @@ fun SpeechSettingsSection(
         ) {
             Text(
                 text = "Main Language",
-                color = TextPrimaryDark,
+                color = textColor,
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Normal
             )
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     text = "Auto-Detect",
-                    color = TextPrimaryDark,
+                    color = textColor,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Normal
                 )
@@ -82,7 +89,7 @@ fun SpeechSettingsSection(
                 Icon(
                     imageVector = Icons.Outlined.KeyboardArrowDown,
                     contentDescription = "Select Main Language",
-                    tint = TextPrimaryDark,
+                    tint = textColor,
                     modifier = Modifier.size(20.dp)
                 )
             }
@@ -91,7 +98,7 @@ fun SpeechSettingsSection(
         // --- DESCRIPTION TEXT ---
         Text(
             text = "For best results, select the language you mainly speak. If it's not listed,\nit may still be supported via auto-detection.",
-            color = TextSecondaryDark,
+            color = secondaryTextColor,
             fontSize = 12.sp,
             lineHeight = 18.sp,
             modifier = Modifier

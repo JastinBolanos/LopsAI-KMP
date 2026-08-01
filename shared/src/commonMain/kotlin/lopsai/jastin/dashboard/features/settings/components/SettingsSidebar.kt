@@ -25,6 +25,7 @@ import lopsai.jastin.dashboard.core.theme.TextPrimaryDark
 @Composable
 fun MobileTabsSection(
     selectedCategory: String,
+    isDarkMode: Boolean = false,
     onCategorySelected: (String) -> Unit
 ) {
     val categories = listOf("General", "Personalization", "Speech", "Data controls", "Builder profile", "Connected apps", "Security")
@@ -40,16 +41,30 @@ fun MobileTabsSection(
     ) {
         categories.forEach { category ->
             val isSelected = category == selectedCategory
+
+            // 🎨 PALETA DE TABS MÓVILES
+            val tabBgColor = if (isSelected) {
+                if (isDarkMode) Color.White else Color(0xFF111111)
+            } else {
+                if (isDarkMode) Color(0xFF262630) else Color(0xFFF0F0F0)
+            }
+
+            val tabTextColor = if (isSelected) {
+                if (isDarkMode) Color.Black else Color.White
+            } else {
+                if (isDarkMode) Color(0xFFA1A1AA) else TextPrimaryDark
+            }
+
             Surface(
                 modifier = Modifier
                     .clip(RoundedCornerShape(50))
                     .clickable { onCategorySelected(category) },
-                color = if (isSelected) Color(0xFF111111) else Color(0xFFF0F0F0),
+                color = tabBgColor,
                 shape = RoundedCornerShape(50)
             ) {
                 Text(
                     text = category,
-                    color = if (isSelected) Color.White else TextPrimaryDark,
+                    color = tabTextColor,
                     fontSize = 13.sp,
                     fontWeight = FontWeight.Medium,
                     modifier = Modifier.padding(horizontal = 14.dp, vertical = 8.dp)
@@ -62,34 +77,45 @@ fun MobileTabsSection(
 @Composable
 fun SettingsSidebar(
     selectedCategory: String,
+    isDarkMode: Boolean = false,
     onCategorySelected: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier.padding(vertical = 16.dp, horizontal = 12.dp)) {
-        SidebarItem(Icons.Outlined.Settings, "General", selectedCategory == "General") { onCategorySelected("General") }
-        SidebarItem(Icons.Outlined.Person, "Personalization", selectedCategory == "Personalization") { onCategorySelected("Personalization") }
-        SidebarItem(Icons.Outlined.GraphicEq, "Speech", selectedCategory == "Speech") { onCategorySelected("Speech") }
-        SidebarItem(Icons.Outlined.Storage, "Data controls", selectedCategory == "Data controls") { onCategorySelected("Data controls") }
-        SidebarItem(Icons.Outlined.AccountCircle, "Builder profile", selectedCategory == "Builder profile") { onCategorySelected("Builder profile") }
-        SidebarItem(Icons.Outlined.GridOn, "Connected apps", selectedCategory == "Connected apps") { onCategorySelected("Connected apps") }
-        SidebarItem(Icons.Outlined.Lock, "Security", selectedCategory == "Security") { onCategorySelected("Security") }
+        SidebarItem(Icons.Outlined.Settings, "General", selectedCategory == "General", isDarkMode) { onCategorySelected("General") }
+        SidebarItem(Icons.Outlined.Person, "Personalization", selectedCategory == "Personalization", isDarkMode) { onCategorySelected("Personalization") }
+        SidebarItem(Icons.Outlined.GraphicEq, "Speech", selectedCategory == "Speech", isDarkMode) { onCategorySelected("Speech") }
+        SidebarItem(Icons.Outlined.Storage, "Data controls", selectedCategory == "Data controls", isDarkMode) { onCategorySelected("Data controls") }
+        SidebarItem(Icons.Outlined.AccountCircle, "Builder profile", selectedCategory == "Builder profile", isDarkMode) { onCategorySelected("Builder profile") }
+        SidebarItem(Icons.Outlined.GridOn, "Connected apps", selectedCategory == "Connected apps", isDarkMode) { onCategorySelected("Connected apps") }
+        SidebarItem(Icons.Outlined.Lock, "Security", selectedCategory == "Security", isDarkMode) { onCategorySelected("Security") }
     }
 }
 
 @Composable
-private fun SidebarItem(icon: ImageVector, text: String, isSelected: Boolean, onClick: () -> Unit) {
+private fun SidebarItem(
+    icon: ImageVector,
+    text: String,
+    isSelected: Boolean,
+    isDarkMode: Boolean,
+    onClick: () -> Unit
+) {
+    // 🎨 PALETA DEL SIDEBAR PC
+    val selectedBg = if (isDarkMode) Color(0xFF262630) else Color(0xFFF0F0F0)
+    val contentColor = if (isDarkMode) Color(0xFFE4E4E7) else TextPrimaryDark
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 2.dp)
             .clip(RoundedCornerShape(8.dp))
-            .background(if (isSelected) Color(0xFFF0F0F0) else Color.Transparent)
+            .background(if (isSelected) selectedBg else Color.Transparent)
             .clickable(onClick = onClick)
             .padding(horizontal = 12.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Icon(imageVector = icon, contentDescription = null, tint = TextPrimaryDark, modifier = Modifier.size(18.dp))
+        Icon(imageVector = icon, contentDescription = null, tint = contentColor, modifier = Modifier.size(18.dp))
         Spacer(modifier = Modifier.width(10.dp))
-        Text(text = text, color = TextPrimaryDark, fontSize = 13.sp)
+        Text(text = text, color = contentColor, fontSize = 13.sp)
     }
 }

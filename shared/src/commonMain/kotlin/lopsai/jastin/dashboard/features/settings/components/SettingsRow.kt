@@ -20,49 +20,85 @@ import lopsai.jastin.dashboard.core.theme.TextPrimaryDark
 import lopsai.jastin.dashboard.core.theme.TextSecondaryDark
 
 @Composable
-fun SettingsDivider() {
-    HorizontalDivider(color = InputBorderColor.copy(alpha = 0.3f), thickness = 1.dp, modifier = Modifier.padding(vertical = 12.dp))
+fun SettingsDivider(isDarkMode: Boolean = false) {
+    val dividerColor = if (isDarkMode) Color(0xFF32323A) else InputBorderColor.copy(alpha = 0.3f)
+    HorizontalDivider(
+        color = dividerColor,
+        thickness = 1.dp,
+        modifier = Modifier.padding(vertical = 12.dp)
+    )
 }
 
 @Composable
-private fun SettingsRowBase(label: String, content: @Composable RowScope.() -> Unit) {
+private fun SettingsRowBase(
+    label: String,
+    isDarkMode: Boolean,
+    content: @Composable RowScope.() -> Unit
+) {
+    val textColor = if (isDarkMode) Color(0xFFF3F4F6) else TextPrimaryDark
+
     Row(
         modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(text = label, color = TextPrimaryDark, fontSize = 13.sp, modifier = Modifier.weight(1f).padding(end = 16.dp))
+        Text(
+            text = label,
+            color = textColor,
+            fontSize = 13.sp,
+            modifier = Modifier.weight(1f).padding(end = 16.dp)
+        )
         content()
     }
 }
 
 @Composable
-fun SettingsRowWithDropdown(label: String, selectedValue: String) {
-    SettingsRowBase(label) {
+fun SettingsRowWithDropdown(
+    label: String,
+    selectedValue: String,
+    isDarkMode: Boolean = false
+) {
+    val borderColor = if (isDarkMode) Color(0xFF3F3F4E) else InputBorderColor.copy(alpha = 0.5f)
+    val textColor = if (isDarkMode) Color(0xFFF3F4F6) else TextPrimaryDark
+    val iconTint = if (isDarkMode) Color(0xFFA1A1AA) else TextSecondaryDark
+
+    SettingsRowBase(label, isDarkMode) {
         Row(
             modifier = Modifier
                 .wrapContentSize()
-                .border(1.dp, InputBorderColor.copy(alpha = 0.5f), RoundedCornerShape(8.dp))
+                .border(1.dp, borderColor, RoundedCornerShape(8.dp))
                 .clickable { }
                 .padding(horizontal = 12.dp, vertical = 6.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(selectedValue, color = TextPrimaryDark, fontSize = 13.sp)
+            Text(selectedValue, color = textColor, fontSize = 13.sp)
             Spacer(modifier = Modifier.width(8.dp))
-            Icon(Icons.Outlined.ArrowDropDown, contentDescription = null, tint = TextSecondaryDark, modifier = Modifier.size(16.dp))
+            Icon(Icons.Outlined.ArrowDropDown, contentDescription = null, tint = iconTint, modifier = Modifier.size(16.dp))
         }
     }
 }
 
 @Composable
-fun SettingsRowWithSwitch(label: String, checked: Boolean) {
-    SettingsRowBase(label) {
+fun SettingsRowWithSwitch(
+    label: String,
+    checked: Boolean,
+    isDarkMode: Boolean = false
+) {
+    val trackChecked = if (isDarkMode) Color(0xFFF3F4F6) else Color.Black
+    val thumbChecked = if (isDarkMode) Color(0xFF16161C) else Color.White
+    val trackUnchecked = if (isDarkMode) Color(0xFF32323A) else InputBorderColor.copy(alpha = 0.5f)
+    val thumbUnchecked = if (isDarkMode) Color(0xFFA1A1AA) else Color.White
+
+    SettingsRowBase(label, isDarkMode) {
         Switch(
             checked = checked,
             onCheckedChange = { },
             colors = SwitchDefaults.colors(
-                checkedThumbColor = Color.White, checkedTrackColor = Color.Black,
-                uncheckedThumbColor = Color.White, uncheckedTrackColor = InputBorderColor.copy(alpha = 0.5f), uncheckedBorderColor = Color.Transparent
+                checkedThumbColor = thumbChecked,
+                checkedTrackColor = trackChecked,
+                uncheckedThumbColor = thumbUnchecked,
+                uncheckedTrackColor = trackUnchecked,
+                uncheckedBorderColor = Color.Transparent
             )
         )
     }
@@ -73,17 +109,32 @@ fun SettingsRowWithButton(
     label: String,
     buttonLabel: String,
     buttonColor: Color = ChatBgColor,
+    isDarkMode: Boolean = false,
     onClick: () -> Unit = {}
 ) {
-    SettingsRowBase(label) {
+    val isSecondary = buttonColor == ChatBgColor
+
+    val actualBg = if (isSecondary) {
+        if (isDarkMode) Color(0xFF262630) else ChatBgColor
+    } else buttonColor
+
+    val actualText = if (isSecondary) {
+        if (isDarkMode) Color(0xFFF3F4F6) else TextPrimaryDark
+    } else Color.White
+
+    val actualBorder = if (isSecondary) {
+        BorderStroke(1.dp, if (isDarkMode) Color(0xFF3F3F4E) else InputBorderColor.copy(alpha = 0.5f))
+    } else null
+
+    SettingsRowBase(label, isDarkMode) {
         Button(
             onClick = onClick,
             colors = ButtonDefaults.buttonColors(
-                containerColor = buttonColor,
-                contentColor = if (buttonColor == ChatBgColor) TextPrimaryDark else Color.White
+                containerColor = actualBg,
+                contentColor = actualText
             ),
             shape = RoundedCornerShape(20.dp),
-            border = if (buttonColor == ChatBgColor) BorderStroke(1.dp, InputBorderColor.copy(alpha = 0.5f)) else null,
+            border = actualBorder,
             contentPadding = PaddingValues(horizontal = 24.dp, vertical = 8.dp)
         ) {
             Text(buttonLabel, fontSize = 13.sp)

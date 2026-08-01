@@ -25,6 +25,11 @@ fun SettingsDialog(
 ) {
     var selectedCategory by remember { mutableStateOf("General") }
 
+    // 🎨 PALETA ADAPTATIVA PARA EL MODAL PRINCIPAL
+    val dialogBg = if (isDarkMode) Color(0xFF16161C) else Color.White
+    val dividerColor = if (isDarkMode) Color(0xFF32323A) else InputBorderColor.copy(alpha = 0.5f)
+    val emptyTextColor = if (isDarkMode) Color(0xFFA1A1AA) else TextSecondaryDark
+
     Dialog(
         onDismissRequest = onClose,
         properties = DialogProperties(usePlatformDefaultWidth = false)
@@ -34,21 +39,22 @@ fun SettingsDialog(
                 .wrapContentHeight()
                 .fillMaxWidth(if (isMobile) 0.95f else 0.7f),
             shape = RoundedCornerShape(16.dp),
-            color = Color.White,
+            color = dialogBg,
             shadowElevation = 8.dp
         ) {
             Column {
                 // 1. Cabecera principal
-                SettingsHeader(onClose)
-                HorizontalDivider(color = InputBorderColor.copy(alpha = 0.5f), thickness = 1.dp)
+                SettingsHeader(onClose = onClose, isDarkMode = isDarkMode)
+                HorizontalDivider(color = dividerColor, thickness = 1.dp)
 
                 // 2. ADAPTACIÓN MÓVIL: Pestañas superiores horizontales
                 if (isMobile) {
                     MobileTabsSection(
                         selectedCategory = selectedCategory,
+                        isDarkMode = isDarkMode,
                         onCategorySelected = { selectedCategory = it }
                     )
-                    HorizontalDivider(color = InputBorderColor.copy(alpha = 0.3f), thickness = 1.dp)
+                    HorizontalDivider(color = dividerColor, thickness = 1.dp)
                 }
 
                 // 3. Cuerpo (Sidebar PC + Contenido)
@@ -57,11 +63,12 @@ fun SettingsDialog(
                     if (!isMobile) {
                         SettingsSidebar(
                             selectedCategory = selectedCategory,
+                            isDarkMode = isDarkMode,
                             onCategorySelected = { selectedCategory = it },
                             modifier = Modifier.weight(0.3f)
                         )
                         VerticalDivider(
-                            color = InputBorderColor.copy(alpha = 0.5f),
+                            color = dividerColor,
                             thickness = 1.dp,
                             modifier = Modifier.fillMaxHeight()
                         )
@@ -72,21 +79,40 @@ fun SettingsDialog(
                         .weight(if (isMobile) 1f else 0.7f)
                         .padding(horizontal = if (isMobile) 16.dp else 32.dp, vertical = 24.dp)
 
+                    // ⚡ AHORA TODAS LAS SECCIONES RECIBEN EL MODO OSCURO
                     when (selectedCategory) {
                         "General" -> GeneralSettingsSection(
                             isDarkMode = isDarkMode,
                             onThemeToggle = onThemeToggle,
                             modifier = contentModifier
                         )
-                        "Personalization" -> PersonalizationSettingsSection(modifier = contentModifier)
-                        "Speech" -> SpeechSettingsSection(modifier = contentModifier)
-                        "Data controls" -> DataControlsSettingsSection(modifier = contentModifier)
-                        "Builder profile" -> BuilderProfileSettingsSection(modifier = contentModifier)
-                        "Connected apps" -> ConnectedAppsSettingsSection(modifier = contentModifier)
-                        "Security" -> SecuritySettingsSection(modifier = contentModifier)
+                        "Personalization" -> PersonalizationSettingsSection(
+                            isDarkMode = isDarkMode,
+                            modifier = contentModifier
+                        )
+                        "Speech" -> SpeechSettingsSection(
+                            isDarkMode = isDarkMode,
+                            modifier = contentModifier
+                        )
+                        "Data controls" -> DataControlsSettingsSection(
+                            isDarkMode = isDarkMode,
+                            modifier = contentModifier
+                        )
+                        "Builder profile" -> BuilderProfileSettingsSection(
+                            isDarkMode = isDarkMode,
+                            modifier = contentModifier
+                        )
+                        "Connected apps" -> ConnectedAppsSettingsSection(
+                            isDarkMode = isDarkMode,
+                            modifier = contentModifier
+                        )
+                        "Security" -> SecuritySettingsSection(
+                            isDarkMode = isDarkMode,
+                            modifier = contentModifier
+                        )
                         else -> {
                             Box(modifier = contentModifier, contentAlignment = Alignment.Center) {
-                                Text("Coming soon...", color = TextSecondaryDark)
+                                Text("Coming soon...", color = emptyTextColor)
                             }
                         }
                     }

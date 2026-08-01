@@ -21,20 +21,34 @@ import lopsai.jastin.dashboard.core.theme.TextPrimaryDark
 import lopsai.jastin.dashboard.core.theme.TextSecondaryDark
 
 @Composable
-fun PersonalizationSettingsSection(modifier: Modifier = Modifier) {
+fun PersonalizationSettingsSection(
+    modifier: Modifier = Modifier,
+    isDarkMode: Boolean = false
+) {
     val scrollState = rememberScrollState()
+
+    // 🎨 PALETA DINÁMICA
+    val textColor = if (isDarkMode) Color(0xFFF3F4F6) else TextPrimaryDark
+    val secondaryTextColor = if (isDarkMode) Color(0xFFA1A1AA) else TextSecondaryDark
+    val dividerColor = if (isDarkMode) Color(0xFF32323A) else InputBorderColor
+
+    // PALETA DEL SWITCH
+    val trackChecked = if (isDarkMode) Color(0xFFF3F4F6) else Color.Black
+    val thumbChecked = if (isDarkMode) Color(0xFF16161C) else Color.White
+    val trackUnchecked = if (isDarkMode) Color(0xFF32323A) else InputBorderColor
+    val thumbUnchecked = if (isDarkMode) Color(0xFFA1A1AA) else Color.White
 
     Column(modifier = modifier.verticalScroll(scrollState)) {
         // --- CUSTOMIZATION SECTION ---
         Text(
             text = "Customization",
-            color = TextPrimaryDark,
+            color = textColor,
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
-        HorizontalDivider(color = InputBorderColor, thickness = 1.dp)
+        HorizontalDivider(color = dividerColor, thickness = 1.dp)
 
         Row(
             modifier = Modifier
@@ -44,11 +58,11 @@ fun PersonalizationSettingsSection(modifier: Modifier = Modifier) {
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text("Custom instructions", color = TextPrimaryDark, fontSize = 14.sp)
+            Text("Custom instructions", color = textColor, fontSize = 14.sp)
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text("On", color = TextPrimaryDark, fontSize = 14.sp)
+                Text("On", color = textColor, fontSize = 14.sp)
                 Spacer(modifier = Modifier.width(4.dp))
-                Icon(Icons.Outlined.ChevronRight, contentDescription = null, tint = TextPrimaryDark, modifier = Modifier.size(16.dp))
+                Icon(Icons.Outlined.ChevronRight, contentDescription = null, tint = textColor, modifier = Modifier.size(16.dp))
             }
         }
 
@@ -60,16 +74,16 @@ fun PersonalizationSettingsSection(modifier: Modifier = Modifier) {
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text("Memory", color = TextPrimaryDark, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+            Text("Memory", color = textColor, fontSize = 18.sp, fontWeight = FontWeight.Bold)
 
             Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.clickable { }) {
-                Text("Learn more", color = TextPrimaryDark, fontSize = 13.sp)
+                Text("Learn more", color = textColor, fontSize = 13.sp)
                 Spacer(modifier = Modifier.width(4.dp))
-                Icon(Icons.Outlined.HelpOutline, contentDescription = "Help", tint = TextSecondaryDark, modifier = Modifier.size(16.dp))
+                Icon(Icons.Outlined.HelpOutline, contentDescription = "Help", tint = secondaryTextColor, modifier = Modifier.size(16.dp))
             }
         }
 
-        HorizontalDivider(color = InputBorderColor, thickness = 1.dp)
+        HorizontalDivider(color = dividerColor, thickness = 1.dp)
 
         Row(
             modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
@@ -77,13 +91,13 @@ fun PersonalizationSettingsSection(modifier: Modifier = Modifier) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(modifier = Modifier.weight(1f).padding(end = 16.dp)) {
-                Text("Reference saved memories", color = TextPrimaryDark, fontSize = 14.sp, fontWeight = FontWeight.Medium)
+                Text("Reference saved memories", color = textColor, fontSize = 14.sp, fontWeight = FontWeight.Medium)
                 Spacer(modifier = Modifier.height(2.dp))
-                Text("Let LopsAI save and use memories when responding.", color = TextSecondaryDark, fontSize = 13.sp)
+                Text("Let LopsAI save and use memories when responding.", color = secondaryTextColor, fontSize = 13.sp)
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = "Manage memories",
-                    color = TextSecondaryDark,
+                    color = secondaryTextColor,
                     fontSize = 13.sp,
                     textDecoration = TextDecoration.Underline,
                     modifier = Modifier.clickable { }
@@ -94,22 +108,27 @@ fun PersonalizationSettingsSection(modifier: Modifier = Modifier) {
                 checked = true,
                 onCheckedChange = { },
                 colors = SwitchDefaults.colors(
-                    checkedThumbColor = Color.White,
-                    checkedTrackColor = Color.Black,
-                    uncheckedThumbColor = Color.White,
-                    uncheckedTrackColor = InputBorderColor,
+                    checkedThumbColor = thumbChecked,
+                    checkedTrackColor = trackChecked,
+                    uncheckedThumbColor = thumbUnchecked,
+                    uncheckedTrackColor = trackUnchecked,
                     uncheckedBorderColor = Color.Transparent
                 )
             )
         }
 
-        HorizontalDivider(color = InputBorderColor, thickness = 1.dp)
+        HorizontalDivider(color = dividerColor, thickness = 1.dp)
         Spacer(modifier = Modifier.height(16.dp))
 
-        Text("LopsAI may use Memory to personalize queries to search providers, such as Bing.", color = TextSecondaryDark, fontSize = 12.sp, modifier = Modifier.fillMaxWidth())
+        Text(
+            text = "LopsAI may use Memory to personalize queries to search providers, such as Bing.",
+            color = secondaryTextColor,
+            fontSize = 12.sp,
+            modifier = Modifier.fillMaxWidth()
+        )
         Text(
             text = "Learn more",
-            color = TextSecondaryDark,
+            color = secondaryTextColor,
             fontSize = 12.sp,
             textDecoration = TextDecoration.Underline,
             modifier = Modifier.clickable { }

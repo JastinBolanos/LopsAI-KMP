@@ -21,7 +21,6 @@ import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
 import lopsai.jastin.dashboard.core.models.AppScreen
 import lopsai.jastin.dashboard.core.models.ChatMessage
-import lopsai.jastin.dashboard.core.theme.ChatBgColor
 import lopsai.jastin.dashboard.features.chat.data.MockChatsData
 import lopsai.jastin.dashboard.features.search.SearchChatsDialog
 import lopsai.jastin.dashboard.shared_ui.layout.Sidebar
@@ -70,10 +69,13 @@ fun MainScreen() {
     }
 
     MaterialTheme {
+        // 🎨 FONDO MAESTRO ADAPTATIVO
+        val mainBgColor = if (isDarkMode) Color(0xFF16161C) else Color(0xFFF9F9F9)
+
         BoxWithConstraints(
             modifier = Modifier
                 .fillMaxSize()
-                .background(ChatBgColor)
+                .background(mainBgColor)
                 .imePadding()
         ) {
             val isMobile = maxWidth < 768.dp
@@ -153,14 +155,14 @@ fun MainScreen() {
 
                     MainRouter(
                         isMobile = isMobile,
-                        showDesktopSidebar = false,
+                        showDesktopSidebar = isDesktopSidebarOpen,
                         titleSize = titleSize,
                         promptText = promptText,
                         onPromptChange = { promptText = it },
                         onSend = handleSend,
                         isChatActive = isChatActive,
                         messages = messages,
-                        onMenuClick = { coroutineScope.launch { drawerState.open() } },
+                        onMenuClick = { isDesktopSidebarOpen = !isDesktopSidebarOpen },
                         currentScreen = currentScreen,
                         isDarkMode = isDarkMode,
                         onThemeToggle = { isDarkMode = !isDarkMode },

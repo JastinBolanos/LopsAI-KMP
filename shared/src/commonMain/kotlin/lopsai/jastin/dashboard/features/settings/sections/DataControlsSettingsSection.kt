@@ -6,7 +6,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ChevronRight
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,19 +15,21 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import lopsai.jastin.dashboard.core.theme.InputBorderColor
 import lopsai.jastin.dashboard.core.theme.TextPrimaryDark
+import lopsai.jastin.dashboard.features.settings.components.SettingsDivider
 import lopsai.jastin.dashboard.features.settings.components.SettingsRowWithButton
 
 @Composable
 fun DataControlsSettingsSection(
     modifier: Modifier = Modifier,
+    isDarkMode: Boolean = false,
     onImproveModelClick: () -> Unit = {},
     onManageSharedLinksClick: () -> Unit = {},
     onExportDataClick: () -> Unit = {},
     onDeleteAccountClick: () -> Unit = {}
 ) {
     val scrollState = rememberScrollState()
+    val textColor = if (isDarkMode) Color(0xFFF3F4F6) else TextPrimaryDark
 
     Column(modifier = modifier.verticalScroll(scrollState)) {
         // --- IMPROVE THE MODEL FOR EVERYONE ---
@@ -42,14 +43,14 @@ fun DataControlsSettingsSection(
         ) {
             Text(
                 text = "Improve the model for everyone",
-                color = TextPrimaryDark,
+                color = textColor,
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Normal
             )
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     text = "On",
-                    color = TextPrimaryDark,
+                    color = textColor,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Normal
                 )
@@ -57,37 +58,40 @@ fun DataControlsSettingsSection(
                 Icon(
                     imageVector = Icons.Outlined.ChevronRight,
                     contentDescription = null,
-                    tint = TextPrimaryDark,
+                    tint = textColor,
                     modifier = Modifier.size(16.dp)
                 )
             }
         }
 
-        HorizontalDivider(color = InputBorderColor.copy(alpha = 0.6f), thickness = 1.dp)
+        SettingsDivider(isDarkMode = isDarkMode)
 
         // --- SHARED LINKS ---
         SettingsRowWithButton(
             label = "Shared links",
             buttonLabel = "Manage",
+            isDarkMode = isDarkMode,
             onClick = onManageSharedLinksClick
         )
 
-        HorizontalDivider(color = InputBorderColor.copy(alpha = 0.6f), thickness = 1.dp)
+        SettingsDivider(isDarkMode = isDarkMode)
 
         // --- EXPORT DATA ---
         SettingsRowWithButton(
             label = "Export data",
             buttonLabel = "Export",
+            isDarkMode = isDarkMode,
             onClick = onExportDataClick
         )
 
-        HorizontalDivider(color = InputBorderColor.copy(alpha = 0.6f), thickness = 1.dp)
+        SettingsDivider(isDarkMode = isDarkMode)
 
         // --- DELETE ACCOUNT ---
         SettingsRowWithButton(
             label = "Delete account",
             buttonLabel = "Delete",
             buttonColor = Color(0xFFFF4A4A),
+            isDarkMode = isDarkMode,
             onClick = onDeleteAccountClick
         )
 

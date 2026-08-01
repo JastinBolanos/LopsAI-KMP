@@ -22,12 +22,16 @@ import lopsai.jastin.dashboard.shared_ui.inputs.ThemeToggleButton
 
 @Composable
 fun GeneralSettingsSection(
-    isDarkMode: Boolean = true,
+    isDarkMode: Boolean = false,
     onThemeToggle: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val scrollState = rememberScrollState()
     var showThemeDropdown by remember { mutableStateOf(false) }
+
+    // 🎨 PALETA DINÁMICA
+    val textColor = if (isDarkMode) Color(0xFFF3F4F6) else TextPrimaryDark
+    val dropdownBg = if (isDarkMode) Color(0xFF262630) else Color.White
 
     Column(modifier = modifier.verticalScroll(scrollState)) {
         // =================================================================
@@ -42,7 +46,7 @@ fun GeneralSettingsSection(
         ) {
             Text(
                 text = "Theme",
-                color = TextPrimaryDark,
+                color = textColor,
                 fontSize = 14.sp
             )
 
@@ -67,14 +71,14 @@ fun GeneralSettingsSection(
                     ) {
                         Text(
                             text = if (isDarkMode) "Dark" else "Light",
-                            color = TextPrimaryDark,
+                            color = textColor,
                             fontSize = 14.sp
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         Icon(
                             imageVector = Icons.Outlined.ArrowDropDown,
                             contentDescription = "Select Theme",
-                            tint = TextPrimaryDark
+                            tint = textColor
                         )
                     }
 
@@ -82,17 +86,17 @@ fun GeneralSettingsSection(
                     DropdownMenu(
                         expanded = showThemeDropdown,
                         onDismissRequest = { showThemeDropdown = false },
-                        modifier = Modifier.background(Color.White)
+                        modifier = Modifier.background(dropdownBg)
                     ) {
                         DropdownMenuItem(
-                            text = { Text("Dark", color = Color.Black) },
+                            text = { Text("Dark", color = textColor) },
                             onClick = {
                                 showThemeDropdown = false
                                 if (!isDarkMode) onThemeToggle()
                             }
                         )
                         DropdownMenuItem(
-                            text = { Text("Light", color = Color.Black) },
+                            text = { Text("Light", color = textColor) },
                             onClick = {
                                 showThemeDropdown = false
                                 if (isDarkMode) onThemeToggle()
@@ -103,20 +107,20 @@ fun GeneralSettingsSection(
             }
         }
 
-        SettingsDivider()
-        SettingsRowWithSwitch("Always show code when using data analyst", false)
-        SettingsDivider()
-        SettingsRowWithSwitch("Show follow up suggestions in chats", true)
-        SettingsDivider()
-        SettingsRowWithDropdown("Language", "English (US)")
-        SettingsDivider()
-        SettingsRowWithButton("Archived chats", "Manage")
-        SettingsDivider()
-        SettingsRowWithButton("Archive all chats", "Archive all")
-        SettingsDivider()
-        SettingsRowWithButton("Delete all Chats", "Delete all", Color(0xFFFF5252))
-        SettingsDivider()
-        SettingsRowWithButton("Log out on this device", "Log out")
+        SettingsDivider(isDarkMode = isDarkMode)
+        SettingsRowWithSwitch("Always show code when using data analyst", false, isDarkMode = isDarkMode)
+        SettingsDivider(isDarkMode = isDarkMode)
+        SettingsRowWithSwitch("Show follow up suggestions in chats", true, isDarkMode = isDarkMode)
+        SettingsDivider(isDarkMode = isDarkMode)
+        SettingsRowWithDropdown("Language", "English (US)", isDarkMode = isDarkMode)
+        SettingsDivider(isDarkMode = isDarkMode)
+        SettingsRowWithButton("Archived chats", "Manage", isDarkMode = isDarkMode)
+        SettingsDivider(isDarkMode = isDarkMode)
+        SettingsRowWithButton("Archive all chats", "Archive all", isDarkMode = isDarkMode)
+        SettingsDivider(isDarkMode = isDarkMode)
+        SettingsRowWithButton("Delete all Chats", "Delete all", Color(0xFFFF5252), isDarkMode = isDarkMode)
+        SettingsDivider(isDarkMode = isDarkMode)
+        SettingsRowWithButton("Log out on this device", "Log out", isDarkMode = isDarkMode)
         Spacer(modifier = Modifier.height(16.dp))
     }
 }
