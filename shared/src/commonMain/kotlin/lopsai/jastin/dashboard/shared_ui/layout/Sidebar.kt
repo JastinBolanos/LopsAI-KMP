@@ -1,8 +1,10 @@
 package lopsai.jastin.dashboard.shared_ui.layout
 
 import androidx.compose.animation.*
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -15,34 +17,30 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import kotlinx.coroutines.delay
-import lopsai.jastin.dashboard.core.models.AppScreen
-import lopsai.jastin.dashboard.core.theme.TextPrimaryDark
-import lopsai.jastin.dashboard.core.theme.TextSecondaryDark
-import lopsai.jastin.dashboard.features.chat.data.MockChatsData
-import androidx.compose.animation.core.*
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.input.pointer.pointerInput
-import kotlinx.coroutines.launch
-import kotlin.math.cos
-import kotlin.math.sin
-import kotlin.math.PI
-import androidx.compose.ui.unit.IntOffset
-import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.drawscope.clipRect
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import lopsai.jastin.dashboard.core.models.AppScreen
+import lopsai.jastin.dashboard.features.chat.data.MockChatsData
+import kotlin.math.PI
+import kotlin.math.cos
 import kotlin.math.roundToInt
+import kotlin.math.sin
 
 @Composable
 fun Sidebar(
@@ -54,10 +52,20 @@ fun Sidebar(
     onSearchClick: () -> Unit = {},
     onSelectChat: (String) -> Unit = {},
     isMobile: Boolean = false,
+    isDarkMode: Boolean = false,
     modifier: Modifier = Modifier
 ) {
-    val sidebarBg = Color(0xFFF9F9F9)
-    val hoverBg = Color(0xFFECECEC)
+    // 🎨 PALETA DINÁMICA CON NEGRO ULTRA OSCURO (OLED BLACK #050507)
+    val sidebarBg = if (isDarkMode) Color(0xFF050507) else Color(0xFFF9F9F9)
+    val hoverBg = if (isDarkMode) Color(0xFF16161A) else Color(0xFFECECEC)
+    val textColorPrimary = if (isDarkMode) Color(0xFFEDEDED) else Color(0xFF111111)
+    val textColorSecondary = if (isDarkMode) Color(0xFF9CA3AF) else Color(0xFF6B7280)
+    val searchBg = if (isDarkMode) Color(0xFF16161A) else Color(0xFFFFFFFF)
+    val searchBorder = if (isDarkMode) Color(0xFF28282E) else Color(0xFFDCDCDC)
+    val commandBadgeBg = if (isDarkMode) Color(0xFF222228) else Color(0xFFF0F0F0)
+    val cardBg = if (isDarkMode) Color(0xFF111114) else Color(0xFFFFFFFF)
+    val baseWashColor = if (isDarkMode) Color(0xFFFFFFFF) else Color(0xFF111111)
+
     var comingSoonText by remember { mutableStateOf<String?>(null) }
 
     LaunchedEffect(comingSoonText) {
@@ -67,32 +75,35 @@ fun Sidebar(
         }
     }
 
-    Box(modifier = modifier.fillMaxHeight()) {
+    // 🌐 FONDO EN EL BOX RAÍZ -> Cubre hasta el techo (píxel 0) detrás de la hora/batería
+    Box(
+        modifier = modifier
+            .fillMaxHeight()
+            .background(sidebarBg)
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(sidebarBg)
+                .statusBarsPadding()
         ) {
             // =========================================================================
             // ✨ 1. TOP FIJO: ESTRELLA RODANTE + REVELADO CINEMÁTICO "LopsAI"
             // =========================================================================
             val headerTransition = rememberInfiniteTransition(label = "LopsAiRevealAnim")
 
-            // 1. Progreso maestro de revelado (0f = Oculto en la izquierda -> 1f = Todo revelado a la derecha)
             val revealProgress by headerTransition.animateFloat(
                 initialValue = 0f,
                 targetValue = 1f,
                 animationSpec = infiniteRepeatable(
                     animation = tween(durationMillis = 2800, easing = FastOutSlowInEasing),
-                    repeatMode = RepeatMode.Reverse // Va dibujando hacia la derecha y regresa suave
+                    repeatMode = RepeatMode.Reverse
                 ),
                 label = "RevealProgress"
             )
 
-            // 2. Rotación de las puntas de la estrella mientras rueda hacia la derecha
             val starWheelRotation by headerTransition.animateFloat(
                 initialValue = 0f,
-                targetValue = 720f, // 2 vueltas completas de 360° durante el trayecto
+                targetValue = 720f,
                 animationSpec = infiniteRepeatable(
                     animation = tween(durationMillis = 2800, easing = FastOutSlowInEasing),
                     repeatMode = RepeatMode.Reverse
@@ -101,11 +112,11 @@ fun Sidebar(
             )
 
             // =========================================================================
-            // 🌊 EL BAÑO LÍQUIDO: BASE NEGRA + OLA QUE MANCHA Y SE RETIRA
+            // 🌊 EL BAÑO LÍQUIDO: BASE DINÁMICA + OLA QUE MANCHA Y SE RETIRA
             // =========================================================================
             val washOffset by headerTransition.animateFloat(
-                initialValue = -350f, // Nace oculta a la izquierda (texto 100% negro)
-                targetValue = 550f,   // Termina a la derecha (texto vuelve a 100% negro)
+                initialValue = -350f,
+                targetValue = 550f,
                 animationSpec = infiniteRepeatable(
                     animation = tween(durationMillis = 3500, easing = LinearEasing),
                     repeatMode = RepeatMode.Restart
@@ -113,20 +124,19 @@ fun Sidebar(
                 label = "LiquidWashOffset"
             )
 
-            // Pincel: Base NEGRA pura -> Ola líquida vibrante -> Retorno a NEGRO puro
-            val lopsAiWashBrush = remember(washOffset) {
+            val lopsAiWashBrush = remember(washOffset, baseWashColor) {
                 Brush.linearGradient(
                     colors = listOf(
-                        Color(0xFF111111), // 1. Negro profundo (antes de la ola)
-                        Color(0xFF111111), //    Margen negro
+                        baseWashColor,     // 1. Color de texto normal antes de la ola
+                        baseWashColor,     //    Margen de color normal
                         Color(0xFF00F2FE), // 2. Entrada de agua (Cian cristalino)
                         Color(0xFFA855F7), // 3. Centro vibrante (Púrpura perlado)
                         Color(0xFFEC4899), // 4. Estela neón (Rosa)
-                        Color(0xFF111111), // 5. Negro profundo (después de la ola)
-                        Color(0xFF111111)  //    Retirada total
+                        baseWashColor,     // 5. Retorno al color normal
+                        baseWashColor      //    Retirada total
                     ),
                     start = Offset(washOffset, 0f),
-                    end = Offset(washOffset + 300f, 0f) // Ancho concentrado de la ola
+                    end = Offset(washOffset + 300f, 0f)
                 )
             }
 
@@ -138,25 +148,17 @@ fun Sidebar(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // =========================================================================
-                // 🚀 CABEZAL OPTIMIZADO POR GPU: 0 RECOMPOSICIONES (60/120 FPS FLUIDOS)
-                // =========================================================================
                 val maxTextWidthPx = with(androidx.compose.ui.platform.LocalDensity.current) { 88.dp.toPx() }
 
                 Box(
                     modifier = Modifier
                         .height(36.dp)
                         .width(120.dp),
-                    // Ancho fijo: cero cálculos de layout durante la animación
                     contentAlignment = Alignment.CenterStart
                 ) {
-                    // =========================================================
-                    // CAPA 1 (ATRÁS): TEXTO REVELADO POR GPU (clipRect en Skia)
-                    // =========================================================
                     Box(
                         modifier = Modifier
                             .fillMaxHeight()
-                            // Recorte directo en la tarjeta gráfica sin tocar la CPU
                             .drawWithContent {
                                 val currentWidth = maxTextWidthPx * revealProgress
                                 clipRect(
@@ -176,18 +178,14 @@ fun Sidebar(
                             fontWeight = FontWeight.ExtraBold,
                             maxLines = 1,
                             style = androidx.compose.ui.text.TextStyle(
-                                brush = lopsAiWashBrush // La ola líquida negra/neón
+                                brush = lopsAiWashBrush
                             ),
                             modifier = Modifier.padding(start = 4.dp)
                         )
                     }
 
-                    // =========================================================
-                    // CAPA 2 (FRENTE): ESTRELLA EN FASE DE LAYOUT (LAMBDA OFFSET)
-                    // =========================================================
                     Box(
                         modifier = Modifier
-                            // USO DE LAMBDA { ... } -> Evita recomponer en cada frame
                             .offset {
                                 val currentX = (maxTextWidthPx * revealProgress).roundToInt()
                                 IntOffset(x = currentX, y = 0)
@@ -195,7 +193,6 @@ fun Sidebar(
                             .size(28.dp)
                             .graphicsLayer {
                                 rotationZ = starWheelRotation
-                                // Forzamos composición en capa de hardware (GPU Render Node)
                                 clip = false
                             },
                         contentAlignment = Alignment.Center
@@ -204,16 +201,15 @@ fun Sidebar(
                             imageVector = Icons.Outlined.AutoAwesome,
                             contentDescription = "LopsAI Animated Star",
                             modifier = Modifier.size(22.dp),
-                            tint = Color(0xFF6366F1) // Índigo Premium
+                            tint = Color(0xFF6366F1)
                         )
                     }
                 }
 
-                // BOTÓN DE CERRAR BARRA LATERAL CON EXPLOSIÓN ÉPICA
                 Icon(
                     imageVector = Icons.Outlined.ViewSidebar,
                     contentDescription = "Close Sidebar",
-                    tint = TextSecondaryDark,
+                    tint = textColorSecondary,
                     modifier = Modifier
                         .size(32.dp)
                         .clip(RoundedCornerShape(8.dp))
@@ -233,12 +229,12 @@ fun Sidebar(
                 item {
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    // 1. Botón New Chat (Estilo Linear App Active Accent)
+                    // 1. Botón New Chat
                     val isNewChatActive = currentScreen == AppScreen.Dashboard
                     val activeBrush = if (isNewChatActive) {
                         Brush.horizontalGradient(
                             colors = listOf(
-                                Color(0xFF6366F1).copy(alpha = 0.12f),
+                                Color(0xFF6366F1).copy(alpha = if (isDarkMode) 0.25f else 0.12f),
                                 Color.Transparent
                             )
                         )
@@ -257,21 +253,24 @@ fun Sidebar(
                             }
                     ) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            // PÍLDORA NEÓN VERTICAL
                             if (isNewChatActive) {
                                 Box(
                                     modifier = Modifier
                                         .width(3.dp)
                                         .height(24.dp)
                                         .clip(RoundedCornerShape(topEnd = 4.dp, bottomEnd = 4.dp))
-                                        .background(Color(0xFF6366F1)) // Acento Índigo
+                                        .background(Color(0xFF6366F1))
                                 )
                             } else {
                                 Spacer(modifier = Modifier.width(3.dp))
                             }
 
                             Box(modifier = Modifier.weight(1f)) {
-                                SidebarItem(icon = Icons.Outlined.Edit, text = "New chat")
+                                SidebarItem(
+                                    icon = Icons.Outlined.Edit,
+                                    text = "New chat",
+                                    tint = textColorPrimary
+                                )
                             }
                         }
                     }
@@ -282,14 +281,13 @@ fun Sidebar(
                         modifier = Modifier
                             .fillMaxWidth()
                             .clip(RoundedCornerShape(10.dp))
-                            .background(Color(0xFFFFFFFF), RoundedCornerShape(10.dp))
+                            .background(searchBg, RoundedCornerShape(10.dp))
                             .drawBehind {
-                                // Sutil contorno metálico/vidrio de 1px
                                 drawRoundRect(
-                                    color = Color(0xFFDCDCDC),
+                                    color = searchBorder,
                                     size = size,
                                     cornerRadius = CornerRadius(10.dp.toPx()),
-                                    style = androidx.compose.ui.graphics.drawscope.Stroke(1.dp.toPx())
+                                    style = Stroke(1.dp.toPx())
                                 )
                             }
                             .clickable {
@@ -308,22 +306,31 @@ fun Sidebar(
                                 tint = Color(0xFF6366F1)
                             )
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text("Search chats...", fontSize = 13.sp, color = TextPrimaryDark, fontWeight = FontWeight.Medium)
+                            Text(
+                                text = "Search chats...",
+                                fontSize = 13.sp,
+                                color = textColorPrimary,
+                                fontWeight = FontWeight.Medium
+                            )
                         }
-                        // Píldora de comando estilo teclado nativo
                         Box(
                             modifier = Modifier
                                 .clip(RoundedCornerShape(4.dp))
-                                .background(Color(0xFFF0F0F0))
+                                .background(commandBadgeBg)
                                 .padding(horizontal = 6.dp, vertical = 2.dp)
                         ) {
-                            Text("⌘K", fontSize = 11.sp, color = TextSecondaryDark, fontWeight = FontWeight.SemiBold)
+                            Text(
+                                text = "⌘K",
+                                fontSize = 11.sp,
+                                color = textColorSecondary,
+                                fontWeight = FontWeight.SemiBold
+                            )
                         }
                     }
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    // 3. Botón Library
+                    // 3. Botón Library -> AHORA PASA tint = textColorPrimary (BLANCO EN DARK MODE)
                     val libraryBg = if (currentScreen == AppScreen.Library) hoverBg else Color.Transparent
                     Box(
                         modifier = Modifier
@@ -334,12 +341,15 @@ fun Sidebar(
                                 if (isMobile) onClose()
                             }
                     ) {
-                        SidebarItem(icon = Icons.Outlined.LibraryBooks, text = "Library", trailingText = "11")
+                        SidebarItem(
+                            icon = Icons.Outlined.LibraryBooks,
+                            text = "Library",
+                            trailingText = "11",
+                            tint = textColorPrimary // ⚡ SOLUCIONADO
+                        )
                     }
 
-                    // ========================================================
-                    // 4. SORA (TOCABLE CON AVISO TEMPORAL "PRÓXIMAMENTE")
-                    // ========================================================
+                    // 4. SORA -> AHORA PASA tint = textColorPrimary (BLANCO EN DARK MODE)
                     Box(
                         modifier = Modifier
                             .clip(RoundedCornerShape(8.dp))
@@ -347,10 +357,14 @@ fun Sidebar(
                                 comingSoonText = "Sora: Próximamente..."
                             }
                     ) {
-                        SidebarItem(icon = Icons.Outlined.PlayCircleOutline, text = "Sora")
+                        SidebarItem(
+                            icon = Icons.Outlined.PlayCircleOutline,
+                            text = "Sora",
+                            tint = textColorPrimary // ⚡ SOLUCIONADO
+                        )
                     }
 
-                    // 5. Botón GPTs
+                    // 5. Botón GPTs -> AHORA PASA tint = textColorPrimary (BLANCO EN DARK MODE)
                     val gptsBg = if (currentScreen == AppScreen.GptStore) hoverBg else Color.Transparent
                     Box(
                         modifier = Modifier
@@ -361,15 +375,22 @@ fun Sidebar(
                                 if (isMobile) onClose()
                             }
                     ) {
-                        SidebarItem(icon = Icons.Outlined.GridView, text = "GPTs")
+                        SidebarItem(
+                            icon = Icons.Outlined.GridView,
+                            text = "GPTs",
+                            tint = textColorPrimary // ⚡ SOLUCIONADO
+                        )
                     }
 
                     Spacer(modifier = Modifier.height(16.dp))
-                    Text("Content", fontSize = 12.sp, color = TextSecondaryDark, modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
+                    Text(
+                        text = "Content",
+                        fontSize = 12.sp,
+                        color = textColorSecondary,
+                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                    )
 
-                    // ========================================================
-                    // 6. CANVA (TOCABLE CON AVISO TEMPORAL "PRÓXIMAMENTE")
-                    // ========================================================
+                    // 6. CANVA -> AHORA PASA tint = textColorPrimary (BLANCO EN DARK MODE)
                     Box(
                         modifier = Modifier
                             .clip(RoundedCornerShape(8.dp))
@@ -377,11 +398,20 @@ fun Sidebar(
                                 comingSoonText = "Canva: Próximamente..."
                             }
                     ) {
-                        SidebarItem(icon = Icons.Outlined.Brush, text = "Canva")
+                        SidebarItem(
+                            icon = Icons.Outlined.Brush,
+                            text = "Canva",
+                            tint = textColorPrimary // ⚡ SOLUCIONADO
+                        )
                     }
 
                     Spacer(modifier = Modifier.height(16.dp))
-                    Text("Chats", fontSize = 12.sp, color = TextSecondaryDark, modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
+                    Text(
+                        text = "Chats",
+                        fontSize = 12.sp,
+                        color = textColorSecondary,
+                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                    )
                 }
 
                 val chatsList = MockChatsData.chatTitles
@@ -390,7 +420,7 @@ fun Sidebar(
                     Text(
                         text = chatTitle,
                         fontSize = 13.sp,
-                        color = TextPrimaryDark,
+                        color = textColorPrimary,
                         maxLines = 1,
                         modifier = Modifier
                             .fillMaxWidth()
@@ -405,11 +435,10 @@ fun Sidebar(
             }
 
             // =========================================================
-            // ✨ 3. BOTTOM FIJO: AURORA VIP UPGRADE CARD (ESTILO CHATGPT PLUS)
+            // ✨ 3. BOTTOM FIJO: AURORA VIP UPGRADE CARD
             // =========================================================
             val vipTransition = rememberInfiniteTransition(label = "VipCardAnim")
 
-            // 1. Rotación lenta y elegante de la estrella VIP
             val starRotation by vipTransition.animateFloat(
                 initialValue = -10f,
                 targetValue = 10f,
@@ -420,7 +449,6 @@ fun Sidebar(
                 label = "StarRotate"
             )
 
-            // 2. Desplazamiento del resplandor Aurora en el borde
             val auroraOffset by vipTransition.animateFloat(
                 initialValue = 0f,
                 targetValue = 800f,
@@ -449,24 +477,20 @@ fun Sidebar(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(12.dp)
-                    // Borde Aurora de 1.5.dp con esquinas de 12.dp
-                    .background(Color(0xFFFFFFFF), RoundedCornerShape(12.dp))
+                    .background(cardBg, RoundedCornerShape(12.dp))
                     .drawBehind {
                         drawRoundRect(
                             brush = auroraBorderBrush,
                             size = size,
                             cornerRadius = CornerRadius(12.dp.toPx()),
-                            // Dibujamos solo el contorno externo
-                            style = androidx.compose.ui.graphics.drawscope.Stroke(width = 1.5.dp.toPx())
+                            style = Stroke(width = 1.5.dp.toPx())
                         )
                     }
                     .clip(RoundedCornerShape(12.dp))
                     .clickable { }
                     .padding(12.dp)
             ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
                         imageVector = Icons.Outlined.AutoAwesome,
                         contentDescription = "Upgrade",
@@ -475,7 +499,7 @@ fun Sidebar(
                             .graphicsLayer {
                                 rotationZ = starRotation
                             },
-                        tint = Color(0xFF6366F1) // Color Índigo Premium
+                        tint = Color(0xFF6366F1)
                     )
                     Spacer(modifier = Modifier.width(12.dp))
                     Column {
@@ -483,12 +507,12 @@ fun Sidebar(
                             text = "Upgrade plan",
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Bold,
-                            color = TextPrimaryDark
+                            color = textColorPrimary
                         )
                         Text(
                             text = "More access to the best models",
                             fontSize = 11.sp,
-                            color = TextSecondaryDark
+                            color = textColorSecondary
                         )
                     }
                 }
@@ -511,7 +535,7 @@ fun Sidebar(
                 Row(
                     modifier = Modifier
                         .shadow(8.dp, RoundedCornerShape(50))
-                        .background(Color(0xFF222222), RoundedCornerShape(50))
+                        .background(if (isDarkMode) Color(0xFF222228) else Color(0xFF222222), RoundedCornerShape(50))
                         .padding(horizontal = 16.dp, vertical = 10.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -535,15 +559,13 @@ fun Sidebar(
 }
 
 // =====================================================================
-// 💥 MODIFICADOR ÉPICO: EXPLOSIÓN DE PARTÍCULAS + ONDA DE CHOQUE (SKIA)
+// MODIFICADOR: EXPLOSIÓN DE PARTÍCULAS + ONDA DE CHOQUE (SKIA)
 // =====================================================================
 @Composable
 fun Modifier.epicClickBurst(
     onClick: () -> Unit
 ): Modifier {
-    // 1. Estado para el rebote elástico (Scale)
     val scale = remember { Animatable(1f) }
-    // 2. Estado para la expansión de la explosión (0f a 1f)
     val burstProgress = remember { Animatable(0f) }
     val coroutineScope = rememberCoroutineScope()
 
@@ -552,10 +574,8 @@ fun Modifier.epicClickBurst(
         .pointerInput(Unit) {
             detectTapGestures(
                 onPress = {
-                    // Compresión inmediata al pulsar
                     scale.animateTo(0.93f, tween(100, easing = FastOutSlowInEasing))
                     tryAwaitRelease()
-                    // Rebote elástico al soltar
                     coroutineScope.launch {
                         scale.animateTo(
                             targetValue = 1f,
@@ -568,7 +588,6 @@ fun Modifier.epicClickBurst(
                 },
                 onTap = {
                     onClick()
-                    // Disparo simultáneo de la explosión de partículas
                     coroutineScope.launch {
                         burstProgress.snapTo(0f)
                         burstProgress.animateTo(
@@ -586,7 +605,7 @@ fun Modifier.epicClickBurst(
                 val centerOffset = Offset(size.width / 2f, size.height / 2f)
                 val alpha = (1f - p).coerceIn(0f, 1f)
 
-                // CAPA 1: ONDA DE CHOQUE CIRCULAR (SHOCKWAVE RING)
+                // CAPA 1: ONDA DE CHOQUE CIRCULAR
                 drawCircle(
                     color = Color(0xFF6366F1).copy(alpha = alpha * 0.7f),
                     radius = maxRadius * p,
@@ -594,7 +613,7 @@ fun Modifier.epicClickBurst(
                     style = Stroke(width = 3.dp.toPx() * (1f - p))
                 )
 
-                // CAPA 2: 6 PARTÍCULAS NEÓN DISPARADAS EN 360 GRADOS
+                // CAPA 2: 6 PARTÍCULAS NEÓN
                 val particleCount = 6
                 val angleStep = (2 * PI) / particleCount
                 val particleDistance = maxRadius * 1.1f * p
@@ -605,7 +624,6 @@ fun Modifier.epicClickBurst(
                     val dy = sin(angle).toFloat() * particleDistance
                     val particleCenter = centerOffset + Offset(dx, dy)
 
-                    // Alternamos colores premium entre Cian Eléctrico y Rosa Neón
                     val particleColor = if (i % 2 == 0) Color(0xFF00F2FE) else Color(0xFFEC4899)
 
                     drawCircle(

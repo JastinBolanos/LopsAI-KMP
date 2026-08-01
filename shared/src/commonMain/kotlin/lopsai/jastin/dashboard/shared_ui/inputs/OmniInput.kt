@@ -1,6 +1,7 @@
 package lopsai.jastin.dashboard.shared_ui.inputs
 
 import androidx.compose.animation.*
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -21,8 +22,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -31,9 +35,6 @@ import androidx.compose.ui.unit.sp
 import lopsai.jastin.dashboard.core.theme.*
 import lopsai.jastin.dashboard.features.chat.components.ChatTool
 import lopsai.jastin.dashboard.features.chat.components.ToolsTray
-import androidx.compose.animation.core.*
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.geometry.Offset
 
 @Composable
 fun OmniInput(
@@ -41,18 +42,25 @@ fun OmniInput(
     onValueChange: (String) -> Unit,
     onSend: () -> Unit,
     isChatActive: Boolean,
+    isDarkMode: Boolean = false,
     modifier: Modifier = Modifier
 ) {
     var showToolsTray by remember { mutableStateOf(false) }
     var selectedTool by remember { mutableStateOf<ChatTool?>(null) }
     val celesteColor = Color(0xFF007AFF)
 
-    // =========================================================
-    // ✨ BORDE PREMIUM CIRCULANTE (SIN OLAS / GROSOR FIJO)
-    // =========================================================
+    // 🎨 PALETA NEGRO PLOMO SEMITRANSPARENTE (DARK) VS BLANCO (LIGHT)
+    val inputBg = if (isDarkMode) Color(0xFF16161C).copy(alpha = 0.88f) else ChatBgColor
+    val textPrimary = if (isDarkMode) Color(0xFFFFFFFF) else TextPrimaryDark
+    val textSecondary = if (isDarkMode) Color(0xFFA1A1AA) else TextSecondaryDark
+    val pillBg = if (isDarkMode) Color(0xFF262630) else Color(0xFFF4F4F5)
+    val pillBorderColor = if (isDarkMode) Color(0xFF3F3F4E) else Color(0xFFE4E4E7)
+    val actionButtonColor = if (isDarkMode) Color(0xFFFFFFFF) else ActionButtonBlack
+    val actionButtonIconTint = if (isDarkMode) Color(0xFF16161C) else Color.White
+    val dividerColor = if (isDarkMode) Color(0xFF32323A) else Color(0xFFE0E0E0)
+
     val infiniteTransition = rememberInfiniteTransition(label = "CirculatingBorder")
 
-    // Desplazamiento lineal continuo alrededor del contorno
     val borderOffset by infiniteTransition.animateFloat(
         initialValue = 0f,
         targetValue = 1000f,
@@ -63,22 +71,20 @@ fun OmniInput(
         label = "BorderOffset"
     )
 
-    // Paleta Premium (Índigo, Púrpura, Rosa Neón, Cian y cierre suave)
     val circulatingBrush = remember(borderOffset) {
         Brush.linearGradient(
             colors = listOf(
-                Color(0xFF6366F1), // Índigo
-                Color(0xFFA855F7), // Púrpura
-                Color(0xFFEC4899), // Rosa Neón
-                Color(0xFF00F2FE), // Cian Eléctrico
-                Color(0xFF6366F1)  // Cierre de bucle sin salto
+                Color(0xFF6366F1),
+                Color(0xFFA855F7),
+                Color(0xFFEC4899),
+                Color(0xFF00F2FE),
+                Color(0xFF6366F1)
             ),
             start = Offset(borderOffset, 0f),
             end = Offset(borderOffset + 400f, 400f)
         )
     }
 
-    // 1. BOX EXTERNO: Permite que la bandeja flote por encima sin deformar la caja blanca
     Box(
         modifier = modifier.fillMaxWidth(),
         contentAlignment = Alignment.BottomStart
@@ -87,17 +93,20 @@ fun OmniInput(
         val isCompactWidth = 360.dp < 440.dp
 
         // =========================================================
-        // 2. TARJETA PRINCIPAL DEL INPUT (Fondo blanco con borde)
+        // 🚀 TARJETA PRINCIPAL BLINDADA CONTRA RECTÁNGULOS FANTASMA
         // =========================================================
         Column(
             modifier = Modifier
                 .fillMaxWidth()
+                // ⚡ 1. EXTERMINIO DEL CUADRADO: Sombra 0.dp en Dark Mode y recorte estricto activado (clip = true)
                 .shadow(
-                    elevation = if (isChatActive) 4.dp else SubtleShadowElevation,
+                    elevation = if (isDarkMode) 0.dp else if (isChatActive) 4.dp else 2.dp,
                     shape = RoundedCornerShape(24.dp),
-                    clip = false
+                    clip = true
                 )
-                .background(ChatBgColor, RoundedCornerShape(24.dp))
+                // ⚡ 2. RECORTE MATEMÁTICO: Obliga al lienzo a curvarse a 24.dp antes de pintar el fondo
+                .clip(RoundedCornerShape(24.dp))
+                .background(inputBg)
                 .border(
                     width = 2.dp,
                     brush = circulatingBrush,
@@ -105,7 +114,6 @@ fun OmniInput(
                 )
                 .padding(16.dp)
         ) {
-            // Área de texto
             BasicTextField(
                 value = value,
                 onValueChange = onValueChange,
@@ -115,15 +123,15 @@ fun OmniInput(
                     .fillMaxWidth()
                     .heightIn(min = 40.dp, max = 150.dp),
                 textStyle = TextStyle(
-                    color = TextPrimaryDark,
+                    color = textPrimary,
                     fontSize = 16.sp
                 ),
-                cursorBrush = SolidColor(TextPrimaryDark),
+                cursorBrush = SolidColor(textPrimary),
                 decorationBox = { innerTextField ->
                     if (value.isEmpty()) {
                         Text(
                             text = "Ask anything",
-                            color = TextSecondaryDark,
+                            color = textSecondary,
                             fontSize = 16.sp
                         )
                     }
@@ -133,30 +141,24 @@ fun OmniInput(
 
             Spacer(modifier = Modifier.height(if (isChatActive) 16.dp else 32.dp))
 
-            // Fila inferior de botones
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // Grupo izquierdo (Acciones y herramientas)
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(6.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.weight(1f)
                 ) {
                     if (isChatActive) {
-                        // --- MODO CHAT ---
-
-                        // Botón +
                         IconButton(
                             onClick = { /* Acción Attach */ },
                             modifier = Modifier.size(32.dp)
                         ) {
-                            Icon(Icons.Outlined.Add, contentDescription = "Add", tint = Color.Black)
+                            Icon(Icons.Outlined.Add, contentDescription = "Add", tint = textPrimary)
                         }
 
-                        // Botón con la palabra exacta "Tools"
                         Row(
                             modifier = Modifier
                                 .clip(RoundedCornerShape(16.dp))
@@ -166,7 +168,7 @@ fun OmniInput(
                         ) {
                             Text(
                                 text = "Tools",
-                                color = if (showToolsTray) celesteColor else TextPrimaryDark,
+                                color = if (showToolsTray) celesteColor else textPrimary,
                                 fontSize = 14.sp,
                                 fontWeight = FontWeight.Medium
                             )
@@ -174,19 +176,17 @@ fun OmniInput(
 
                         selectedTool?.let { tool ->
                             Spacer(modifier = Modifier.width(4.dp))
-                            // Separador vertical gris suave |
                             Box(
                                 modifier = Modifier
                                     .size(width = 1.dp, height = 16.dp)
-                                    .background(Color(0xFFE0E0E0))
+                                    .background(dividerColor)
                             )
                             Spacer(modifier = Modifier.width(8.dp))
 
-                            // Píldora Celeste [Icono] Nombre ×
                             Row(
                                 modifier = Modifier
                                     .clip(RoundedCornerShape(8.dp))
-                                    .clickable { selectedTool = null } // Al tocar se remueve
+                                    .clickable { selectedTool = null }
                                     .padding(horizontal = 6.dp, vertical = 4.dp),
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
@@ -213,24 +213,38 @@ fun OmniInput(
                             }
                         }
                     } else {
-                        // --- MODO DASHBOARD ---
-                        ActionPill(icon = Icons.Outlined.Add, text = "Attach")
-                        ActionPill(icon = Icons.Outlined.Language, text = "Search")
+                        ActionPill(
+                            icon = Icons.Outlined.Add,
+                            text = "Attach",
+                            bgColor = pillBg,
+                            borderColor = pillBorderColor,
+                            contentColor = textPrimary
+                        )
+                        ActionPill(
+                            icon = Icons.Outlined.Language,
+                            text = "Search",
+                            bgColor = pillBg,
+                            borderColor = pillBorderColor,
+                            contentColor = textPrimary
+                        )
 
                         if (!isVerySmallScreen) {
-                            ActionPill(icon = Icons.Outlined.Lightbulb, text = "Reason")
+                            ActionPill(
+                                icon = Icons.Outlined.Lightbulb,
+                                text = "Reason",
+                                bgColor = pillBg,
+                                borderColor = pillBorderColor,
+                                contentColor = textPrimary
+                            )
                         }
                     }
                 }
 
                 Spacer(modifier = Modifier.width(8.dp))
 
-                // Grupo derecho ANIMADO (Micrófono <-> Flecha de Enviar)
                 AnimatedContent(
                     targetState = value.isNotEmpty(),
-                    transitionSpec = {
-                        scaleIn() togetherWith scaleOut()
-                    },
+                    transitionSpec = { scaleIn() togetherWith scaleOut() },
                     label = "SendButtonAnimation"
                 ) { hasText ->
                     if (hasText) {
@@ -238,14 +252,14 @@ fun OmniInput(
                             modifier = Modifier
                                 .size(32.dp)
                                 .clip(CircleShape)
-                                .background(ActionButtonBlack)
+                                .background(actionButtonColor)
                                 .clickable { onSend() },
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
                                 imageVector = Icons.Default.ArrowUpward,
                                 contentDescription = "Send",
-                                tint = Color.White,
+                                tint = actionButtonIconTint,
                                 modifier = Modifier.size(18.dp)
                             )
                         }
@@ -253,21 +267,21 @@ fun OmniInput(
                         Row(
                             modifier = Modifier
                                 .clip(CircleShape)
-                                .background(if (isChatActive) Color.Transparent else ActionButtonBlack)
+                                .background(if (isChatActive) Color.Transparent else actionButtonColor)
                                 .clickable { /* Acción Voice */ },
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Icon(
                                 imageVector = Icons.Outlined.Mic,
                                 contentDescription = "Voice",
-                                tint = if (isChatActive) ActionButtonBlack else Color.White,
+                                tint = if (isChatActive) textPrimary else actionButtonIconTint,
                                 modifier = Modifier.padding(8.dp).size(20.dp)
                             )
 
                             if (!isCompactWidth && !isChatActive) {
                                 Text(
                                     text = "Voice",
-                                    color = Color.White,
+                                    color = actionButtonIconTint,
                                     fontSize = 13.sp,
                                     modifier = Modifier.padding(end = 12.dp)
                                 )
@@ -278,9 +292,6 @@ fun OmniInput(
             }
         }
 
-        // =========================================================
-        // 3. CAPA SUPERIOR: BANDEJA FLOTANTE INDEPENDIENTE
-        // =========================================================
         if (showToolsTray) {
             ToolsTray(
                 onToolSelected = { tool ->
@@ -291,5 +302,42 @@ fun OmniInput(
                     .padding(start = 16.dp, bottom = 60.dp)
             )
         }
+    }
+}
+
+@Composable
+private fun ActionPill(
+    icon: ImageVector,
+    text: String,
+    bgColor: Color = Color(0xFFF4F4F5),
+    borderColor: Color = Color(0xFFE4E4E7),
+    contentColor: Color = Color.Black
+) {
+    Row(
+        modifier = Modifier
+            .clip(RoundedCornerShape(16.dp))
+            .background(bgColor)
+            .border(
+                width = 1.dp,
+                color = borderColor,
+                shape = RoundedCornerShape(16.dp)
+            )
+            .clickable { /* Acción de la herramienta */ }
+            .padding(horizontal = 12.dp, vertical = 6.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(6.dp)
+    ) {
+        Icon(
+            imageVector = icon,
+            contentDescription = text,
+            tint = contentColor,
+            modifier = Modifier.size(16.dp)
+        )
+        Text(
+            text = text,
+            color = contentColor,
+            fontSize = 13.sp,
+            fontWeight = FontWeight.Medium
+        )
     }
 }

@@ -17,8 +17,11 @@ import lopsai.jastin.dashboard.features.settings.sections.*
 
 @Composable
 fun SettingsDialog(
-    isMobile: Boolean = false,
-    onClose: () -> Unit = {}
+    isMobile: Boolean,
+    onClose: () -> Unit,
+    isDarkMode: Boolean = false,
+    onThemeToggle: () -> Unit = {},
+    modifier: Modifier = Modifier
 ) {
     var selectedCategory by remember { mutableStateOf("General") }
 
@@ -70,11 +73,14 @@ fun SettingsDialog(
                         .padding(horizontal = if (isMobile) 16.dp else 32.dp, vertical = 24.dp)
 
                     when (selectedCategory) {
-                        "General" -> GeneralSettingsSection(modifier = contentModifier)
+                        "General" -> GeneralSettingsSection(
+                            isDarkMode = isDarkMode,
+                            onThemeToggle = onThemeToggle,
+                            modifier = contentModifier
+                        )
                         "Personalization" -> PersonalizationSettingsSection(modifier = contentModifier)
                         "Speech" -> SpeechSettingsSection(modifier = contentModifier)
                         "Data controls" -> DataControlsSettingsSection(modifier = contentModifier)
-                        // =============================
                         "Builder profile" -> BuilderProfileSettingsSection(modifier = contentModifier)
                         "Connected apps" -> ConnectedAppsSettingsSection(modifier = contentModifier)
                         "Security" -> SecuritySettingsSection(modifier = contentModifier)

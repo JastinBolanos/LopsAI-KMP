@@ -1,5 +1,14 @@
 package lopsai.jastin.dashboard.features.chat
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandHorizontally
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkHorizontally
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -15,32 +24,17 @@ import lopsai.jastin.dashboard.core.models.ChatMessage
 import lopsai.jastin.dashboard.core.theme.ChatBgColor
 import lopsai.jastin.dashboard.features.chat.data.MockChatsData
 import lopsai.jastin.dashboard.features.search.SearchChatsDialog
-import lopsai.jastin.dashboard.features.settings.SettingsDialog
-import lopsai.jastin.dashboard.features.share.ShareChatDialog
 import lopsai.jastin.dashboard.shared_ui.layout.Sidebar
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.expandHorizontally
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.shrinkHorizontally
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.core.FastOutSlowInEasing
 
 @Composable
 fun MainScreen() {
-    var showSettingsDialog by remember { mutableStateOf(false) }
+    var isDarkMode by remember { mutableStateOf(true) }
     var showSearchDialog by remember { mutableStateOf(false) }
-    var showShareDialog by remember { mutableStateOf(false) }
-
     var promptText by remember { mutableStateOf("") }
     var isDesktopSidebarOpen by remember { mutableStateOf(true) }
-
     var isChatActive by remember { mutableStateOf(false) }
     var messages by remember { mutableStateOf(listOf<ChatMessage>()) }
     var currentScreen by remember { mutableStateOf(AppScreen.Dashboard) }
-
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val coroutineScope = rememberCoroutineScope()
 
@@ -80,7 +74,6 @@ fun MainScreen() {
             modifier = Modifier
                 .fillMaxSize()
                 .background(ChatBgColor)
-                .systemBarsPadding()
                 .imePadding()
         ) {
             val isMobile = maxWidth < 768.dp
@@ -105,6 +98,7 @@ fun MainScreen() {
                                 onSearchClick = { showSearchDialog = true },
                                 onSelectChat = handleSelectChat,
                                 isMobile = true,
+                                isDarkMode = isDarkMode,
                                 modifier = Modifier.fillMaxSize()
                             )
                         }
@@ -120,7 +114,9 @@ fun MainScreen() {
                         isChatActive = isChatActive,
                         messages = messages,
                         onMenuClick = { coroutineScope.launch { drawerState.open() } },
-                        currentScreen = currentScreen
+                        currentScreen = currentScreen,
+                        isDarkMode = isDarkMode,
+                        onThemeToggle = { isDarkMode = !isDarkMode }
                     )
                 }
             } else {
@@ -150,50 +146,36 @@ fun MainScreen() {
                             onSearchClick = { showSearchDialog = true },
                             onSelectChat = handleSelectChat,
                             isMobile = false,
+                            isDarkMode = isDarkMode,
                             modifier = Modifier.width(260.dp)
                         )
                     }
+
                     MainRouter(
-                        isMobile = false,
-                        showDesktopSidebar = isDesktopSidebarOpen,
+                        isMobile = isMobile,
+                        showDesktopSidebar = false,
                         titleSize = titleSize,
                         promptText = promptText,
                         onPromptChange = { promptText = it },
                         onSend = handleSend,
                         isChatActive = isChatActive,
                         messages = messages,
-                        onMenuClick = { isDesktopSidebarOpen = true },
+                        onMenuClick = { coroutineScope.launch { drawerState.open() } },
                         currentScreen = currentScreen,
+                        isDarkMode = isDarkMode,
+                        onThemeToggle = { isDarkMode = !isDarkMode },
                         modifier = Modifier.weight(1f)
                     )
                 }
             }
 
             // ==========================================
-            // DIÁLOGOS FLOTANTES (MODALES GLOBALES)
+            // DIÁLOGOS FLOTANTES
             // ==========================================
             if (showSearchDialog) {
                 SearchChatsDialog(
                     onClose = { showSearchDialog = false },
                     onSelectChat = handleSelectChat
-                )
-            }
-
-            if (showShareDialog) {
-                ShareChatDialog(
-                    onClose = { showShareDialog = false },
-                    onUpdateLinkClick = {
-                    },
-                    onSettingsClick = {
-                        showSettingsDialog = true
-                    }
-                )
-            }
-
-            if (showSettingsDialog) {
-                SettingsDialog(
-                    isMobile = isMobile,
-                    onClose = { showSettingsDialog = false }
                 )
             }
         }

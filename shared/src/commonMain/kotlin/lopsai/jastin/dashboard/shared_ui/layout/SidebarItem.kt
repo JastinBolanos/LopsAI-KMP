@@ -12,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -19,7 +20,12 @@ import lopsai.jastin.dashboard.core.theme.TextPrimaryDark
 import lopsai.jastin.dashboard.core.theme.TextSecondaryDark
 
 @Composable
-fun SidebarItem(icon: ImageVector, text: String, trailingText: String? = null) {
+fun SidebarItem(
+    icon: ImageVector,
+    text: String,
+    trailingText: String? = null,
+    tint: Color = TextPrimaryDark
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -32,13 +38,21 @@ fun SidebarItem(icon: ImageVector, text: String, trailingText: String? = null) {
                 imageVector = icon,
                 contentDescription = text,
                 modifier = Modifier.size(18.dp),
-                tint = TextPrimaryDark
+                tint = tint
             )
             Spacer(modifier = Modifier.width(12.dp))
-            Text(text, fontSize = 13.sp, color = TextPrimaryDark)
+            Text(
+                text = text,
+                fontSize = 13.sp,
+                color = tint
+            )
         }
         if (trailingText != null) {
-            Text(trailingText, fontSize = 12.sp, color = TextSecondaryDark)
+            Text(
+                text = trailingText,
+                fontSize = 12.sp,
+                color = TextSecondaryDark
+            )
         }
     }
 }
