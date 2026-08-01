@@ -87,7 +87,7 @@ fun MainRouter(
                 modifier = Modifier.weight(1f)
             ) { screen ->
                 when (screen) {
-                    AppScreen.GptStore -> GptStoreScreen(isMobile = isMobile)
+                    AppScreen.GptStore -> GptStoreScreen(isMobile = isMobile, isDarkMode = isDarkMode)
 
                     AppScreen.Library -> LibraryScreen(
                         isMobile = isMobile,

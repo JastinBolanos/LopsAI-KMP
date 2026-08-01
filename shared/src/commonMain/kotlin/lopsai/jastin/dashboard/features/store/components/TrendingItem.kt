@@ -16,21 +16,33 @@ import lopsai.jastin.dashboard.core.theme.TextPrimaryDark
 import lopsai.jastin.dashboard.core.theme.TextSecondaryDark
 
 @Composable
-fun TrendingItem(rank: Int, modifier: Modifier, title: String, desc: String, author: String, colors: List<Color>, icon: ImageVector) {
+fun TrendingItem(
+    rank: Int,
+    modifier: Modifier,
+    title: String,
+    desc: String,
+    author: String,
+    colors: List<Color>,
+    icon: ImageVector,
+    isDarkMode: Boolean = false
+) {
+    val textColor = if (isDarkMode) Color.White else TextPrimaryDark
+    val secondaryTextColor = if (isDarkMode) Color(0xFFA1A1AA) else TextSecondaryDark
+
     Row(modifier = modifier.clickable { }.padding(8.dp), verticalAlignment = Alignment.Top) {
         Text(
             text = "$rank",
             fontSize = 14.sp,
             fontWeight = FontWeight.Bold,
-            color = TextSecondaryDark,
+            color = secondaryTextColor,
             modifier = Modifier.padding(top = 12.dp, end = 12.dp)
         )
         PremiumGradientIcon(colors, icon, 42)
         Spacer(modifier = Modifier.width(12.dp))
         Column {
-            Text(title, fontWeight = FontWeight.Bold, fontSize = 15.sp, color = TextPrimaryDark)
+            Text(title, fontWeight = FontWeight.Bold, fontSize = 15.sp, color = textColor)
             Spacer(modifier = Modifier.height(2.dp))
-            Text(desc, fontSize = 13.sp, color = TextSecondaryDark, maxLines = 2, overflow = TextOverflow.Ellipsis, lineHeight = 16.sp)
+            Text(desc, fontSize = 13.sp, color = secondaryTextColor, maxLines = 2, overflow = TextOverflow.Ellipsis, lineHeight = 16.sp)
             Spacer(modifier = Modifier.height(4.dp))
             Text(author, fontSize = 11.sp, color = Color(0xFF999999))
         }

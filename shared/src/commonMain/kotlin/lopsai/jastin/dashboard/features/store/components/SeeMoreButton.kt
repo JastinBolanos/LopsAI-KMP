@@ -11,22 +11,28 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import lopsai.jastin.dashboard.core.theme.InputBorderColor
 import lopsai.jastin.dashboard.core.theme.TextPrimaryDark
 
 @Composable
-fun SeeMoreButton() {
+fun SeeMoreButton(isDarkMode: Boolean = false) {
+
+    // 🎨 PALETA DINÁMICA
+    val textColor = if (isDarkMode) Color.White else TextPrimaryDark
+    val borderColor = if (isDarkMode) Color(0xFF3F3F4E) else InputBorderColor
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(50))
-            .border(1.dp, InputBorderColor, RoundedCornerShape(50))
+            .border(1.dp, borderColor, RoundedCornerShape(50))
             .clickable { }
             .padding(vertical = 12.dp),
         contentAlignment = Alignment.Center
     ) {
-        Text("See more", fontSize = 14.sp, color = TextPrimaryDark)
+        Text("See more", fontSize = 14.sp, color = textColor)
     }
 }

@@ -19,11 +19,23 @@ import lopsai.jastin.dashboard.core.theme.TextPrimaryDark
 import lopsai.jastin.dashboard.core.theme.TextSecondaryDark
 
 @Composable
-fun FeaturedCard(modifier: Modifier, title: String, desc: String, author: String, colors: List<Color>, icon: ImageVector) {
+fun FeaturedCard(
+    modifier: Modifier,
+    title: String,
+    desc: String,
+    author: String,
+    colors: List<Color>,
+    icon: ImageVector,
+    isDarkMode: Boolean = false
+) {
+    val cardBg = if (isDarkMode) Color(0xFF262630) else Color(0xFFF9F9F9)
+    val textColor = if (isDarkMode) Color.White else TextPrimaryDark
+    val secondaryTextColor = if (isDarkMode) Color(0xFFA1A1AA) else TextSecondaryDark
+
     Row(
         modifier = modifier
             .clip(RoundedCornerShape(16.dp))
-            .background(Color(0xFFF9F9F9))
+            .background(cardBg)
             .clickable { }
             .padding(16.dp),
         verticalAlignment = Alignment.Top
@@ -31,9 +43,9 @@ fun FeaturedCard(modifier: Modifier, title: String, desc: String, author: String
         PremiumGradientIcon(colors, icon, 48)
         Spacer(modifier = Modifier.width(16.dp))
         Column {
-            Text(title, fontWeight = FontWeight.Bold, fontSize = 15.sp, color = TextPrimaryDark)
+            Text(title, fontWeight = FontWeight.Bold, fontSize = 15.sp, color = textColor)
             Spacer(modifier = Modifier.height(4.dp))
-            Text(desc, fontSize = 13.sp, color = TextSecondaryDark, maxLines = 2, overflow = TextOverflow.Ellipsis, lineHeight = 18.sp)
+            Text(desc, fontSize = 13.sp, color = secondaryTextColor, maxLines = 2, overflow = TextOverflow.Ellipsis, lineHeight = 18.sp)
             Spacer(modifier = Modifier.height(8.dp))
             Text(author, fontSize = 11.sp, color = Color(0xFF999999))
         }
