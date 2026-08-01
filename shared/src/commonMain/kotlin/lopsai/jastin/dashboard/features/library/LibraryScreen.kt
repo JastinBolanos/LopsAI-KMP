@@ -11,13 +11,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import lopsai.jastin.dashboard.core.theme.ChatBgColor
 import lopsai.jastin.dashboard.features.library.components.*
 
 @Composable
 fun LibraryScreen(
     isMobile: Boolean = false,
+    isDarkMode: Boolean = false,
     onCreateImageClick: () -> Unit = {},
     onProfileClick: () -> Unit = {},
     onHelpClick: () -> Unit = {},
@@ -25,7 +26,14 @@ fun LibraryScreen(
 ) {
     val cards = getMockLibraryCardGradients()
 
-    Box(modifier = modifier.fillMaxSize().background(ChatBgColor)) {
+    // 🎨 FONDO GENERAL ADAPTATIVO
+    val mainBgColor = if (isDarkMode) Color(0xFF16161C) else Color(0xFFF9F9F9)
+
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .background(mainBgColor)
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -34,6 +42,7 @@ fun LibraryScreen(
             // 1. Cabecera superior
             LibraryTopBar(
                 isMobile = isMobile,
+                isDarkMode = isDarkMode,
                 onCreateImageClick = onCreateImageClick,
                 onProfileClick = onProfileClick
             )
@@ -60,6 +69,7 @@ fun LibraryScreen(
 
         // 3. Botón "?" flotante inferior derecho
         FloatingHelpButton(
+            isDarkMode = isDarkMode,
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(24.dp),

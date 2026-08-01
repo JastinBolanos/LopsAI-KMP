@@ -77,7 +77,7 @@ fun MainRouter(
                 onMenuClick = onMenuClick,
                 onAvatarClick = { showSettingsDialog = true },
                 onShareClick = { showShareDialog = true },
-                isDarkMode = isDarkMode, // <-- CONECTADO
+                isDarkMode = isDarkMode,
                 modifier = Modifier.background(Color.Transparent)
             )
 
@@ -91,6 +91,7 @@ fun MainRouter(
 
                     AppScreen.Library -> LibraryScreen(
                         isMobile = isMobile,
+                        isDarkMode = isDarkMode,
                         onProfileClick = { showSettingsDialog = true }
                     )
 

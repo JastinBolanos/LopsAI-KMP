@@ -298,6 +298,7 @@ fun OmniInput(
                     selectedTool = tool
                     showToolsTray = false
                 },
+                isDarkMode = isDarkMode,
                 modifier = Modifier
                     .padding(start = 16.dp, bottom = 60.dp)
             )

@@ -1,6 +1,5 @@
 package lopsai.jastin.dashboard.features.chat.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -37,14 +36,20 @@ enum class ChatTool(
 @Composable
 fun ToolsTray(
     onToolSelected: (ChatTool) -> Unit,
+    isDarkMode: Boolean = false,
     modifier: Modifier = Modifier
 ) {
+    // 🎨 PALETA DINÁMICA DE LA BANDEJA
+    val bgColor = if (isDarkMode) Color(0xFF18181B) else Color.White
+    val textColor = if (isDarkMode) Color(0xFFF3F4F6) else TextPrimaryDark
+    val secondaryTextColor = if (isDarkMode) Color(0xFFA1A1AA) else TextSecondaryDark.copy(alpha = 0.7f)
+
     Surface(
         modifier = modifier
             .width(260.dp)
             .wrapContentHeight(),
         shape = RoundedCornerShape(20.dp),
-        color = Color.White,
+        color = bgColor,
         shadowElevation = 12.dp
     ) {
         Column(
@@ -64,13 +69,13 @@ fun ToolsTray(
                         Icon(
                             imageVector = tool.icon,
                             contentDescription = null,
-                            tint = TextPrimaryDark,
+                            tint = textColor,
                             modifier = Modifier.size(20.dp)
                         )
                         Spacer(modifier = Modifier.width(14.dp))
                         Text(
                             text = tool.fullName,
-                            color = TextPrimaryDark,
+                            color = textColor,
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Normal
                         )
@@ -79,7 +84,7 @@ fun ToolsTray(
                     if (tool.trailingText != null) {
                         Text(
                             text = tool.trailingText,
-                            color = TextSecondaryDark.copy(alpha = 0.7f),
+                            color = secondaryTextColor,
                             fontSize = 13.sp
                         )
                     }
