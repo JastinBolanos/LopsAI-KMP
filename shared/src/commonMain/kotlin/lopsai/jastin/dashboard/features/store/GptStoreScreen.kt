@@ -36,17 +36,9 @@ fun GptStoreScreen(
     val secondaryTextColor = if (isDarkMode) Color(0xFFA1A1AA) else TextSecondaryDark
     val searchBgColor = if (isDarkMode) Color(0xFF262630) else Color(0xFFF4F4F4)
 
-    // EL VELO MÁGICO
-    val overlayColor = if (isDarkMode) {
-        Color(0xFF16161C).copy(alpha = 0.85f)
-    } else {
-        Color(0xFFF9F9F9).copy(alpha = 0.85f)
-    }
-
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .background(overlayColor)
             .padding(horizontal = if (isMobile) 16.dp else 48.dp),
         contentPadding = PaddingValues(top = 24.dp, bottom = 64.dp)
     ) {

@@ -65,15 +65,24 @@ fun MainRouter(
             modifier = Modifier.fillMaxSize()
         )
 
-        // CAPA 1: INTERFAZ
+        val showUnifiedVeil = currentScreen == AppScreen.Library || currentScreen == AppScreen.GptStore
+        val unifiedVeilColor = if (showUnifiedVeil) {
+            if (isDarkMode) Color.Black.copy(alpha = 0.45f) else Color.White.copy(alpha = 0.65f)
+        } else {
+            Color.Transparent
+        }
+
+        //CAPA 1: INTERFAZ
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .background(unifiedVeilColor)
                 .statusBarsPadding()
         ) {
             TopHeader(
                 isSidebarVisible = showDesktopSidebar,
                 isChatActive = isChatActive,
+                // ... el resto de tu TopHeader se queda exactamente igual
                 onMenuClick = onMenuClick,
                 onAvatarClick = { showSettingsDialog = true },
                 onShareClick = { showShareDialog = true },

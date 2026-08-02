@@ -26,13 +26,9 @@ fun LibraryScreen(
 ) {
     val cards = getMockLibraryCardGradients()
 
-    // 🎨 FONDO GENERAL ADAPTATIVO
-    val mainBgColor = if (isDarkMode) Color(0xFF16161C) else Color(0xFFF9F9F9)
-
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(mainBgColor)
     ) {
         Column(
             modifier = Modifier
