@@ -141,6 +141,7 @@ fun TopHeader(
                                 subtitle = "Faster everyday responses",
                                 isSelected = selectedModel == "GPT-4o mini",
                                 badgeText = "New",
+                                isDarkMode = isDarkMode,
                                 onClick = { selectedModel = "GPT-4o mini"; isModelMenuExpanded = false }
                             )
 
@@ -149,6 +150,7 @@ fun TopHeader(
                                 subtitle = "General assistance",
                                 isSelected = selectedModel == "GPT-4o",
                                 badgeText = "New",
+                                isDarkMode = isDarkMode,
                                 onClick = { selectedModel = "GPT-4o"; isModelMenuExpanded = false }
                             )
 
@@ -156,6 +158,7 @@ fun TopHeader(
                                 title = "GPT-5",
                                 subtitle = "Math & advanced programming",
                                 isSelected = selectedModel == "GPT-5",
+                                isDarkMode = isDarkMode,
                                 onClick = { selectedModel = "GPT-5"; isModelMenuExpanded = false }
                             )
 
@@ -168,6 +171,7 @@ fun TopHeader(
                                 title = "GPT-5.5",
                                 subtitle = "Extended reasoning for complex...",
                                 isSelected = isReasoningExtended,
+                                isDarkMode = isDarkMode,
                                 onClick = {
                                     isReasoningExtended = !isReasoningExtended
                                     isModelMenuExpanded = false

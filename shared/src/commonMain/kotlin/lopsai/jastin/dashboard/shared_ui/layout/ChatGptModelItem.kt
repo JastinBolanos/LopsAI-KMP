@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color // ⚡ AÑADIDO PARA LOS COLORES
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -26,8 +27,15 @@ fun ChatGptModelItem(
     subtitle: String,
     isSelected: Boolean,
     badgeText: String? = null,
+    isDarkMode: Boolean = false,
     onClick: () -> Unit
 ) {
+    // 🎨 PALETA DINÁMICA
+    val titleColor = if (isDarkMode) Color.White else TextPrimaryDark
+    val subtitleColor = if (isDarkMode) Color(0xFFA1A1AA) else TextSecondaryDark
+    val iconColor = if (isDarkMode) Color.White else TextPrimaryDark
+    val badgeBorderColor = if (isDarkMode) Color(0xFF3F3F4E) else InputBorderColor
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -44,7 +52,7 @@ fun ChatGptModelItem(
                 Icon(
                     imageVector = Icons.Default.Check,
                     contentDescription = "Selected",
-                    tint = TextPrimaryDark,
+                    tint = iconColor,
                     modifier = Modifier.size(20.dp)
                 )
             }
@@ -54,12 +62,12 @@ fun ChatGptModelItem(
 
         // Textos Centrales
         Column(modifier = Modifier.weight(1f)) {
-            Text(title, fontSize = 15.sp, fontWeight = FontWeight.SemiBold, color = TextPrimaryDark)
+            Text(title, fontSize = 15.sp, fontWeight = FontWeight.SemiBold, color = titleColor) // ⚡ CONECTADO
             Spacer(modifier = Modifier.height(2.dp))
             Text(
                 text = subtitle,
                 fontSize = 13.sp,
-                color = TextSecondaryDark,
+                color = subtitleColor,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
@@ -71,7 +79,7 @@ fun ChatGptModelItem(
             Box(
                 modifier = Modifier
                     .clip(RoundedCornerShape(50))
-                    .border(1.dp, InputBorderColor, RoundedCornerShape(50))
+                    .border(1.dp, badgeBorderColor, RoundedCornerShape(50)) // ⚡ CONECTADO
                     .padding(horizontal = 10.dp, vertical = 4.dp),
                 contentAlignment = Alignment.Center
             ) {
@@ -79,7 +87,7 @@ fun ChatGptModelItem(
                     text = badgeText,
                     fontSize = 11.sp,
                     fontWeight = FontWeight.Medium,
-                    color = TextPrimaryDark
+                    color = titleColor // ⚡ CONECTADO
                 )
             }
         }

@@ -240,7 +240,8 @@ fun MainRouter(
             ShareChatDialog(
                 onClose = { showShareDialog = false },
                 onUpdateLinkClick = { },
-                onSettingsClick = { showSettingsDialog = true }
+                onSettingsClick = { showSettingsDialog = true },
+                isDarkMode = isDarkMode
             )
         }
     }

@@ -30,8 +30,20 @@ import lopsai.jastin.dashboard.core.theme.TextSecondaryDark
 fun ShareChatDialog(
     onClose: () -> Unit,
     onUpdateLinkClick: () -> Unit = {},
-    onSettingsClick: () -> Unit = {}
+    onSettingsClick: () -> Unit = {},
+    isDarkMode: Boolean = false
 ) {
+    // 🎨 PALETA DINÁMICA
+    val surfaceBg = if (isDarkMode) Color(0xFF18181B) else ChatBgColor
+    val textColor = if (isDarkMode) Color.White else TextPrimaryDark
+    val secondaryTextColor = if (isDarkMode) Color(0xFFA1A1AA) else TextSecondaryDark
+    val dividerColor = if (isDarkMode) Color.White.copy(alpha = 0.1f) else InputBorderColor.copy(alpha = 0.6f)
+    val borderColor = if (isDarkMode) Color(0xFF3F3F4E) else InputBorderColor
+
+    // 🎛️ BOTÓN INVERTIDO: Destaca perfectamente en cualquier modo
+    val buttonBgColor = if (isDarkMode) Color.White else Color.Black
+    val buttonContentColor = if (isDarkMode) Color.Black else Color.White
+
     Dialog(
         onDismissRequest = onClose,
         properties = DialogProperties(usePlatformDefaultWidth = false)
@@ -42,7 +54,7 @@ fun ShareChatDialog(
                 .fillMaxWidth(0.92f)
                 .wrapContentHeight(),
             shape = RoundedCornerShape(24.dp),
-            color = ChatBgColor,
+            color = surfaceBg,
             shadowElevation = 16.dp
         ) {
             Column(
@@ -60,7 +72,7 @@ fun ShareChatDialog(
                 ) {
                     Text(
                         text = "Update public link to chat",
-                        color = TextPrimaryDark,
+                        color = textColor,
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold
                     )
@@ -71,14 +83,14 @@ fun ShareChatDialog(
                         Icon(
                             imageVector = Icons.Outlined.Close,
                             contentDescription = "Close",
-                            tint = TextPrimaryDark,
+                            tint = textColor,
                             modifier = Modifier.size(20.dp)
                         )
                     }
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
-                HorizontalDivider(color = InputBorderColor.copy(alpha = 0.6f), thickness = 1.dp)
+                HorizontalDivider(color = dividerColor, thickness = 1.dp)
                 Spacer(modifier = Modifier.height(20.dp))
 
                 // ==========================================
@@ -88,7 +100,7 @@ fun ShareChatDialog(
                     append("Your name, custom instructions, and any messages you add after sharing stay private. ")
                     withStyle(
                         style = SpanStyle(
-                            color = TextPrimaryDark,
+                            color = textColor,
                             textDecoration = TextDecoration.Underline
                         )
                     ) {
@@ -98,7 +110,7 @@ fun ShareChatDialog(
 
                 Text(
                     text = privacyText,
-                    color = TextPrimaryDark,
+                    color = textColor,
                     fontSize = 14.sp,
                     lineHeight = 20.sp
                 )
@@ -111,8 +123,8 @@ fun ShareChatDialog(
                 Surface(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(50),
-                    color = ChatBgColor,
-                    border = BorderStroke(1.dp, InputBorderColor)
+                    color = Color.Transparent,
+                    border = BorderStroke(1.dp, borderColor)
                 ) {
                     Row(
                         modifier = Modifier
@@ -123,20 +135,20 @@ fun ShareChatDialog(
                     ) {
                         Text(
                             text = "https://lopsai.com/share/..",
-                            color = TextSecondaryDark.copy(alpha = 0.7f),
+                            color = secondaryTextColor.copy(alpha = 0.7f),
                             fontSize = 14.sp,
                             modifier = Modifier.weight(1f).padding(end = 8.dp)
                         )
 
-                        // Botón negro "Update link"
+                        // Botón de acción
                         Button(
                             onClick = {
                                 onUpdateLinkClick()
                                 onClose()
                             },
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = Color.Black,
-                                contentColor = Color.White
+                                containerColor = buttonBgColor,
+                                contentColor = buttonContentColor
                             ),
                             shape = RoundedCornerShape(50),
                             contentPadding = PaddingValues(horizontal = 20.dp, vertical = 12.dp),
@@ -145,7 +157,7 @@ fun ShareChatDialog(
                             Icon(
                                 imageVector = Icons.Outlined.Link,
                                 contentDescription = null,
-                                tint = Color.White,
+                                tint = buttonContentColor,
                                 modifier = Modifier.size(16.dp)
                             )
                             Spacer(modifier = Modifier.width(8.dp))
@@ -167,7 +179,7 @@ fun ShareChatDialog(
                     append("A past version of this chat has already been shared. Manage previously shared chats via ")
                     withStyle(
                         style = SpanStyle(
-                            color = TextSecondaryDark,
+                            color = secondaryTextColor,
                             textDecoration = TextDecoration.Underline
                         )
                     ) {
@@ -178,7 +190,7 @@ fun ShareChatDialog(
 
                 Text(
                     text = footerText,
-                    color = TextSecondaryDark,
+                    color = secondaryTextColor,
                     fontSize = 13.sp,
                     lineHeight = 18.sp,
                     modifier = Modifier.clickable {

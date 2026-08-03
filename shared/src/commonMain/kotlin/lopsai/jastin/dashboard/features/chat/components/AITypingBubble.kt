@@ -22,7 +22,7 @@ import lopsai.jastin.dashboard.core.theme.TextSecondaryDark
 fun AITypingBubble(
     fullText: String,
     isTyping: Boolean,
-    isDarkMode: Boolean = true // <-- SOPORTE DE MODO OSCURO
+    isDarkMode: Boolean = true
 ) {
     var displayedText by remember { mutableStateOf(if (isTyping) "" else fullText) }
     var showActions by remember { mutableStateOf(!isTyping) }
