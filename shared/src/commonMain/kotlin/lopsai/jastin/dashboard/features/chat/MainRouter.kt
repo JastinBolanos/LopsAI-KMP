@@ -9,6 +9,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -82,7 +83,6 @@ fun MainRouter(
             TopHeader(
                 isSidebarVisible = showDesktopSidebar,
                 isChatActive = isChatActive,
-                // ... el resto de tu TopHeader se queda exactamente igual
                 onMenuClick = onMenuClick,
                 onAvatarClick = { showSettingsDialog = true },
                 onShareClick = { showShareDialog = true },
@@ -113,66 +113,67 @@ fun MainRouter(
                                 label = "ChatTransition"
                             ) { active ->
                                 if (active) {
-                                    LazyColumn(
-                                        modifier = Modifier
-                                            .fillMaxSize()
-                                            .padding(horizontal = if (isMobile) 16.dp else 48.dp)
-                                            .padding(bottom = 120.dp),
-                                        contentPadding = PaddingValues(vertical = 24.dp)
-                                    ) {
-                                        items(messages.size) { index ->
-                                            val msg = messages[index]
-                                            Column(
-                                                modifier = Modifier
-                                                    .fillMaxWidth()
-                                                    .padding(vertical = 12.dp),
-                                                horizontalAlignment = if (msg.isUser) Alignment.End else Alignment.Start
-                                            ) {
-                                                msg.imageRes?.let { resource ->
-                                                    val isUserImg = msg.isUser
-                                                    val imgWidth = if (isUserImg) 180.dp else 360.dp
-                                                    val imgHeight = if (isUserImg) 135.dp else 270.dp
-                                                    val cornerRadius = if (isUserImg) 20.dp else 24.dp
+                                    // ⚡ AQUÍ ESTÁ EL ESCUDO: Fuerza a recrear la lista completa y evita el crash de reciclaje
+                                    key(messages) {
+                                        LazyColumn(
+                                            modifier = Modifier
+                                                .fillMaxSize()
+                                                .padding(horizontal = if (isMobile) 16.dp else 48.dp)
+                                                .padding(bottom = 120.dp),
+                                            contentPadding = PaddingValues(vertical = 24.dp)
+                                        ) {
+                                            items(messages.size) { index ->
+                                                val msg = messages[index]
+                                                Column(
+                                                    modifier = Modifier
+                                                        .fillMaxWidth()
+                                                        .padding(vertical = 12.dp),
+                                                    horizontalAlignment = if (msg.isUser) Alignment.End else Alignment.Start
+                                                ) {
+                                                    msg.imageRes?.let { resource ->
+                                                        val isUserImg = msg.isUser
+                                                        val imgWidth = if (isUserImg) 180.dp else 360.dp
+                                                        val imgHeight = if (isUserImg) 135.dp else 270.dp
+                                                        val cornerRadius = if (isUserImg) 20.dp else 24.dp
 
-                                                    Box(
-                                                        modifier = Modifier
-                                                            .padding(bottom = 8.dp)
-                                                            .size(width = imgWidth, height = imgHeight)
-                                                            .clip(RoundedCornerShape(cornerRadius))
-                                                            .background(Color(0xFF222222)),
-                                                        contentAlignment = Alignment.Center
-                                                    ) {
-                                                        Image(
-                                                            painter = painterResource(resource),
-                                                            contentDescription = "Chat attachment image",
-                                                            modifier = Modifier.fillMaxSize(),
-                                                            contentScale = ContentScale.Crop
-                                                        )
-                                                    }
-                                                }
-
-                                                if (msg.isUser) {
-                                                    Box(
-                                                        modifier = Modifier
-                                                            .background(
-                                                                if (isDarkMode) Color(0xFF262630) else Color(
-                                                                    0xFFDEDEDE
-                                                                ),
-                                                                RoundedCornerShape(20.dp)
+                                                        Box(
+                                                            modifier = Modifier
+                                                                .padding(bottom = 8.dp)
+                                                                .size(width = imgWidth, height = imgHeight)
+                                                                .clip(RoundedCornerShape(cornerRadius))
+                                                                .background(Color(0xFF222222)),
+                                                            contentAlignment = Alignment.Center
+                                                        ) {
+                                                            Image(
+                                                                painter = painterResource(resource),
+                                                                contentDescription = "Chat attachment image",
+                                                                modifier = Modifier.fillMaxSize(),
+                                                                contentScale = ContentScale.Crop
                                                             )
-                                                            .padding(16.dp)
-                                                    ) {
-                                                        Text(
-                                                            text = msg.text,
-                                                            color = if (isDarkMode) Color.White else TextPrimaryDark
+                                                        }
+                                                    }
+
+                                                    if (msg.isUser) {
+                                                        Box(
+                                                            modifier = Modifier
+                                                                .background(
+                                                                    if (isDarkMode) Color(0xFF262630) else Color(0xFFDEDEDE),
+                                                                    RoundedCornerShape(20.dp)
+                                                                )
+                                                                .padding(16.dp)
+                                                        ) {
+                                                            Text(
+                                                                text = msg.text,
+                                                                color = if (isDarkMode) Color.White else TextPrimaryDark
+                                                            )
+                                                        }
+                                                    } else {
+                                                        AITypingBubble(
+                                                            fullText = msg.text,
+                                                            isTyping = msg.isTyping,
+                                                            isDarkMode = isDarkMode
                                                         )
                                                     }
-                                                } else {
-                                                    AITypingBubble(
-                                                        fullText = msg.text,
-                                                        isTyping = msg.isTyping,
-                                                        isDarkMode = isDarkMode
-                                                    )
                                                 }
                                             }
                                         }
