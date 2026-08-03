@@ -81,7 +81,8 @@ fun SettingsRowWithDropdown(
 @Composable
 fun SettingsRowWithSwitch(
     label: String,
-    checked: Boolean,
+    isChecked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
     isDarkMode: Boolean = false
 ) {
     val trackChecked = if (isDarkMode) Color(0xFFF3F4F6) else Color.Black
@@ -91,8 +92,8 @@ fun SettingsRowWithSwitch(
 
     SettingsRowBase(label, isDarkMode) {
         Switch(
-            checked = checked,
-            onCheckedChange = { },
+            checked = isChecked,
+            onCheckedChange = onCheckedChange,
             colors = SwitchDefaults.colors(
                 checkedThumbColor = thumbChecked,
                 checkedTrackColor = trackChecked,

@@ -29,6 +29,10 @@ fun GeneralSettingsSection(
     val scrollState = rememberScrollState()
     var showThemeDropdown by remember { mutableStateOf(false) }
 
+    // ⚡ ESTADOS TEMPORALES PARA LOS SWITCHES (Efecto Demo)
+    var showCodeActive by remember { mutableStateOf(false) }
+    var showSuggestionsActive by remember { mutableStateOf(true) }
+
     // 🎨 PALETA DINÁMICA
     val textColor = if (isDarkMode) Color(0xFFF3F4F6) else TextPrimaryDark
     val dropdownBg = if (isDarkMode) Color(0xFF262630) else Color.White
@@ -82,35 +86,49 @@ fun GeneralSettingsSection(
                         )
                     }
 
-                    // Menú flotante real al hacer clic
-                    DropdownMenu(
-                        expanded = showThemeDropdown,
-                        onDismissRequest = { showThemeDropdown = false },
-                        modifier = Modifier.background(dropdownBg)
+                    MaterialTheme(
+                        shapes = MaterialTheme.shapes.copy(extraSmall = RoundedCornerShape(16.dp)),
+                        colorScheme = if (isDarkMode) darkColorScheme() else lightColorScheme()
                     ) {
-                        DropdownMenuItem(
-                            text = { Text("Dark", color = textColor) },
-                            onClick = {
-                                showThemeDropdown = false
-                                if (!isDarkMode) onThemeToggle()
-                            }
-                        )
-                        DropdownMenuItem(
-                            text = { Text("Light", color = textColor) },
-                            onClick = {
-                                showThemeDropdown = false
-                                if (isDarkMode) onThemeToggle()
-                            }
-                        )
+                        DropdownMenu(
+                            expanded = showThemeDropdown,
+                            onDismissRequest = { showThemeDropdown = false },
+                            modifier = Modifier.background(dropdownBg)
+                        ) {
+                            DropdownMenuItem(
+                                text = { Text("Dark", color = textColor) },
+                                onClick = {
+                                    showThemeDropdown = false
+                                    if (!isDarkMode) onThemeToggle()
+                                }
+                            )
+                            DropdownMenuItem(
+                                text = { Text("Light", color = textColor) },
+                                onClick = {
+                                    showThemeDropdown = false
+                                    if (isDarkMode) onThemeToggle()
+                                }
+                            )
+                        }
                     }
                 }
             }
         }
 
         SettingsDivider(isDarkMode = isDarkMode)
-        SettingsRowWithSwitch("Always show code when using data analyst", false, isDarkMode = isDarkMode)
+        SettingsRowWithSwitch(
+            label = "Always show code when using data analyst",
+            isChecked = showCodeActive,
+            onCheckedChange = { showCodeActive = it },
+            isDarkMode = isDarkMode
+        )
         SettingsDivider(isDarkMode = isDarkMode)
-        SettingsRowWithSwitch("Show follow up suggestions in chats", true, isDarkMode = isDarkMode)
+        SettingsRowWithSwitch(
+            label = "Show follow up suggestions in chats",
+            isChecked = showSuggestionsActive,
+            onCheckedChange = { showSuggestionsActive = it },
+            isDarkMode = isDarkMode
+        )
         SettingsDivider(isDarkMode = isDarkMode)
         SettingsRowWithDropdown("Language", "English (US)", isDarkMode = isDarkMode)
         SettingsDivider(isDarkMode = isDarkMode)
