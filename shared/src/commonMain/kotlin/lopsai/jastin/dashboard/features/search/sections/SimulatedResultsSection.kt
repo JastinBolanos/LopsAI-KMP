@@ -27,9 +27,17 @@ import lopsai.jastin.dashboard.features.search.components.SearchColors
 
 @Composable
 fun SimulatedResultsSection(
-    query: String,
-    onSelectChat: (String) -> Unit
+    @Suppress("UNUSED_PARAMETER") query: String,
+    onSelectChat: (String) -> Unit,
+    isDarkMode: Boolean = false
 ) {
+    // 🎨 PALETA DINÁMICA
+    val textColor = if (isDarkMode) Color.White else TextPrimaryDark
+    val secondaryTextColor = if (isDarkMode) Color(0xFFA1A1AA) else TextSecondaryDark
+    val iconColor = if (isDarkMode) SearchColors.TextMutedDark else TextPrimaryDark
+    val bgSelected = if (isDarkMode) SearchColors.SelectedItemBgDark else SearchColors.SelectedItemBgLight
+    val mutedDateColor = if (isDarkMode) SearchColors.TextMutedDark else SearchColors.TextMutedLight
+
     val mockResults = listOf(
         Pair("Design System & UI Kit - ", "SnowUI is a Design System and UI Kit created with Figma. Features Use new feature..."),
         Pair("", "SnowUI. Inspirational designs, illustrations, and graphic elements from the..."),
@@ -49,7 +57,7 @@ fun SimulatedResultsSection(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(16.dp))
-                    .background(if (isSelected) SearchColors.SelectedItemBg else Color.Transparent)
+                    .background(if (isSelected) bgSelected else Color.Transparent) // ⚡ CONECTADO
                     .clickable { onSelectChat("SnowUI") }
                     .padding(horizontal = 14.dp, vertical = 14.dp),
                 verticalAlignment = Alignment.Top
@@ -57,7 +65,7 @@ fun SimulatedResultsSection(
                 Icon(
                     imageVector = Icons.Outlined.ChatBubbleOutline,
                     contentDescription = null,
-                    tint = TextPrimaryDark,
+                    tint = iconColor, // ⚡ CONECTADO
                     modifier = Modifier
                         .size(18.dp)
                         .padding(top = 2.dp)
@@ -74,7 +82,7 @@ fun SimulatedResultsSection(
                             if (item.first.contains(" - ")) append(" - " + item.first.substringAfter(" - "))
                         }
                     }
-                    Text(text = titleText, fontSize = 15.sp, color = TextPrimaryDark)
+                    Text(text = titleText, fontSize = 15.sp, color = textColor) // ⚡ CONECTADO
 
                     Spacer(modifier = Modifier.height(4.dp))
 
@@ -85,14 +93,14 @@ fun SimulatedResultsSection(
                     Text(
                         text = subtitleText,
                         fontSize = 13.sp,
-                        color = TextSecondaryDark,
+                        color = secondaryTextColor, // ⚡ CONECTADO
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
                 }
 
                 if (isSelected) {
-                    Text("Today", color = SearchColors.TextMuted, fontSize = 13.sp)
+                    Text("Today", color = mutedDateColor, fontSize = 13.sp) // ⚡ CONECTADO
                 }
             }
         }

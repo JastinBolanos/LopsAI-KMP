@@ -21,17 +21,23 @@ import lopsai.jastin.dashboard.core.theme.TextPrimaryDark
 import lopsai.jastin.dashboard.core.theme.TextSecondaryDark
 
 object SearchColors {
-    val DialogBg = Color(0xFFEFEFEF)
-    val SelectedItemBg = Color(0xFFDFDFDF)
+    val DialogBgLight = Color(0xFFEFEFEF)
+    val DialogBgDark = Color(0xFF18181B)
+
+    val SelectedItemBgLight = Color(0xFFDFDFDF)
+    val SelectedItemBgDark = Color(0xFF262630)
+
+    val TextMutedLight = Color(0xFF888888)
+    val TextMutedDark = Color(0xFFA1A1AA)
+
     val HighlightBlue = Color(0xFF007AFF)
-    val TextMuted = Color(0xFF888888)
 }
 
 @Composable
-fun SectionHeader(title: String) {
+fun SectionHeader(title: String, isDarkMode: Boolean = false) {
     Text(
         text = title,
-        color = SearchColors.TextMuted,
+        color = if (isDarkMode) SearchColors.TextMutedDark else SearchColors.TextMutedLight,
         fontSize = 12.sp,
         fontWeight = FontWeight.Medium,
         modifier = Modifier.padding(start = 12.dp, top = 16.dp, bottom = 8.dp)
@@ -42,13 +48,18 @@ fun SectionHeader(title: String) {
 fun RecentChatRow(
     title: String,
     isSelected: Boolean,
-    onSelectChat: (String) -> Unit
+    onSelectChat: (String) -> Unit,
+    isDarkMode: Boolean = false
 ) {
+    val textColor = if (isDarkMode) Color.White else TextPrimaryDark
+    val iconColor = if (isDarkMode) SearchColors.TextMutedDark else TextPrimaryDark
+    val bgSelected = if (isDarkMode) SearchColors.SelectedItemBgDark else SearchColors.SelectedItemBgLight
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(12.dp))
-            .background(if (isSelected) SearchColors.SelectedItemBg else Color.Transparent)
+            .background(if (isSelected) bgSelected else Color.Transparent)
             .clickable { onSelectChat(title) }
             .padding(horizontal = 12.dp, vertical = 10.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -58,18 +69,18 @@ fun RecentChatRow(
             Icon(
                 imageVector = Icons.Outlined.ChatBubbleOutline,
                 contentDescription = null,
-                tint = TextPrimaryDark,
+                tint = iconColor,
                 modifier = Modifier.size(18.dp)
             )
             Spacer(modifier = Modifier.width(12.dp))
-            Text(title, fontSize = 14.sp, color = TextPrimaryDark)
+            Text(title, fontSize = 14.sp, color = textColor)
         }
 
         if (isSelected) {
             Icon(
                 imageVector = Icons.Outlined.KeyboardReturn,
                 contentDescription = "Select",
-                tint = TextSecondaryDark,
+                tint = if (isDarkMode) Color.White else TextSecondaryDark,
                 modifier = Modifier.size(16.dp)
             )
         }

@@ -177,7 +177,8 @@ fun MainScreen() {
             if (showSearchDialog) {
                 SearchChatsDialog(
                     onClose = { showSearchDialog = false },
-                    onSelectChat = handleSelectChat
+                    onSelectChat = handleSelectChat,
+                    isDarkMode = isDarkMode
                 )
             }
         }

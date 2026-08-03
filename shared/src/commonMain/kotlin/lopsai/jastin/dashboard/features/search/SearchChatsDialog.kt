@@ -29,9 +29,18 @@ import lopsai.jastin.dashboard.features.search.sections.SimulatedResultsSection
 @Composable
 fun SearchChatsDialog(
     onClose: () -> Unit,
-    onSelectChat: (String) -> Unit = {}
+    onSelectChat: (String) -> Unit = {},
+    isDarkMode: Boolean = false
 ) {
     var query by remember { mutableStateOf("") }
+
+    // 🎨 PALETA DINÁMICA
+    val surfaceBg = if (isDarkMode) SearchColors.DialogBgDark else SearchColors.DialogBgLight
+    val textColor = if (isDarkMode) Color.White else TextPrimaryDark
+    val mutedText = if (isDarkMode) SearchColors.TextMutedDark else SearchColors.TextMutedLight
+    val closeBtnBg = if (isDarkMode) Color(0xFF32323A) else Color(0xFFE0E0E0)
+    val closeBtnIcon = if (isDarkMode) Color.White else TextSecondaryDark
+    val dividerColor = if (isDarkMode) Color.White.copy(alpha = 0.1f) else Color.Black.copy(alpha = 0.06f)
 
     Dialog(
         onDismissRequest = onClose,
@@ -43,7 +52,7 @@ fun SearchChatsDialog(
                 .fillMaxHeight(0.85f)
                 .padding(16.dp),
             shape = RoundedCornerShape(28.dp),
-            color = SearchColors.DialogBg,
+            color = surfaceBg,
             shadowElevation = 16.dp
         ) {
             Column(modifier = Modifier.fillMaxSize()) {
@@ -59,7 +68,7 @@ fun SearchChatsDialog(
                     Icon(
                         imageVector = Icons.Outlined.Search,
                         contentDescription = "Search",
-                        tint = TextPrimaryDark,
+                        tint = textColor,
                         modifier = Modifier.size(24.dp)
                     )
                     Spacer(modifier = Modifier.width(14.dp))
@@ -69,14 +78,14 @@ fun SearchChatsDialog(
                             value = query,
                             onValueChange = { query = it },
                             singleLine = true,
-                            textStyle = TextStyle(color = TextPrimaryDark, fontSize = 18.sp),
-                            cursorBrush = SolidColor(TextPrimaryDark),
+                            textStyle = TextStyle(color = textColor, fontSize = 18.sp),
+                            cursorBrush = SolidColor(textColor),
                             modifier = Modifier.fillMaxWidth()
                         )
                         if (query.isEmpty()) {
                             Text(
                                 text = "Search chats..",
-                                color = SearchColors.TextMuted,
+                                color = mutedText,
                                 fontSize = 18.sp
                             )
                         }
@@ -87,30 +96,34 @@ fun SearchChatsDialog(
                         modifier = Modifier
                             .size(28.dp)
                             .clip(RoundedCornerShape(6.dp))
-                            .background(Color(0xFFE0E0E0))
+                            .background(closeBtnBg)
                             .clickable { if (query.isNotEmpty()) query = "" else onClose() },
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.Close,
                             contentDescription = "Close",
-                            tint = TextSecondaryDark,
+                            tint = closeBtnIcon,
                             modifier = Modifier.size(16.dp)
                         )
                     }
                 }
 
-                HorizontalDivider(color = Color.Black.copy(alpha = 0.06f), thickness = 1.dp)
+                HorizontalDivider(color = dividerColor, thickness = 1.dp)
 
                 // ==========================================
                 // 2. CONTENIDO DINÁMICO (VACÍO vs BÚSQUEDA)
                 // ==========================================
                 if (query.isEmpty()) {
-                    DefaultRecentSection(onSelectChat = { onSelectChat(it); onClose() })
+                    DefaultRecentSection(
+                        onSelectChat = { onSelectChat(it); onClose() },
+                        isDarkMode = isDarkMode
+                    )
                 } else {
                     SimulatedResultsSection(
                         query = query,
-                        onSelectChat = { onSelectChat(it); onClose() }
+                        onSelectChat = { onSelectChat(it); onClose() },
+                        isDarkMode = isDarkMode
                     )
                 }
             }

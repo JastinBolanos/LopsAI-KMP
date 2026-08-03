@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import lopsai.jastin.dashboard.core.theme.TextPrimaryDark
@@ -19,7 +20,13 @@ import lopsai.jastin.dashboard.features.search.components.RecentChatRow
 import lopsai.jastin.dashboard.features.search.components.SectionHeader
 
 @Composable
-fun DefaultRecentSection(onSelectChat: (String) -> Unit) {
+fun DefaultRecentSection(
+    onSelectChat: (String) -> Unit,
+    isDarkMode: Boolean = false
+) {
+    val textColor = if (isDarkMode) Color.White else TextPrimaryDark
+    val iconColor = if (isDarkMode) Color.White else TextPrimaryDark
+
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp)
@@ -34,32 +41,32 @@ fun DefaultRecentSection(onSelectChat: (String) -> Unit) {
                     .padding(horizontal = 12.dp, vertical = 12.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(Icons.Outlined.Edit, contentDescription = null, modifier = Modifier.size(18.dp))
+                Icon(Icons.Outlined.Edit, contentDescription = null, tint = iconColor, modifier = Modifier.size(18.dp))
                 Spacer(modifier = Modifier.width(12.dp))
-                Text("New chat", fontSize = 14.sp, color = TextPrimaryDark)
+                Text("New chat", fontSize = 14.sp, color = textColor)
             }
 
-            SectionHeader("Today")
+            SectionHeader("Today", isDarkMode)
         }
 
         item {
-            RecentChatRow("Brooklyn Sunrise Time", isSelected = false, onSelectChat)
-            RecentChatRow("Manhattan Bus Comparisons", isSelected = true, onSelectChat)
-            RecentChatRow("Typo Assistance Request", isSelected = false, onSelectChat)
+            RecentChatRow("Brooklyn Sunrise Time", isSelected = false, onSelectChat, isDarkMode)
+            RecentChatRow("Manhattan Bus Comparisons", isSelected = true, onSelectChat, isDarkMode)
+            RecentChatRow("Typo Assistance Request", isSelected = false, onSelectChat, isDarkMode)
         }
 
-        item { SectionHeader("Yesterday") }
+        item { SectionHeader("Yesterday", isDarkMode) }
         item {
-            RecentChatRow("Quadratic Function Plot", isSelected = false, onSelectChat)
-            RecentChatRow("Toyota Names Poetry", isSelected = false, onSelectChat)
-            RecentChatRow("Urban Green Spaces", isSelected = false, onSelectChat)
+            RecentChatRow("Quadratic Function Plot", isSelected = false, onSelectChat, isDarkMode)
+            RecentChatRow("Toyota Names Poetry", isSelected = false, onSelectChat, isDarkMode)
+            RecentChatRow("Urban Green Spaces", isSelected = false, onSelectChat, isDarkMode)
         }
 
-        item { SectionHeader("Previous 7 Days") }
+        item { SectionHeader("Previous 7 Days", isDarkMode) }
         item {
-            RecentChatRow("Historical Landmarks Guide", isSelected = false, onSelectChat)
-            RecentChatRow("Gourmet Food Truck Trends", isSelected = false, onSelectChat)
-            RecentChatRow("Digital Art Techniques", isSelected = false, onSelectChat)
+            RecentChatRow("Historical Landmarks Guide", isSelected = false, onSelectChat, isDarkMode)
+            RecentChatRow("Gourmet Food Truck Trends", isSelected = false, onSelectChat, isDarkMode)
+            RecentChatRow("Digital Art Techniques", isSelected = false, onSelectChat, isDarkMode)
         }
     }
 }
