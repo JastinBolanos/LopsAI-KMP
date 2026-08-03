@@ -44,7 +44,7 @@ fun AITypingBubble(
     Column {
         Text(
             text = displayedText,
-            color = textColor, // <-- LETRAS BLANCAS EN DARK MODE
+            color = textColor,
             fontSize = 15.sp,
             lineHeight = 24.sp,
             modifier = Modifier.padding(end = 24.dp)

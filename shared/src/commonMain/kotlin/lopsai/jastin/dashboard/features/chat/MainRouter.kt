@@ -151,24 +151,28 @@ fun MainRouter(
                                                     }
                                                 }
 
-                                                if (msg.text.isNotEmpty()) {
-                                                    if (msg.isUser) {
-                                                        Box(
-                                                            modifier = Modifier
-                                                                .background(
-                                                                    if (isDarkMode) Color(0xFF262630) else Color(0xFFF4F4F4),
-                                                                    RoundedCornerShape(20.dp)
-                                                                )
-                                                                .padding(16.dp)
-                                                        ) {
-                                                            Text(
-                                                                text = msg.text,
-                                                                color = if (isDarkMode) Color.White else TextPrimaryDark
+                                                if (msg.isUser) {
+                                                    Box(
+                                                        modifier = Modifier
+                                                            .background(
+                                                                if (isDarkMode) Color(0xFF262630) else Color(
+                                                                    0xFFDEDEDE
+                                                                ),
+                                                                RoundedCornerShape(20.dp)
                                                             )
-                                                        }
-                                                    } else {
-                                                        AITypingBubble(msg.text, msg.isTyping)
+                                                            .padding(16.dp)
+                                                    ) {
+                                                        Text(
+                                                            text = msg.text,
+                                                            color = if (isDarkMode) Color.White else TextPrimaryDark
+                                                        )
                                                     }
+                                                } else {
+                                                    AITypingBubble(
+                                                        fullText = msg.text,
+                                                        isTyping = msg.isTyping,
+                                                        isDarkMode = isDarkMode
+                                                    )
                                                 }
                                             }
                                         }
