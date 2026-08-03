@@ -8,7 +8,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ChevronRight
 import androidx.compose.material.icons.outlined.HelpOutline
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,6 +26,7 @@ fun PersonalizationSettingsSection(
     isDarkMode: Boolean = false
 ) {
     val scrollState = rememberScrollState()
+    var memoryActive by remember { mutableStateOf(true) }
 
     // 🎨 PALETA DINÁMICA
     val textColor = if (isDarkMode) Color(0xFFF3F4F6) else TextPrimaryDark
@@ -35,7 +36,7 @@ fun PersonalizationSettingsSection(
     // PALETA DEL SWITCH
     val trackChecked = if (isDarkMode) Color(0xFFF3F4F6) else Color.Black
     val thumbChecked = if (isDarkMode) Color(0xFF16161C) else Color.White
-    val trackUnchecked = if (isDarkMode) Color(0xFF32323A) else InputBorderColor
+    val trackUnchecked = if (isDarkMode) Color(0xFF32323A) else InputBorderColor.copy(alpha = 0.5f)
     val thumbUnchecked = if (isDarkMode) Color(0xFFA1A1AA) else Color.White
 
     Column(modifier = modifier.verticalScroll(scrollState)) {
@@ -105,8 +106,8 @@ fun PersonalizationSettingsSection(
             }
 
             Switch(
-                checked = true,
-                onCheckedChange = { },
+                checked = memoryActive,
+                onCheckedChange = { memoryActive = it },
                 colors = SwitchDefaults.colors(
                     checkedThumbColor = thumbChecked,
                     checkedTrackColor = trackChecked,
