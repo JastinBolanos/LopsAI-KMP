@@ -4,4 +4,22 @@ html, body {
     margin: 0;
     padding: 0;
     overflow: hidden;
+    background-color: #16161C;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+canvas {
+    display: block;
+    width: 100vw !important;
+    height: 100vh !important;
+    outline: none;
+    position: absolute;
+    z-index: 10;
+}
+
+svg {
+    position: absolute;
+    z-index: 1;
 }
