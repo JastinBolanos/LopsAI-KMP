@@ -28,32 +28,53 @@ fun PremiumUpgradeDialog(
         onDismissRequest = onDismiss,
         properties = DialogProperties(usePlatformDefaultWidth = false)
     ) {
-        Box(
+        BoxWithConstraints(
             modifier = Modifier
                 .fillMaxWidth(0.9f)
                 .fillMaxHeight(0.85f)
                 .clip(RoundedCornerShape(24.dp))
                 .background(dialogBgColor)
         ) {
+            val isDesktop = maxWidth > 800.dp
+
             Column(
                 modifier = Modifier.fillMaxSize()
             ) {
                 // 1. HEADER (título y subtítulo)
                 PremiumHeader(isDarkMode = isDarkMode)
 
-                // 2. LISTA DE PLANES (Las 3 bandejas apiladas con scroll)
-                LazyColumn(
+                // 2. LISTA DE PLANES
+                Box(
                     modifier = Modifier
                         .weight(1f)
-                        .padding(horizontal = 24.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                        .padding(horizontal = 24.dp)
                 ) {
-                    items(MockPlansData.plans) { plan ->
-                        PlanTierCard(plan = plan, isDarkMode = isDarkMode)
-                    }
+                    if (isDesktop) {
+                        // 🖥️ DISEÑO WEB: 3 Columnas horizontales
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(16.dp)
+                        ) {
+                            MockPlansData.plans.forEach { plan ->
+                                Box(modifier = Modifier.weight(1f)) {
+                                    PlanTierCard(plan = plan, isDarkMode = isDarkMode)
+                                }
+                            }
+                        }
+                    } else {
+                        // 📱 DISEÑO CELULAR: Tu código original apilado verticalmente
+                        LazyColumn(
+                            modifier = Modifier.fillMaxSize(),
+                            verticalArrangement = Arrangement.spacedBy(16.dp)
+                        ) {
+                            items(MockPlansData.plans) { plan ->
+                                PlanTierCard(plan = plan, isDarkMode = isDarkMode)
+                            }
 
-                    item {
-                        Spacer(modifier = Modifier.height(16.dp))
+                            item {
+                                Spacer(modifier = Modifier.height(16.dp))
+                            }
+                        }
                     }
                 }
 
