@@ -24,12 +24,14 @@ import lopsai.jastin.dashboard.core.models.ChatMessage
 import lopsai.jastin.dashboard.features.chat.data.MockChatsData
 import lopsai.jastin.dashboard.features.search.SearchChatsDialog
 import lopsai.jastin.dashboard.shared_ui.layout.Sidebar
+import lopsai.jastin.dashboard.features.premium.PremiumUpgradeDialog
 
 @Composable
 fun MainScreen() {
     var isDarkMode by remember { mutableStateOf(true) }
     var showSearchDialog by remember { mutableStateOf(false) }
     var promptText by remember { mutableStateOf("") }
+    var showPremiumDialog by remember { mutableStateOf(false) }
     var isDesktopSidebarOpen by remember { mutableStateOf(true) }
     var isChatActive by remember { mutableStateOf(false) }
     var messages by remember { mutableStateOf(listOf<ChatMessage>()) }
@@ -98,6 +100,7 @@ fun MainScreen() {
                                 onNavigateToHome = navToHome,
                                 onNavigateToLibrary = navToLibrary,
                                 onSearchClick = { showSearchDialog = true },
+                                onUpgradeClick = { showPremiumDialog = true },
                                 onSelectChat = handleSelectChat,
                                 isMobile = true,
                                 isDarkMode = isDarkMode,
@@ -116,6 +119,7 @@ fun MainScreen() {
                         isChatActive = isChatActive,
                         messages = messages,
                         onMenuClick = { coroutineScope.launch { drawerState.open() } },
+                        onUpgradeClick = { showPremiumDialog = true },
                         currentScreen = currentScreen,
                         isDarkMode = isDarkMode,
                         onThemeToggle = { isDarkMode = !isDarkMode }
@@ -146,6 +150,7 @@ fun MainScreen() {
                             onNavigateToHome = navToHome,
                             onNavigateToLibrary = navToLibrary,
                             onSearchClick = { showSearchDialog = true },
+                            onUpgradeClick = { showPremiumDialog = true },
                             onSelectChat = handleSelectChat,
                             isMobile = false,
                             isDarkMode = isDarkMode,
@@ -163,6 +168,7 @@ fun MainScreen() {
                         isChatActive = isChatActive,
                         messages = messages,
                         onMenuClick = { isDesktopSidebarOpen = !isDesktopSidebarOpen },
+                        onUpgradeClick = { showPremiumDialog = true },
                         currentScreen = currentScreen,
                         isDarkMode = isDarkMode,
                         onThemeToggle = { isDarkMode = !isDarkMode },
@@ -179,6 +185,13 @@ fun MainScreen() {
                     onClose = { showSearchDialog = false },
                     onSelectChat = handleSelectChat,
                     isDarkMode = isDarkMode
+                )
+            }
+
+            if (showPremiumDialog) {
+                PremiumUpgradeDialog(
+                    isDarkMode = isDarkMode,
+                    onDismiss = { showPremiumDialog = false }
                 )
             }
         }

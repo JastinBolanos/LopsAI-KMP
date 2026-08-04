@@ -9,7 +9,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -41,6 +40,7 @@ fun MainRouter(
     showDesktopSidebar: Boolean,
     titleSize: TextUnit,
     promptText: String,
+    onUpgradeClick: () -> Unit,
     onPromptChange: (String) -> Unit,
     onSend: () -> Unit,
     isChatActive: Boolean,
@@ -86,6 +86,7 @@ fun MainRouter(
                 onMenuClick = onMenuClick,
                 onAvatarClick = { showSettingsDialog = true },
                 onShareClick = { showShareDialog = true },
+                onUpgradeClick = onUpgradeClick,
                 isDarkMode = isDarkMode,
                 modifier = Modifier.background(Color.Transparent)
             )

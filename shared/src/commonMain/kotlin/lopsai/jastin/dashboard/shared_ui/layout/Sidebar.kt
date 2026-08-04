@@ -49,6 +49,7 @@ fun Sidebar(
     onNavigateToGpts: () -> Unit = {},
     onNavigateToHome: () -> Unit = {},
     onNavigateToLibrary: () -> Unit = {},
+    onUpgradeClick: () -> Unit,
     onSearchClick: () -> Unit = {},
     onSelectChat: (String) -> Unit = {},
     isMobile: Boolean = false,
@@ -487,7 +488,7 @@ fun Sidebar(
                         )
                     }
                     .clip(RoundedCornerShape(12.dp))
-                    .clickable { }
+                    .clickable { onUpgradeClick() }
                     .padding(12.dp)
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {

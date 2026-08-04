@@ -46,6 +46,7 @@ fun TopHeader(
     onMenuClick: () -> Unit = {},
     onAvatarClick: () -> Unit = {},
     onShareClick: () -> Unit = {},
+    onUpgradeClick: () -> Unit = {},
     isDarkMode: Boolean = false,
     modifier: Modifier = Modifier
 ) {
@@ -226,7 +227,7 @@ fun TopHeader(
                                 .graphicsLayer { scaleX = buttonScale; scaleY = buttonScale }
                                 .clip(if (showButtonText) RoundedCornerShape(50) else CircleShape)
                                 .background(getStartedBg) // <-- Violeta OLED en Modo Oscuro
-                                .clickable(interactionSource = interactionSource, indication = null) { }
+                                .clickable(interactionSource = interactionSource, indication = null) { onUpgradeClick() }
                                 .padding(horizontal = if (showButtonText) 14.dp else 8.dp, vertical = 8.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
