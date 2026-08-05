@@ -57,10 +57,10 @@ The project is governed by the *"Write once, run natively anywhere"* paradigm, o
 
 https://github.com/user-attachments/assets/3cd6e81d-5aa1-4534-a139-d66eb65982b9
 
-### 🖥️ WebAssembly & Desktop Experience (Wasm/JS)
+### 🖥️ WebAssembly Experience (Wasm/JS)
 *Witness the adaptive desktop layout in action. Featuring a persistent sidebar, intelligent multi-column grids for premium tiers, and Skiko-powered canvas rendering that maintains absolute visual crispness across large widescreen viewports.*
 
-https://github.com/user-attachments/assets/8453f722-07c5-4929-9acb-7d77ac51fa99
+https://github.com/user-attachments/assets/133028d0-2532-4523-832e-e3fe9904765b
 
 ---
 
@@ -97,6 +97,37 @@ Stateful overlay dialogs allow instant full-text filtering across current and pa
   <img src="docs/13_chat_history_search.png" width="220" alt="Chat History Search Modal"/>
   &nbsp;&nbsp;&nbsp;&nbsp;
   <img src="docs/03_share_chat_dialog.png" width="220" alt="Public Link Sharing Modal"/>
+</p>
+
+### WebAssembly (Wasm) Architecture & Widescreen Adaptation
+The architecture scales with absolute precision to any widescreen browser environment, powered entirely by WebAssembly (Wasm) and Skiko canvas rendering. By expanding into a persistent side navigation bar and fluid multi-column grids, the interface shatters traditional DOM limitations, delivering a hyper-fluid, native-app experience directly within the web—all from a single, unified Kotlin codebase.
+
+<p align="center">
+  <img src="docs/19_dashboard_web_dark.png" width="400" alt="Web Dashboard Dark"/>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="docs/27_dashboard_web_light.png" width="400" alt="Web Dashboard Light"/>
+</p>
+
+<p align="center">
+  <img src="docs/22_gpt_store_web_dark.png" width="400" alt="Web GPT Store Dark"/>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="docs/25_gpt_store_web_light.png" width="400" alt="Web GPT Store Light"/>
+</p>
+
+<p align="center">
+  <img src="docs/23_library_grid_web_dark.png" width="400" alt="Web Library Grid Dark"/>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="docs/24_library_grid_web_light.png" width="400" alt="Web Library Grid Light"/>
+</p>
+
+<p align="center">
+  <img src="docs/20_premium_upgrade_web_dark.png" width="400" alt="Web Premium Pricing Grid Dark"/>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="docs/26_premium_upgrade_web_light.png" width="400" alt="Web Premium Pricing Grid Light"/>
+</p>
+
+<p align="center">
+  <img src="docs/21_chat_image_web_dark.png" width="600" alt="Web Chat Image Interface"/>
 </p>
 
 ---

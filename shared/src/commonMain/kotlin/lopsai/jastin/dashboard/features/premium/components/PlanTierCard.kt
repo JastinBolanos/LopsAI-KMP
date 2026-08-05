@@ -36,6 +36,7 @@ fun PlanTierCard(plan: PremiumPlan, isDarkMode: Boolean) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
+            .fillMaxHeight()
             .then(borderModifier)
             .clip(RoundedCornerShape(16.dp))
             .background(cardBg)
@@ -79,9 +80,16 @@ fun PlanTierCard(plan: PremiumPlan, isDarkMode: Boolean) {
         Spacer(modifier = Modifier.height(16.dp))
 
         // --- 3. LISTA DE BENEFICIOS ---
-        plan.features.forEach { feature ->
-            PlanBenefitItem(text = feature, isDarkMode = isDarkMode)
+        Column(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            plan.features.forEach { feature ->
+                PlanBenefitItem(text = feature, isDarkMode = isDarkMode)
+            }
         }
+
+        // --- 🪄 EMPUJE FLEXIBLE AL FONDO ---
+        Spacer(modifier = Modifier.weight(1f))
 
         Spacer(modifier = Modifier.height(16.dp))
 
