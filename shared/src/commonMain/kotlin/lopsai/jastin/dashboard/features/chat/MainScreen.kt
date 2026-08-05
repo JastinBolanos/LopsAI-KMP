@@ -54,7 +54,7 @@ fun MainScreen() {
             messages = listOf(
                 ChatMessage(userMsg, isUser = true),
                 ChatMessage(
-                    "Alright! Here's something fresh and fascinating:\n\n**Scientists just discovered a plant that glows faintly in the dark — naturally.**\nThis find could open new doors in plant biology.",
+                    "Hello! It’s a pleasure to meet you. I’m LopsAI, your intelligent assistant, and I’m here to help you with whatever you need.\n\nIf you’re passionate about the natural world, today we can explore a wide range of fascinating topics together. Here are a few options to get started:\n\n🌿 Biology and Ecosystems: Discover how trees communicate through their roots or uncover the secrets of marine life.\n☀️ Sustainability and Climate: Learn about renewable energy, recycling, and how to care for our environment.\n🐾 Wildlife: Fun facts about the planet's most exotic and adaptable animals.\n🌱 Botany and Nature: Explore the power of plants, gardening, and the most amazing natural phenomena.\n\nWhich of these paths would you like to start with? If you have any other questions or need help with something else, just let me know!",
                     isUser = false,
                     isTyping = true
                 )

@@ -25,7 +25,6 @@ import lopsai_kmp.shared.generated.resources.urban_4_infographic
 
 object MockChatsData {
 
-    // 1. 5 CHATS
     val chatTitles = listOf(
         "Typo Assistance Request",
         "Quadratic Function Plot",
@@ -43,7 +42,7 @@ object MockChatsData {
                     imageRes = Res.drawable.typo_1_report
                 ),
                 ChatMessage(
-                    text = "Here is a polished, professional version of your email:\n\n**Subject:** Q3 Performance Report Attached\n\n**Hi [Manager's Name],**\n\nI have attached the Q3 performance report for your review. Overall, we achieved strong results in sales, though marketing engagement grew at a steadier pace this quarter.\n\nLet me know if you would like to discuss the numbers in detail.\n\n**Best regards,**\n[Your Name]",
+                    text = "Here is a polished version:\n\nSubject: Q3 Performance Report Attached\n\nHi [Manager's Name],\n\nI have attached the Q3 performance report. We achieved strong sales results, though marketing engagement grew steadily.\n\nLet me know if you want to discuss the details.\n\nBest regards,\nGabriel",
                     isUser = false
                 ),
                 ChatMessage(
@@ -51,7 +50,7 @@ object MockChatsData {
                     isUser = true
                 ),
                 ChatMessage(
-                    text = "Here is a proactive, professional message that leads with transparency and immediately provides a solution:\n\n***\n\n**Subject:** Shipment Update: Delivery Schedule for Order #8821\n\n**Dear [Partner's Name],**\n\nWe are writing to provide a quick timeline update regarding your upcoming delivery. Due to routine customs congestion at the port of entry, shipment #8821 is now scheduled to arrive on **Friday, the 18th**, approximately three days later than our initial estimate.\n\n**What We Are Doing:**\n* We have upgraded the inland distribution leg to priority express transit at our own expense to recover as much time as possible.\n* Our logistics team is actively tracking the clearance process and will provide a confirmed delivery window by tomorrow morning.\n\nWe appreciate your understanding and are committed to ensuring a smooth receipt of your stock.\n\n**Best regards,**\n[Your Name]",
+                    text = "Here is a proactive message:\n\nSubject: Delivery Schedule Update: Order 8821\n\nDear [Partner's Name],\n\nDue to port customs congestion, shipment 8821 is now scheduled to arrive on Friday, the 18th (three days later).\n\nOur Actions:\n- Upgraded to priority express transit at our expense.\n- Tracking clearance closely to confirm the delivery window by tomorrow.\n\nThank you for your understanding.\n\nBest regards,\nGabriel",
                     isUser = false
                 ),
                 ChatMessage(
@@ -59,7 +58,7 @@ object MockChatsData {
                     isUser = true
                 ),
                 ChatMessage(
-                    text = "Here is an elegant, prestigious invitation that honors your donors and elevates the tone of the evening:\n\n***\n\n**Subject:** An Exclusive Invitation: The Annual Foundation Gala\n\n**Dear [Guest's Name],**\n\nIt is with immense gratitude that we invite you to join us as a guest of honor at our **Annual Leadership & Impact Gala** on Friday, November 14th.\n\nThanks to your extraordinary generosity this year, our community initiatives have reached unprecedented milestones. This special evening is dedicated to celebrating that shared impact, featuring exquisite culinary pairings, live chamber music, and a private preview of our upcoming philanthropic roadmap.\n\n* **Venue:** The Grand Ballroom, Heritage Hotel\n* **Reception:** 7:00 PM | Formal Attire\n\nWe would be honored by your presence. Please let us know if we may reserve your table by responding to this email.\n\n**Warmly,**\n[Your Name]  \nExecutive Director",
+                    text = "Here is an elegant invitation:\n\nSubject: An Exclusive Invitation: The Annual Foundation Gala\n\nDear [Guest's Name],\n\nWe invite you as a guest of honor to our Annual Leadership & Impact Gala on Friday, Nov 14th.\n\nThanks to your extraordinary generosity, we've reached unprecedented milestones. Join us for exquisite culinary pairings and live chamber music to celebrate.\n\n- Venue: The Grand Ballroom, Heritage Hotel\n- Reception: 7:00 PM | Formal Attire\n\nPlease let us know if we may reserve your table.\n\nWarmly,\nGabriel",
                     isUser = false,
                     imageRes = Res.drawable.typo_2_gala
                 ),
@@ -77,7 +76,7 @@ object MockChatsData {
                     isUser = true
                 ),
                 ChatMessage(
-                    text = "Here is a professional negotiation script that respects their craft while protecting your financial boundaries:\n\n***\n\n**Subject:** Proposal Review & Budget Alignment – Seminar Catering\n\n**Hi [Caterer's Name],**\n\nThank you for sending over the tasting menu and comprehensive proposal for our upcoming seminar. The culinary selections look fantastic.\n\nWe are very keen to work with your team; however, the current estimate exceeds our approved event allocation by roughly **USD 3,500**.\n\nTo bridge this difference, could we explore a few menu adjustments? For instance:\n* Transitioning from plated service to an upscale buffet-style presentation.\n* Simplification of the afternoon break offerings to coffee and pastries.\n\nCould you let us know if a revised package around our target figure is feasible? We would love to finalize the agreement this week.\n\n**Best regards,**\n[Your Name]",
+                    text = "Here is a professional negotiation script:\n\nSubject: Proposal Review – Seminar Catering\n\nHi [Caterer's Name],\n\nThank you for the fantastic proposal. However, it exceeds our budget by USD 3,500.\n\nCould we explore adjustments to bridge this gap? For example:\n- Transitioning to a buffet-style presentation.\n- Simplifying the afternoon break to coffee and pastries.\n\nPlease let us know if a revised package is feasible.\n\nBest regards,\nGabriel",
                     isUser = false
                 ),
                 ChatMessage(
@@ -85,7 +84,7 @@ object MockChatsData {
                     isUser = true
                 ),
                 ChatMessage(
-                    text = "Here is a crisp, executive-ready summary designed for rapid reading:\n\n***\n\n**Subject:** Q3 ESG Update – Office Sustainability & Waste Reduction Milestones\n\n**Executive Summary:**\nOur transition toward sustainable workplace operations has yielded significant measurable gains over the last quarter, reducing environmental impact while lowering recurring supplies overhead.\n\n### 🌿 Key Operational Achievements\n* **60% Reduction in Paper Consumption:** Successfully transitioned our internal billing and onboarding workflows to secure digital signing.\n* **100% Single-Use Plastic Elimination:** Replaced all disposable cutlery and cups in the employee cafeteria with commercial-grade compostable alternatives.\n* **Certified Recycling Partnership:** Executed a formal service contract with GreenCycle Corp to manage e-waste and organics, diverting 85% of office waste from landfills.\n\nWe will continue monitoring our energy efficiency metrics and share the full environmental impact report at the next board meeting.\n\n**Best regards,**\n[Your Name]  \nOperations & ESG Lead",
+                    text = "Here is a crisp executive summary:\n\nSubject: Q3 ESG Update – Sustainability Milestones\n\nExecutive Summary:\nOur sustainable operations transition has yielded great results:\n\n- 60% Less Paper: Transitioned to secure digital signing.\n- 0% Single-Use Plastics: Switched to compostable cafeteria alternatives.\n- Recycling Partnership: Partnered with GreenCycle Corp to divert 85% of office waste from landfills.\n\nBest regards,\nGabriel",
                     isUser = false,
                     imageRes = Res.drawable.typo_4_esg
                 )
@@ -98,7 +97,7 @@ object MockChatsData {
                     imageRes = Res.drawable.quad_1_worksheet
                 ),
                 ChatMessage(
-                    text = "Let's break down the quadratic function **f(x) = x² - 4x + 3** step by step:\n\n### 1. Roots (X-intercepts)\nUsing factoring, we look for two numbers that multiply to **3** and add to **-4**:\n**f(x) = (x - 1)(x - 3) = 0**\n* **Root 1:** x = 1\n* **Root 2:** x = 3\n\n### 2. Vertex\nThe x-coordinate of the vertex is at the midpoint of the roots:\n**x_v = (1 + 3) / 2 = 2**\n\nSubstitute **x = 2** back into the equation:\n**f(2) = (2)² - 4(2) + 3 = -1**\n* **Vertex:** (2, -1)\n\nThis gives you a symmetrical parabola opening upwards with its lowest point at **(2, -1)**.",
+                    text = "Let's break down f(x) = x² - 4x + 3:\n\n1. Roots\nFactoring gives (x - 1)(x - 3) = 0, so roots are at x = 1 and x = 3.\n\n2. Vertex\nThe x-coordinate is the midpoint: (1 + 3) / 2 = 2.\nSubstitute x = 2: f(2) = (2)² - 4(2) + 3 = -1.\n\nThe vertex (lowest point) is (2, -1).",
                     isUser = false
                 ),
                 ChatMessage(
@@ -106,7 +105,7 @@ object MockChatsData {
                     isUser = true
                 ),
                 ChatMessage(
-                    text = "You can explain it using **visual symmetry and rates of change**—no calculus required:\n\n* **The Bowl Effect:** Because the coefficient in front of **x²** is positive (+1), the parabola opens upward like a bowl.\n* **The Turning Point:** As you move from left to right, the values drop steadily until they hit **x = 2**. At that exact instant, the downward trend stops and reverses upward.\n* **Symmetry:** Every point to the left of **x = 2** has a perfect mirror image at the same height on the right, making **(2, -1)** the indisputable floor of the function.\n\nIt is simply the balance point where decline turns into growth.",
+                    text = "Explain it using visual symmetry:\n\n- The Bowl: The positive x² makes it open upward.\n- The Turning Point: Values drop until x = 2, then reverse upward.\n- Symmetry: Every point has a mirror image, making (2, -1) the absolute floor.",
                     isUser = false
                 ),
                 ChatMessage(
@@ -114,7 +113,7 @@ object MockChatsData {
                     isUser = true
                 ),
                 ChatMessage(
-                    text = "Here is the plotted curve showing the exact relationship between the roots, the vertex, and the axis of symmetry:\n\n### Key Visual Markers\n* **Axis of Symmetry:** The dashed vertical line at **x = 2** divides the curve into two identical halves.\n* **X-Intercepts (1, 0) and (3, 0):** Where the function crosses the horizontal axis.\n* **Minimum Floor (2, -1):** The lowest coordinate value before the trajectory ascends.\n\nThis visual format is ideal for executive slide decks and technical presentations.",
+                    text = "Here is the plotted curve:\n\n- Axis of Symmetry: The vertical line at x = 2.\n- X-Intercepts: (1, 0) and (3, 0).\n- Minimum Floor: (2, -1).",
                     isUser = false,
                     imageRes = Res.drawable.quad_2_chart
                 ),
@@ -132,7 +131,7 @@ object MockChatsData {
                     isUser = true
                 ),
                 ChatMessage(
-                    text = "Quadratic models are the gold standard for **Revenue Optimization** because pricing always follows a parabolic curve:\n\n### The Price-Revenue Curve\n* **Pricing Too Low:** You sell thousands of units, but your margin per unit is so small that total revenue remains low.\n* **Pricing Too High:** Your margin is huge, but customer demand drops to zero, killing total revenue.\n\n### The Mathematical Optimization\nIf a company's revenue curve is modeled by **R(p) = -2p² + 120p** (where **p** is price):\n* Because the **p²** term is negative, the parabola opens downward (like an arch).\n* The vertex represents the **Maximum Achievable Revenue**.\n* Using the vertex formula **p = -b / (2a)** -> **-120 / (2 × -2) = 30**.\n\n**Business Takeaway:** Pricing your product at exactly **USD 30** captures the absolute peak of the revenue curve before price resistance erodes demand.",
+                    text = "Quadratic models optimize Revenue:\n\nIf revenue is R(p) = -2p² + 120p (where p is price):\n- The downward parabola shows revenue peaking, then dropping if priced too high.\n- Using the vertex formula (p = -b / 2a): -120 / -4 = 30.\n\nPricing at USD 30 maximizes revenue before demand drops.",
                     isUser = false
                 ),
                 ChatMessage(
@@ -140,7 +139,7 @@ object MockChatsData {
                     isUser = true
                 ),
                 ChatMessage(
-                    text = "Here is an executive summary formatted for high-level stakeholders, supported by a profit maximization curve:\n\n***\n\n**Subject:** Strategic Modeling – Utilizing Parabolic Models for Decision Making\n\n### 💡 Executive Summary\nQuadratic functions provide a mathematically rigorous framework for identifying peaks and floors across business operations, allowing teams to move from guesswork to precision forecasting.\n\n### 🎯 Three Key Takeaways\n1. **Predictable Optimization (The Vertex):** Every parabolic model contains a single mathematical turning point—identifying it reveals the exact price, staffing level, or inventory threshold that maximizes profit or minimizes cost.\n2. **Break-Even Analysis (The Roots):** The X-intercepts clearly define operating boundaries, marking the precise thresholds where a campaign or product line transitions between loss and profitability.\n3. **Symmetrical Forecasting:** Because curves are symmetrical around their axis, historical performance on the growth side can accurately predict deceleration patterns if market conditions reverse.\n\nWe will be using this modeling approach to calibrate Q4 pricing tiers across all product lines.\n\n**Best regards,**\n[Your Name]  \nFinancial & Business Analytics Lead",
+                    text = "Here is the summary:\n\nSubject: Strategic Parabolic Modeling\n\n🎯 Key Takeaways\n1. Predictable Optimization: The vertex reveals the exact price to maximize profit.\n2. Break-Even Analysis: The roots mark thresholds between loss and profitability.\n3. Symmetrical Forecasting: Historical growth accurately predicts deceleration patterns.\n\nBest regards,\nGabriel",
                     isUser = false,
                     imageRes = Res.drawable.quad_4_revenue
                 )
@@ -153,7 +152,7 @@ object MockChatsData {
                     imageRes = Res.drawable.toyota_1_moodboard
                 ),
                 ChatMessage(
-                    text = "Here is a haiku inspired by timeless engineering and enduring craftsmanship:\n\n> *Steel across the miles,*\n> *Quiet engine hums at dawn,*\n> *Journey never fails.*",
+                    text = "Here is a haiku inspired by timeless engineering:\n\n> Steel across the miles,\n> Quiet engine hums at dawn,\n> Journey never fails.",
                     isUser = false
                 ),
                 ChatMessage(
@@ -161,7 +160,7 @@ object MockChatsData {
                     isUser = true
                 ),
                 ChatMessage(
-                    text = "Here is a lyrical brand piece tailored for an executive heritage brochure:\n\n***\n\n### The Nomenclature of Endurance\n\nSome names are merely labels; others are promises forged over generations.\n\nTo speak of the **Crown** is to recall quiet sovereignty—a graceful silhouette moving serenely through the modern metropolis. To mention the **Century** is to pause before craftsmanship that defies passing trends, where every hand-stitched detail honors tradition.\n\nAnd beyond the paved horizon stands the **Land Cruiser**—an unbroken oath between traveler and terrain. Wherever roads fade into dust and stone, the name itself becomes a compass, guaranteeing not just departure, but return.\n\nIn every letter, engineering becomes heritage; in every journey, heritage becomes legend.",
+                    text = "The Nomenclature of Endurance\n\nTo speak of the Crown is to recall quiet sovereignty. The Century pauses before craftsmanship that defies trends.\n\nBeyond the paved horizon stands the Land Cruiser—an unbroken oath between traveler and terrain. In every letter, engineering becomes heritage.",
                     isUser = false
                 ),
                 ChatMessage(
@@ -169,7 +168,7 @@ object MockChatsData {
                     isUser = true
                 ),
                 ChatMessage(
-                    text = "Here is a refined, minimalist advertising layout designed for premium print publications:\n\n***\n\n### **SILENCE IS THE ULTIMATE LUXURY.**\n\nTrue distinction never raises its voice.\n\nCrafted with acoustic precision and wool-appointed serenity, the cabin is not merely a passenger space—it is a sanctuary from the world outside. Where others seek attention through spectacle, we engineer poise through restraint.\n\n**Arrive without fanfare. Be remembered without word.**\n\n*Experience the Art of Quiet Sovereignty.*",
+                    text = "SILENCE IS THE ULTIMATE LUXURY.\n\nTrue distinction never raises its voice. Crafted with acoustic precision, the cabin is a sanctuary. We engineer poise through restraint.\n\nArrive without fanfare. Be remembered without word.",
                     isUser = false,
                     imageRes = Res.drawable.toyota_2_sedan
                 ),
@@ -187,7 +186,7 @@ object MockChatsData {
                     isUser = true
                 ),
                 ChatMessage(
-                    text = "Enduring brand nomenclature relies on subtle psychological and acoustic triggers. Here are the three primary drivers:\n\n* **Acoustic Symbolism:** Words featuring hard consonants (like *C*, *K*, or *T*) convey strength, precision, and durability, while open vowels evoke smoothness and aerodynamic flow.\n* **Aspirational Framing:** Naming a vehicle after enduring concepts (*Crown*, *Century*, *Horizon*) subconsciously transfers attributes of permanence and social prestige to the owner.\n* **Narrative Anchor:** A classic name acts as a historical vessel. With each new generation of the product, the consumer is not just buying hardware, but participating in a decades-long heritage story.",
+                    text = "Enduring names rely on subtle triggers:\n\n- Acoustic Symbolism: Hard consonants convey strength; open vowels evoke smoothness.\n- Aspirational Framing: Names like Crown transfer attributes of prestige.\n- Narrative Anchor: A classic name acts as a historical vessel spanning generations.",
                     isUser = false
                 ),
                 ChatMessage(
@@ -195,7 +194,7 @@ object MockChatsData {
                     isUser = true
                 ),
                 ChatMessage(
-                    text = "Here is an authoritative yet inspiring foreword for your exhibition catalog:\n\n***\n\n**Subject:** Foreword – The Poetry of Motion: 50 Years of Automotive Heritage\n\n### 🏛️ Foreword: Where Engineering Meets Storytelling\n\nAt its highest level, industrial design transcends pure utility to become an expression of human aspiration. An automobile is never merely steel, glass, and combustion—it is a sculpture engineered for motion.\n\nThis exhibition explores the rare intersection where uncompromising mechanical reliability meets poetic design. As you walk through these galleries, you will witness how nomenclature, proportion, and craftsmanship converge to turn everyday journeys into timeless legends.\n\nWe invite you to experience the harmony of form and endurance.\n\n**Best regards,**\n[Your Name]  \nCurator & Brand Heritage Lead",
+                    text = "Subject: Foreword – The Poetry of Motion\n\n🏛️ Where Engineering Meets Storytelling\n\nAn automobile is a sculpture engineered for motion. This exhibition explores the rare intersection where mechanical reliability meets poetic design, turning everyday journeys into timeless legends.\n\nBest regards,\nGabriel",
                     isUser = false,
                     imageRes = Res.drawable.toyota_4_museum
                 )
@@ -208,7 +207,7 @@ object MockChatsData {
                     imageRes = Res.drawable.urban_1_aerial
                 ),
                 ChatMessage(
-                    text = "Urban green spaces are essential for resilient cities. Here are the three primary impacts:\n\n* **Heat Island Mitigation:** Parks and tree canopies lower surrounding asphalt temperatures by up to 5°C.\n* **Mental Restoration:** Access to natural foliage correlates directly with reduced cortisol levels and lower urban anxiety.\n* **Stormwater Management:** Soil and roots absorb heavy rainfall, preventing city sewage overflow.",
+                    text = "Urban green spaces impact cities by:\n\n- Cooling: Parks lower asphalt temperatures by up to 5°C.\n- Mental Health: Foliage access reduces cortisol and urban anxiety.\n- Stormwater: Soil absorbs heavy rainfall, preventing floods.",
                     isUser = false
                 ),
                 ChatMessage(
@@ -216,7 +215,7 @@ object MockChatsData {
                     isUser = true
                 ),
                 ChatMessage(
-                    text = "Here is an executive summary of the commercial ROI you can present to the developer:\n\n***\n\n### The Business Case for Urban Green Plazas\n\nIntegrating accessible public greenery is no longer just an aesthetic amenity—it is a proven catalyst for commercial performance:\n\n* **Premium Property Valuation:** Commercial office spaces overlooking well-maintained greenery command up to **15% higher lease rates** and experience shorter vacancy cycles.\n* **Increased Foot Traffic & Dwell Time:** Retail and dining tenants surrounding green plazas benefit from a **25% increase in dwell time**, translating directly to higher average ticket sales.\n* **Reduced Infrastructure Operating Costs:** Green roofs and shaded plazas reduce building HVAC cooling demands during summer months by up to **20%** while serving as natural stormwater retention systems.\n\nInvesting in a public plaza directly elevates the net operating income (NOI) of the surrounding development.",
+                    text = "The Business Case for Green Plazas\n\n- Premium Valuation: Greenery-facing offices command up to 15% higher lease rates.\n- Increased Traffic: Surrounding retail sees a 25% increase in dwell time and sales.\n- Reduced Costs: Green roofs lower building HVAC cooling demands by up to 20%.",
                     isUser = false
                 ),
                 ChatMessage(
@@ -224,7 +223,7 @@ object MockChatsData {
                     isUser = true
                 ),
                 ChatMessage(
-                    text = "Here is a persuasive executive pitch tailored for municipal leadership:\n\n***\n\n### **Project Proposal: The Midtown Pocket Park Initiative**\n\n**Executive Summary:**\nWe propose converting the underutilized municipal surface lot on 4th Street into a high-impact urban pocket park. This strategic transformation converts a low-yield concrete asset into a thriving neighborhood hub that enhances public health and urban resilience.\n\n**Core Community Benefits:**\n* **Urban Cooling & Biodiversity:** Replaces 12,000 sq. ft. of heat-absorbing asphalt with native shade trees and drought-tolerant perennials.\n* **Economic Micro-Activation:** Creates an attractive lunchtime gathering space for surrounding office workers, driving daytime patronage to local food vendors.\n* **Low-Cost Deployment:** Utilizes modular seating and permeable gravel pathways to minimize initial capital expenditure while maximizing community impact.\n\n*Let's transform static infrastructure into living community value.*",
+                    text = "Project: The Midtown Pocket Park\n\nExecutive Summary:\nTransforming the 4th Street surface lot into a pocket park boosts urban resilience.\n\nBenefits:\n- Urban Cooling: Replaces 12,000 sq. ft. of asphalt with shade trees.\n- Economic Activation: Drives daytime patronage to local vendors.\n- Low-Cost: Utilizes modular seating to minimize capital expenditure.",
                     isUser = false,
                     imageRes = Res.drawable.urban_2_park
                 ),
@@ -242,7 +241,7 @@ object MockChatsData {
                     isUser = true
                 ),
                 ChatMessage(
-                    text = "Here is a structured, reassuring response designed to neutralize budget and water consumption concerns during the Q&A:\n\n***\n\n### Re: Mitigating Ongoing Water and Maintenance Costs\n\n**1. Xeriscaping & Native Species Selection:**\nBy strictly planting native, drought-resistant perennials and ornamental grasses, the park will require **zero supplemental irrigation** once root systems are established during the first growing season.\n\n**2. Smart Drainage & Passive Retention:**\nThe design incorporates bioswales that naturally capture and store rainwater run-off from adjacent rooftops, eliminating the need for municipal tap water use.\n\n**3. Minimal Staffing Overhead:**\nUnlike traditional turf grass which requires weekly mowing and fertilization, a native plant landscape requires only bi-annual seasonal pruning, reducing long-term labor costs by **65% compared to conventional parks**.",
+                    text = "Mitigating Water & Maintenance Costs\n\n- Xeriscaping: Native, drought-resistant plants require zero supplemental irrigation.\n- Passive Drainage: Bioswales capture rainwater, eliminating tap water use.\n- Low Labor: Requires only bi-annual pruning, cutting labor costs by 65%.",
                     isUser = false
                 ),
                 ChatMessage(
@@ -250,7 +249,7 @@ object MockChatsData {
                     isUser = true
                 ),
                 ChatMessage(
-                    text = "Here is a formal, highly scannable executive update ready for the Task Force:\n\n***\n\n**Subject:** Q3 Urban Forestry & Green Space Progress Report\n\n**Dear Members of the Sustainability Task Force,**\n\nWe are pleased to present our quarterly progress summary regarding municipal canopy expansion and green space revitalization.\n\n### 🌳 Key Q3 Milestones\n* **Tree Canopy Density:** Completed the installation of **450 urban shade trees** across high-heat commercial corridors, putting us 10% ahead of our annual sustainability target.\n* **Permeable Surface Conversion:** Transformed **35,000 square feet** of degraded municipal concrete into permeable, planted streetscapes to assist with storm drainage.\n* **Community Engagement:** Onboarded **12 corporate sponsorship partners** to fund ongoing maintenance of downtown pocket parks, ensuring fiscal sustainability.\n\nWe look forward to presenting the full environmental impact dashboard at next month's board session.\n\n**Best regards,**\n[Your Name]  \nDirector of Urban Resilience & Sustainability",
+                    text = "Subject: Q3 Urban Forestry Progress Report\n\n🌳 Key Milestones\n- Canopy Density: Installed 450 shade trees across commercial corridors.\n- Permeable Surfaces: Transformed 35,000 sq. ft. of concrete to assist drainage.\n- Sponsorships: Onboarded 12 corporate partners to fund ongoing maintenance.\n\nBest regards,\nGabriel",
                     isUser = false,
                     imageRes = Res.drawable.urban_4_infographic
                 )
@@ -263,7 +262,7 @@ object MockChatsData {
                     imageRes = Res.drawable.art_1_sketch
                 ),
                 ChatMessage(
-                    text = "For a realistic neon glow, follow this 3-layer technique:\n\n1. **Base Layer (Normal):** Paint the solid core of the light in crisp white or very light pastel.\n2. **Glow Layer 1 (Add / Linear Dodge):** Use a soft airbrush with your saturated neon color (e.g., cyan or magenta) around the white core.\n3. **Ambient Layer (Screen):** Lower the opacity to 30% and paint a wide, soft halo around the surrounding environment to simulate light bounce.",
+                    text = "Use this 3-layer neon technique:\n\n1. Base (Normal): Solid core in white.\n2. Glow (Add): Soft airbrush with saturated color around the core.\n3. Ambient (Screen): Lower opacity (30%) wide halo to simulate light bounce.",
                     isUser = false
                 ),
                 ChatMessage(
@@ -271,7 +270,7 @@ object MockChatsData {
                     isUser = true
                 ),
                 ChatMessage(
-                    text = "Complementary palettes like cyan and warm orange dominate commercial illustration because they maximize **chromatic contrast and emotional clarity**:\n\n* **Visual Hierarchy:** Cool teals and cyans naturally recede into the background, while warm oranges and ambers advance toward the viewer, instantly telling the eye where to focus.\n* **Thermal Balance:** Combining warm and cool light sources mimics natural atmospheric phenomena (like sunset against deep shadow), which humans find inherently pleasing and cinematic.\n* **Brand Impact:** High-contrast palettes perform exceptionally well on small mobile displays, preventing image muddying in social media feeds.",
+                    text = "Complementary palettes (cyan/orange) work because:\n\n- Visual Hierarchy: Cool cyans recede, warm oranges advance, guiding the eye.\n- Thermal Balance: Mimics pleasing natural phenomena like sunsets.\n- Brand Impact: High-contrast prevents image muddying on mobile.",
                     isUser = false
                 ),
                 ChatMessage(
@@ -279,7 +278,7 @@ object MockChatsData {
                     isUser = true
                 ),
                 ChatMessage(
-                    text = "Here is a compelling creative pitch designed for executive leadership:\n\n***\n\n**Subject:** Creative Pitch: Stylized Digital Illustration for Q4 Campaign\n\n**Hi [Creative Director's Name],**\n\nTo break through the visual clutter of traditional studio photography, we propose a high-impact **Stylized Digital Illustration** approach for our upcoming sneaker launch.\n\nBy replacing stock renders with custom illustrated lighting and dynamic color grading, we can position the product as a cultural artifact rather than just a physical commodity.\n\n### Strategic Advantages\n* **Unrestricted Visual Worlds:** Freely manipulate gravity, lighting, and environment without the budget constraints of physical set builds.\n* **Cross-Platform Adaptability:** Vector-backed raster assets scale seamlessly from mobile story formats to large-scale retail window displays.\n* **Elevated Brand Prestige:** Distinctive artistic direction reinforces our client's reputation as a design-forward industry leader.\n\nI would love to walk you through our initial style frames during tomorrow's sync.\n\n**Best regards,**\n[Your Name]  \nLead Art Director",
+                    text = "Subject: Creative Pitch: Stylized Digital Illustration\n\nHi [Director],\n\nWe propose Stylized Digital Illustration for the sneaker launch to break through traditional visual clutter.\n\nAdvantages\n- Unrestricted Worlds: Manipulate lighting without set-build costs.\n- Adaptability: Scales seamlessly from mobile to retail displays.\n- Prestige: Reinforces our client's reputation as a design leader.\n\nBest regards,\nGabriel",
                     isUser = false,
                     imageRes = Res.drawable.art_2_sneaker
                 ),
@@ -297,7 +296,7 @@ object MockChatsData {
                     isUser = true
                 ),
                 ChatMessage(
-                    text = "Professional design studios ensure non-destructive workflows by enforcing a **Strict Modular Layering Hierarchy**:\n\n* **Separate Line, Flat, and Shadow Groups:** Never merge line art with color fills. Keep primary local colors on discrete layers so brand palette swaps take seconds instead of hours.\n* **Use Clipping Masks for Texture:** Apply brushes, grit, and ambient occlusion exclusively via clipping masks over flat shapes, ensuring the base silhouettes remain sharp and editable.\n* **Global Adjustment Layers:** Manage overall contrast and color temperature using top-level adjustment curves rather than painting lighting directly onto object layers.",
+                    text = "Ensure fast revisions with Modular Layering:\n\n- Separate Line/Color: Keep local colors discrete for instant palette swaps.\n- Clipping Masks: Apply textures via masks to keep base silhouettes editable.\n- Global Adjustments: Manage contrast with top-level curves, not by painting directly.",
                     isUser = false
                 ),
                 ChatMessage(
@@ -305,13 +304,13 @@ object MockChatsData {
                     isUser = true
                 ),
                 ChatMessage(
-                    text = "Here is an executive summary formatted for your monthly creative operations report:\n\n***\n\n**Subject:** Studio Operations Report – Workflow Standardization & Efficiency Gains\n\n### 🎨 Executive Summary\nThe implementation of standardized digital illustration pipelines and modular layer architectures has significantly streamlined production velocity across our commercial design teams.\n\n### 📈 Core Operational Takeaways\n1. **35% Faster Revision Turnaround:** By enforcing non-destructive clipping masks and modular color grouping, client-requested palette modifications are now executed in minutes.\n2. **Consistent Visual Quality:** Standardizing our custom brush libraries and lighting templates across all senior artists eliminated style drift across multi-asset campaigns.\n3. **Reduced File Footprint:** Implementing structured export protocols reduced our shared server storage consumption while accelerating cross-department asset delivery to the motion graphics team.\n\nWe recommend rolling out this standardized digital workflow across all global creative pods next quarter.\n\n**Best regards,**\n[Your Name]  \nDirector of Creative Operations",
+                    text = "Subject: Studio Operations Report\n\n🎨 Executive Summary\nStandardized workflows streamlined our production velocity.\n\n📈 Core Takeaways\n1. 35% Faster Revisions: Modular grouping enables palette swaps in minutes.\n2. Consistent Quality: Shared brush libraries eliminated style drift.\n3. Reduced File Size: Export protocols accelerated cross-department delivery.\n\nBest regards,\nGabriel",
                     isUser = false,
                     imageRes = Res.drawable.art_4_studio
                 )
             )
 
-            // FALLBACK DE SEGURIDAD PARA EVITAR CRASH
+            // FALLBACK DE SEGURIDAD
             else -> listOf(
                 ChatMessage(
                     text = "Can we review our notes on this topic? I'm attaching a photo of our current sprint board to show where we are; we've got a lot of tickets stuck in the review stage.",
@@ -319,7 +318,7 @@ object MockChatsData {
                     imageRes = Res.drawable.typo_1_report
                 ),
                 ChatMessage(
-                    text = "Of course! Here is the summarized thread and key takeaways regarding this topic up to this point. Based on the notes and your image, the primary focus needs to be on unblocking that review stage.\n\n### Key Open Items\n* **Resource Allocation:** Team alpha is waiting on client approval for deliverables.\n* **Technical Spikes:** Two major architecture decisions are pending C-suite review.\n\nLet me know how you would like to proceed with this topic.",
+                    text = "Here are the key takeaways to unblock the review stage:\n\n- Resource Allocation: Team alpha awaits client approval.\n- Technical Spikes: Two architecture decisions await C-suite review.",
                     isUser = false
                 ),
                 ChatMessage(
@@ -327,7 +326,7 @@ object MockChatsData {
                     isUser = true
                 ),
                 ChatMessage(
-                    text = "Certainly, here is a professional draft designed to encourage prompt review without being aggressive:\n\n***\n\n**Subject:** Deliverables Submitted - Request for Expedited Review\n\n**Dear [Stakeholder Name],**\n\nI hope this email finds you well.\n\nRegarding our current project phase, our team alpha submitted the major deliverables for your review early this week. As we approach our next critical sprint milestone, a finalized review of these items will ensure we maintain our planned production velocity and hit our targeted delivery dates.\n\nCould your team provide feedback by **Thursday at 3:00 PM**? This will give us the necessary time to address any inputs before the weekend code freeze.\n\nThank you for your partnership. Please let me know if you need to schedule a brief sync to walk through these items.\n\n**Best regards,**\n[Your Name]",
+                    text = "Subject: Request for Expedited Review\n\nDear [Stakeholder],\n\nTeam alpha submitted deliverables early this week. To maintain velocity and hit delivery dates, could you provide feedback by Thursday at 3:00 PM?\n\nThank you for your partnership.\n\nBest regards,\nGabriel",
                     isUser = false
                 ),
                 ChatMessage(
@@ -335,7 +334,7 @@ object MockChatsData {
                     isUser = true
                 ),
                 ChatMessage(
-                    text = "Absolutely. Here is a streamlined executive decision matrix summarizing the pending architectural choices based on our previous discussions. This format is ideal for gaining high-level consensus:\n\n| Option | Description | Trade-offs | Scalability Impact |\n| :--- | :--- | :--- | :--- |\n| **A** | Serverless Architecture | Lower immediate cost, higher operational complexity | Highest |\n| **B** | Dedicated Cloud Infrastructure | Predictable costs, longer set-up time | Moderate |\n| **C** | Hybrid Solution | Existing compatibility, higher long-term management | Limited |\n\nI recommend prioritizing **Option B** for long-term stability unless cost is the absolute defining constraint.",
+                    text = "| Option | Description | Scalability |\n| :--- | :--- | :--- |\n| A | Serverless | Highest |\n| B | Dedicated Cloud | Moderate |\n| C | Hybrid Solution | Limited |\n\nI recommend Option B for long-term stability.",
                     isUser = false,
                     imageRes = Res.drawable.quad_2_chart
                 ),
@@ -353,7 +352,7 @@ object MockChatsData {
                     isUser = true
                 ),
                 ChatMessage(
-                    text = "Here are the talking points structured for the budget variance update, designed to position the slight overspend as a strategic investment in speed:\n\n***\n\n### Budget Variance & Roadmap Acceleration Update\n\n**1. The Current State:**\n* Currently forecasting roughly **10 percent over budget** for Phase 1. This variance is primarily driven by additional front-end resources allocated to key deliverables.\n\n**2. The Strategic Return on Investment (ROI):**\n* **Roadmap Acceleration:** By front-loading these resources, we accelerated the Phase 1 roadmap by **two full sprints** (4 weeks). We effectively traded near-term budget for significant long-term time savings.\n* **Client Confidence:** Accelerating these deliverables improved the client's internal validation timelines, reducing long-term project friction.\n\n**3. Mitigation & The Path Forward:**\n* We will utilize the generated efficiencies in Phase 2 to normalize the budget variance and revert to the baseline spend profile.",
+                    text = "Budget Variance Update\n\n- Current State: Forecasting 10% over budget due to front-loaded resources.\n- Strategic ROI: This accelerated the roadmap by 4 weeks.\n- Path Forward: We will use these efficiencies to normalize Phase 2 spending.",
                     isUser = false
                 ),
                 ChatMessage(
@@ -361,7 +360,7 @@ object MockChatsData {
                     isUser = true
                 ),
                 ChatMessage(
-                    text = "Here is the definitive executive summary of our note review session regarding this topic:\n\n***\n\n**Subject:** Executive Summary – Note Review & Action Plan\n\n**Current Status & Key Unblocking Actions:**\n* The team identified primary project roadblocks in deliverable review and pending architectural decisions.\n\n### Strategic Action Plan\n1. **Client Communication:** A tactful email was drafted to client leadership requesting expedited review of team alpha's deliverables, emphasizing the planned production velocity.\n2. **Architecture Decision Matrix:** A matrix was generated to facilitate high-level consensus on pending architecture spikes during the upcoming leadership meeting.\n3. **Budget Variance Management:** Talking points were prepared to frame the projected 10 percent overspend as a strategic investment in accelerating the roadmap by two sprints.\n\nWe will resume note-taking after the upcoming leadership sync.\n\n**Best regards,**\n[Your Name]  \nProject Management & Strategic Partner",
+                    text = "Subject: Executive Summary – Action Plan\n\nStrategic Action Plan\n1. Client Communication: Requested expedited review to maintain velocity.\n2. Architecture: Matrix generated for C-suite consensus.\n3. Budget: Framed the 10% overspend as a strategic roadmap acceleration.\n\nBest regards,\nGabriel",
                     isUser = false,
                     imageRes = Res.drawable.art_4_studio
                 )
