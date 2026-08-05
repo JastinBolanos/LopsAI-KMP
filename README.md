@@ -1,165 +1,210 @@
 <div align="center">
+  <img src="docs/lopsai.png" alt="LopsAI Logo" width="120" />
 
-# LopsAI-KMP | Enterprise-Grade AI Dashboard
+  <h1>LopsAI-KMP | Enterprise-Grade AI Dashboard</h1>
+  <h3>Multiplatform Architecture Showcase</h3>
 
-### Multiplatform Architecture Showcase
-
-**High-Performance UI/UX, Single Codebase, and Next-Gen Web & Mobile Deployment.**
+  <p><strong>High-Performance UI/UX, Single Codebase, and Next-Gen Web & Mobile Deployment.</strong></p>
 
 [![View Live Web Demo](https://img.shields.io/badge/View%20Live%20Web%20Demo-blue?style=for-the-badge&logo=googlechrome&logoColor=white)](https://github.com/TuUsuario/LopsAI-KMP/releases)
-[![GitHub Release](https://img.shields.io/badge/Releases-gray?style=for-the-badge&logo=github)](https://github.com/TuUsuario/LopsAI-KMP/releases)
 [![Kotlin](https://img.shields.io/badge/Kotlin-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white)](https://kotlinlang.org/)
 [![Compose Multiplatform](https://img.shields.io/badge/Compose_Multiplatform-purple?style=for-the-badge&logo=android)](https://www.jetbrains.com/lp/compose-multiplatform/)
 [![WebAssembly](https://img.shields.io/badge/WebAssembly-Optimized-654FF0?style=for-the-badge&logo=webassembly&logoColor=white)]()
 [![iOS & Android](https://img.shields.io/badge/Mobile-Native_Fluidity-black?style=for-the-badge&logo=apple)]()
 [![Clean Architecture](https://img.shields.io/badge/Architecture-Clean-orange?style=for-the-badge)]()
 
+<p align="center">
+  <a href="https://github.com/JastinBolanos/LopsAI-KMP/releases/download/v1.0.0/lopsai.apk">
+    <img src="https://img.shields.io/badge/Download-APK%20Android-green?style=for-the-badge&logo=android&logoColor=white" alt="Descargar APK">
+  </a>
+</p>
 </div>
 
 ---
 
-## 1. Project Vision and Repository Nature
+## 1. Project Vision & Repository Nature
 
 After a successful architectural design cycle with production-level foundations, this codebase has been surgically structured to act as an elite **Frontend & UI Architecture Showcase**.
-**LopsAI-KMP** is not a generic template. It establishes a "competitive moat" in multiplatform development by demonstrating that highly complex, interactive interfaces — like an AI conversational dashboard — can exist in a single codebase without sacrificing visual fidelity or performance.
-The architecture has been strategically streamlined to focus exclusively on the highest-impact platforms: **Mobile (Android/iOS) and Web (Wasm/JS)** — ensuring hyper-fast compilation times and maximum performance in market-dominant ecosystems. Any developer, auditor, or Tech Lead can instantly clone and evaluate the system's UI prowess.
+
+**LopsAI-KMP** is not a generic template. It establishes a "competitive moat" in multiplatform development by demonstrating that highly complex, interactive interfaces — like an AI conversational dashboard — can exist in a single codebase without sacrificing visual fidelity, animation frame rates, or platform-native fluidity.
+
+The architecture has been strategically streamlined to focus exclusively on market-dominant targets: **Mobile (Android/iOS) and Web (Wasm/JS)** — ensuring hyper-fast compilation times, minimal bundle sizes, and native-grade hardware acceleration.
 
 ---
 
-## 2. Tech Stack and Technical Excellence
-The project is governed by the *"Write once, run natively anywhere"* paradigm, optimized for scenarios with high visual load, dynamic theming, and fluid animations.
+## 2. Tech Stack & Technical Excellence
 
-- **Core & UI Framework:** Kotlin Multiplatform (KMP) and Compose Multiplatform. Shares 100% of the visual and business logic between Android, iOS, and the Browser.
-- **Web Optimization (Skiko/Canvas):** Advanced implementation of Web deployment utilizing Skiko and WebAssembly/JS. Includes precise `viewport` management in HTML to prevent browser-scaling degradation, ensuring crisp text and layout rendering.
-- **State Management & Recomposition:** Rigorous implementation of `key()` blocks and state management within Lazy structures (like the Chat list) to completely eradicate "reuse" crashes during high-speed view transitions.
-- **Build Infrastructure:** Gradle Kotlin DSL (`build.gradle.kts`) optimized for a pure Mobile/Web ecosystem. Exclusion of unnecessary legacy desktop targets to reduce artifact weight and boost CI/CD scalability.
-- **Dynamic Visual Engine:** Custom implementation of *Living Wallpapers* and animated state transitions (like the custom Switch components), running identically across all target platforms.
+The project is governed by the *"Write once, run natively anywhere"* paradigm, optimized for scenarios with high visual load, dynamic gradient rendering, and real-time state mutations.
+
+* **Core & UI Framework:** Kotlin Multiplatform (KMP) & Compose Multiplatform. Shares 100% of the UI design system, state handling, and navigation logic across platforms.
+* **Web Optimization (Skiko / WebAssembly):** Direct canvas rendering via Skiko and WebAssembly (Wasm). Implements tailored viewport management in HTML to prevent browser font degradation, ensuring crisp vector text and sub-pixel alignment.
+* **State Management & Zero-Crash Recomposition:** Rigorous utilization of explicit `key()` bindings inside `LazyColumn` and `LazyGrid` structures. This completely eradicates view-recycling collisions during high-frequency AI message updates.
+* **Dynamic Visual Engine:** Custom `LivingWallpaperBg` implementation utilizing hardware-accelerated Compose Canvas shaders, rendering smooth ambient light glows with low GPU consumption.
+* **Adaptive Light/Dark Theming:** Fully reactive theme provider driven by Compose `CompositionLocal`, providing instant UI color mutations without screen re-instantiation.
 
 ---
 
 <div align="center">
-<img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcHp0bDAxNXk1bG56OHp6MHU5NWp3aG95Zm9ndzNjNmh2amxpNTZmNiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/F0VCptrJteVWDeLBHD/giphy.gif" width="70" align="absmiddle" />
-
-### Live Demo: LopsAI in Action
+  <h2>
+    <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcHp0bDAxNXk1bG56OHp6MHU5NWp3aG95Zm9ndzNjNmh2amxpNTZmNiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/F0VCptrJteVWDeLBHD/giphy.gif" width="50" align="center" /> 
+    Live Interface Demonstrations
+  </h2>
+  <p><em>Experience the adaptive layout transition, live model toggling, and fluid glassmorphic UI across platforms.</em></p>
 </div>
 
-Explore the showcased experience: observe the interface's fluidity, the seamless dark/light mode transitions, and the adaptive layout that reshapes perfectly from a wide desktop browser down to a mobile screen. This brief demonstration presents LopsAI, an enterprise-grade AI dashboard built entirely using Kotlin Multiplatform.
-> *(Replace this placeholder with your actual GIF demo)*
-> https://github.com/user-attachments/assets/your-video-link-here
+### 📱 Mobile Native Experience (Android & iOS)
+*A comprehensive 59-second deep dive into the mobile application. Observe the fluid `OmniInput` expansion, seamless modal routing, instant Dark/Light mode mutations, and real-time conversational rendering with zero UI stuttering.*
 
-## 3. Case Study: The AI Conversational Interface
+https://github.com/user-attachments/assets/3cd6e81d-5aa1-4534-a139-d66eb65982b9
 
-This module embodies a next-generation AI assistant, balancing deep aesthetic customization with the non-negotiable rendering fluidity demanded by real-time conversational interfaces.
+### 🖥️ WebAssembly & Desktop Experience (Wasm/JS)
+*Witness the adaptive desktop layout in action. Featuring a persistent sidebar, intelligent multi-column grids for premium tiers, and Skiko-powered canvas rendering that maintains absolute visual crispness across large widescreen viewports.*
 
-### OmniInput & Adaptive Layout
-At its core lies a highly responsive architecture. The custom `OmniInput` component intelligently handles multi-line prompts and interactive states, while the global layout seamlessly morphs from a persistent desktop sidebar into a sleek, mobile-first top-header navigation without losing view state.
+https://github.com/user-attachments/assets/8453f722-07c5-4929-9acb-7d77ac51fa99
 
-<p align="left">
-  <img src="docs/01_dashboard_desktop.png" width="350" alt="Desktop Sidebar Dashboard"/>
-  &nbsp;&nbsp;&nbsp;
-  <img src="docs/02_dashboard_mobile.png" width="200" alt="Mobile TopHeader Navigation"/>
+---
+
+## 3. Case Study: The AI Conversational Engine & Responsive UX
+
+This module embodies a next-generation AI assistant interface, balancing deep visual customization with rendering fluidity for real-time streaming environments.
+
+### Adaptive Layout & Ambient Navigation
+At its core lies a responsive navigation architecture. On compact viewports, the interface utilizes a smooth sliding navigation drawer paired with an uncluttered header. The custom `OmniInput` input box supports multi-line expanding text, quick action pills (*Brainstorm, Code, Summarize*), and quick voice input toggles.
+
+<p align="center">
+  <img src="docs/01_dashboard_mobile.png" width="220" alt="Mobile Dashboard Dark"/>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="docs/15_dashboard_mobile_light.png" width="220" alt="Mobile Dashboard Light"/>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="docs/07_sidebar_navigation.png" width="220" alt="Sidebar Navigation Drawer"/>
 </p>
 
-### High-Performance Chat Rendering
-State management is pushed to the limit using highly optimized `LazyColumn` structures. By implementing complex composite keys, the architecture completely eradicates rendering collisions during rapid state mutations (reuse crashes). The UI seamlessly integrates dynamic image attachments, smooth corner masking, and real-time AI typing indicators (`AITypingBubble`).
+### Model Switching, OmniInput Tools & Rich Media Rendering
+The system features a lightweight modal selector allowing users to switch models dynamically (e.g., *GPT-4o mini, GPT-5, Claude Opus*). The `OmniInput` component expands to reveal specialized AI tool triggers (*Deep Research, Web Search, Code Generation, Image Generation*), while the chat window handles inline high-resolution image attachments and structured Markdown text without UI stuttering.
 
-<p align="left">
-  <img src="docs/03_chat_attachments.png" width="250" alt="Chat with Image Attachments"/>
-  &nbsp;&nbsp;&nbsp;
-  <img src="docs/04_ai_typing_animation.gif" width="250" alt="AI Typing Indicator GIF"/>
-  &nbsp;&nbsp;&nbsp;
-  <img src="docs/05_chat_history.png" width="250" alt="Scrollable Chat History"/>
+<p align="center">
+  <img src="docs/02_model_selection_dropdown.png" width="220" alt="Model Selector Menu"/>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="docs/14_input_tools_menu.png" width="220" alt="OmniInput Tools Menu"/>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="docs/18_chat_image_response.png" width="220" alt="Rich Media Chat Attachment"/>
+</p>
+
+### Chat History Search & Public Link Sharing
+Stateful overlay dialogs allow instant full-text filtering across current and past conversation threads grouped by time periods (*Today, Yesterday, Previous 7 Days*). Users can seamlessly generate shareable public URL links directly from any active chat session via a dedicated modal dialog.
+
+<p align="center">
+  <img src="docs/13_chat_history_search.png" width="220" alt="Chat History Search Modal"/>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="docs/03_share_chat_dialog.png" width="220" alt="Public Link Sharing Modal"/>
 </p>
 
 ---
 
-## 4. Case Study: Ecosystem Management (Library & Settings)
+## 4. Case Study: Ecosystem Management (Library, GPT Store & Settings)
 
-A cohesive ecosystem designed for comprehensive user management, demonstrating complex modal routing, state hoisting, and reactive theme mutations in Compose.
+A unified management layer built for user customization, platform integration, and tier-based monetization.
 
-### Dynamic Theming & Living Backgrounds
-The Settings module grants access to appearance configurations. The system includes an interactive, animated dropdown for theme selection and smoothly animated toggles that instantly mutate the global application state, including a breathtaking dynamic gradient background (`LivingWallpaperBg`).
+### Unified Settings & Cloud Connectors
+The settings architecture is split into modular tabs managed via Compose state hoisting:
+* **General:** Global theme switches (Dark/Light), code visibility toggles, and multi-language selections.
+* **Personalization & Memory:** Custom instructions and persistent memory toggles.
+* **Builder Profile:** Creator details, professional domain verifications, and public social links.
+* **Connected Apps:** Integrations with cloud providers (*Google Drive, Microsoft OneDrive*) and native hardware frameworks (*Apple Intelligence*).
 
-<p align="left">
-  <img src="docs/06_settings_modal.png" width="250" alt="Settings Dialog"/>
-  &nbsp;&nbsp;&nbsp;
-  <img src="docs/07_theme_selection.png" width="250" alt="Theme Dropdown"/>
-  &nbsp;&nbsp;&nbsp;
-  <img src="docs/08_light_mode.png" width="250" alt="Light Mode Applied"/>
+<p align="center">
+  <img src="docs/09_settings_general.png" width="210" alt="General Settings Tab"/>
+  &nbsp;&nbsp;
+  <img src="docs/12_settings_personalization.png" width="210" alt="Personalization Settings Tab"/>
+  &nbsp;&nbsp;
+  <img src="docs/10_settings_builder_profile.png" width="210" alt="Builder Profile Settings Tab"/>
+  &nbsp;&nbsp;
+  <img src="docs/11_settings_connected_apps.png" width="210" alt="Connected Apps Tab"/>
 </p>
 
-### Library & App Navigation
-Implementation of a custom `Crossfade` transition system for navigating between the Main Dashboard, the Prompts Library, and the GPT Store, ensuring the background veil and global aesthetics remain undisturbed during screen swaps.
+### Asset Library & Custom GPT Discovery Store
+The **My Library** feature offers a grid of saved workspace environments and creative visual assets, rendering ambient background cards cleanly in both dark and light visual modes. The **GPT Store** features categorized discovery hubs (*Featured, Writing, Productivity, Research*) complete with trending creator rankings and direct launch buttons.
 
-<p align="left">
-  <img src="docs/09_library_screen.png" width="250" alt="Library View"/>
-  &nbsp;&nbsp;&nbsp;
-  <img src="docs/10_store_screen.png" width="250" alt="GPT Store"/>
-  &nbsp;&nbsp;&nbsp;
-  <img src="docs/11_share_dialog.png" width="250" alt="Share Modal"/>
+<p align="center">
+  <img src="docs/06_library_gradients.png" width="210" alt="My Library Grid Dark"/>
+  &nbsp;&nbsp;
+  <img src="docs/17_library_grid_light.png" width="210" alt="My Library Grid Light"/>
+  &nbsp;&nbsp;
+  <img src="docs/04_gpt_store_featured.png" width="210" alt="GPT Store Featured Tier"/>
+  &nbsp;&nbsp;
+  <img src="docs/05_gpt_store_trending.png" width="210" alt="GPT Store Trending Rankings"/>
 </p>
 
---- 
+### Responsive Monetization & Tier Upgrade Dialogs
+The premium subscription engine presents tier option cards (*LopsAI Plus, Pro, Max*) highlighting featured capabilities, custom pricing badges, and highlighted call-to-actions. Designed with responsive break-points, the dialog layout dynamically scales from vertical mobile stacks into balanced 3-column desktop wide views.
 
-## 5. Software Architecture (Project Map) The following diagram illustrates the routing and UI logic implemented in the application: 
+<p align="center">
+  <img src="docs/08_premium_upgrade_modal.png" width="240" alt="Premium Upgrade Dark Mode"/>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="docs/16_premium_upgrade_light.png" width="240" alt="Premium Upgrade Light Mode"/>
+</p>
 
-  ```bash
-  graph TD
-    %% Punto de Entrada
-    Start([App Start]) --> App[App.kt]
-    App --> Theme[ChatGPTTheme & Platform Init]
-    Theme --> Router(MainRouter)
+---
 
-    %% Capa Base y Navegación
-    Router --> Layout{Adaptive Layout}
-    Layout -->|Fondo Dinámico| LivingBg[LivingWallpaperBg]
-    Layout -->|Desktop / Web| Sidebar[Sidebar & SidebarItem]
-    Layout -->|Móvil| TopHeader[TopHeader]
+## 5. Architectural Breakdown & Performance Guardrails
 
-    %% Enrutamiento Principal
-    Router --> ScreenState{Current AppScreen?}
+```mermaid
+graph TD
+  %% Punto de Entrada
+  Start([App Start]) --> App[App.kt]
+  App --> Theme["ChatGPTTheme & Platform Init"]
+  Theme --> Router(MainRouter)
 
-    %% 1. Módulo: Dashboard (Chat)
-    ScreenState -->|Dashboard| Chat[Main Dashboard Area]
-    Chat --> Input[OmniInput Container]
-    Input --> Tools[ToolsTray & ThemeToggleButton]
-    Input --> Chips[SuggestionChips]
-    
-    Chat --> List[Lazy Message List]
-    List --> MsgUI[Chat Message Render]
-    MsgUI --> UserMsg[Image Scaling & User Text]
-    MsgUI --> AIMsg[AITypingBubble]
+  %% Capa Base y Navegación
+  Router --> Layout{Adaptive Layout}
+  Layout -->|Fondo Dinámico| LivingBg[LivingWallpaperBg]
+  Layout -->|Desktop / Web| Sidebar["Sidebar & SidebarItem"]
+  Layout -->|Móvil| TopHeader[TopHeader]
 
-    %% 2. Módulo: Library
-    ScreenState -->|Library| Lib[LibraryScreen]
-    Lib --> LibHeader[LibraryTopBar]
-    Lib --> LibGrid[LibraryCardItem List]
+  %% Enrutamiento Principal
+  Router --> ScreenState{Current AppScreen?}
 
-    %% 3. Módulo: GPT Store
-    ScreenState -->|GptStore| Store[GptStoreScreen]
-    Store --> StoreHeader[SectionTitle & SeeMoreButton]
-    Store --> Featured[FeaturedCard]
-    Store --> Trending[TrendingItem & ChatGptModelItem]
+  %% 1. Módulo: Dashboard (Chat)
+  ScreenState -->|Dashboard| Chat[Main Dashboard Area]
+  Chat --> Input[OmniInput Container]
+  Input --> Tools["ToolsTray & ThemeToggleButton"]
+  Input --> Chips[SuggestionChips]
+  
+  Chat --> List[Lazy Message List]
+  List --> MsgUI[Chat Message Render]
+  MsgUI --> UserMsg["Image Scaling & User Text"]
+  MsgUI --> AIMsg[AITypingBubble]
 
-    %% Modales Globales e Interacciones
-    Router --> Modals{Global Actions}
+  %% 2. Módulo: Library
+  ScreenState -->|Library| Lib[LibraryScreen]
+  Lib --> LibHeader[LibraryTopBar]
+  Lib --> LibGrid["LibraryCardItem List"]
 
-    %% Buscador (Search)
-    Modals -->|Search Click / Cmd+K| Search[SearchChatsDialog]
-    Search --> SearchUI[SearchComponents]
-    SearchUI --> Recent[DefaultRecentSection]
-    SearchUI --> Results[SimulatedResultsSection]
+  %% 3. Módulo: GPT Store
+  ScreenState -->|GptStore| Store[GptStoreScreen]
+  Store --> StoreHeader["SectionTitle & SeeMoreButton"]
+  Store --> Featured[FeaturedCard]
+  Store --> Trending["TrendingItem & ChatGptModelItem"]
 
-    %% Ajustes (Settings)
-    Modals -->|Avatar Click| Settings[SettingsDialog]
-    Settings --> SettingsMenu[SettingsSidebar & Header]
-    SettingsMenu --> SettingsSections{Settings Sections}
-    SettingsSections --> Sec1[Personalization & General]
-    SettingsSections --> Sec2[Data Controls & Security]
-    SettingsSections --> Sec3[Builder Profile & Speech]
+  %% Modales Globales e Interacciones
+  Router --> Modals{Global Actions}
 
-    %% Compartir (Share)
-    Modals -->|Share Click| Share[ShareChatDialog]
+  %% Buscador (Search)
+  Modals -->|Search Click / Cmd+K| Search[SearchChatsDialog]
+  Search --> SearchUI[SearchComponents]
+  SearchUI --> Recent[DefaultRecentSection]
+  SearchUI --> Results[SimulatedResultsSection]
+
+  %% Ajustes (Settings)
+  Modals -->|Avatar Click| Settings[SettingsDialog]
+  Settings --> SettingsMenu["SettingsSidebar & Header"]
+  SettingsMenu --> SettingsSections{Settings Sections}
+  SettingsSections --> Sec1["Personalization & General"]
+  SettingsSections --> Sec2["Data Controls & Security"]
+  SettingsSections --> Sec3["Builder Profile & Speech"]
+
+  %% Compartir (Share)
+  Modals -->|Share Click| Share[ShareChatDialog]
   ```
 
 ---
@@ -193,7 +238,7 @@ The codebase follows a rigorous multiplatform architecture approach, ensuring a 
 
 1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/TuUsuario/LopsAI-KMP.git](https://github.com/TuUsuario/LopsAI-KMP.git)
+   git clone [https://github.com/JastinBolanos/LopsAI-KMP.git](https://github.com/JastinBolanos/LopsAI-KMP.git)
    cd LopsAI-KMP
    ```
 **For Android:**

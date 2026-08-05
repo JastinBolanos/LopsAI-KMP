@@ -19,8 +19,6 @@ kotlin {
         }
     }
 
-    // ⚡ Se eliminó jvm() por completo
-
     js {
         browser()
     }
