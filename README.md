@@ -4,7 +4,7 @@
   <h1>LopsAI-KMP | Enterprise-Grade AI Dashboard</h1>
   <h3>Multiplatform Architecture Showcase</h3>
 
-  <p><strong>High-Performance UI/UX, Single Codebase, and Next-Gen Web & Mobile Deployment.</strong></p>
+  <p><strong>High-Performance Native Android UI/UX Powered by a Multiplatform Core Prepared for iOS & Web.</strong></p>
 
 [![View Live Web Demo](https://img.shields.io/badge/View%20Live%20Web%20Demo-blue?style=for-the-badge&logo=googlechrome&logoColor=white)](https://github.com/TuUsuario/LopsAI-KMP/releases)
 [![Kotlin](https://img.shields.io/badge/Kotlin-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white)](https://kotlinlang.org/)
@@ -26,9 +26,9 @@
 
 After a successful architectural design cycle with production-level foundations, this codebase has been surgically structured to act as an elite **Frontend & UI Architecture Showcase**.
 
-**LopsAI-KMP** is not a generic template. It establishes a "competitive moat" in multiplatform development by demonstrating that highly complex, interactive interfaces — like an AI conversational dashboard — can exist in a single codebase without sacrificing visual fidelity, animation frame rates, or platform-native fluidity.
+**LopsAI-KMP** is not a generic template. It establishes a "competitive moat" in multiplatform development by demonstrating that highly complex, interactive interfaces — like an AI conversational dashboard — can be delivered with flawless native fluidity on Android and Web (Wasm) today, while structurally preparing the entire visual and logical engine to scale seamlessly to iOS.
 
-The architecture has been strategically streamlined to focus exclusively on market-dominant targets: **Mobile (Android/iOS) and Web (Wasm/JS)** — ensuring hyper-fast compilation times, minimal bundle sizes, and native-grade hardware acceleration.
+The shared architecture has been strategically streamlined with cross-platform scalability in mind — ensuring hyper-fast compilation times, minimal bundle sizes, and native-grade hardware acceleration across mobile and desktop browser environments.
 
 ---
 
@@ -36,7 +36,7 @@ The architecture has been strategically streamlined to focus exclusively on mark
 
 The project is governed by the *"Write once, run natively anywhere"* paradigm, optimized for scenarios with high visual load, dynamic gradient rendering, and real-time state mutations.
 
-* **Core & UI Framework:** Kotlin Multiplatform (KMP) & Compose Multiplatform. Shares 100% of the UI design system, state handling, and navigation logic across platforms.
+* **Core & UI Framework:** Kotlin Multiplatform (KMP) & Compose Multiplatform. Drives a premium native experience on Android and Web browsers, sharing 100% of the UI design system, state handling, and navigation logic, structurally ready to scale to the Apple ecosystem.
 * **Web Optimization (Skiko / WebAssembly):** Direct canvas rendering via Skiko and WebAssembly (Wasm). Implements tailored viewport management in HTML to prevent browser font degradation, ensuring crisp vector text and sub-pixel alignment.
 * **State Management & Zero-Crash Recomposition:** Rigorous utilization of explicit `key()` bindings inside `LazyColumn` and `LazyGrid` structures. This completely eradicates view-recycling collisions during high-frequency AI message updates.
 * **Dynamic Visual Engine:** Custom `LivingWallpaperBg` implementation utilizing hardware-accelerated Compose Canvas shaders, rendering smooth ambient light glows with low GPU consumption.
@@ -52,7 +52,7 @@ The project is governed by the *"Write once, run natively anywhere"* paradigm, o
   <p><em>Experience the adaptive layout transition, live model toggling, and fluid glassmorphic UI across platforms.</em></p>
 </div>
 
-### 📱 Mobile Native Experience (Android & iOS)
+### 📱 Mobile Native Experience
 *A comprehensive 59-second deep dive into the mobile application. Observe the fluid `OmniInput` expansion, seamless modal routing, instant Dark/Light mode mutations, and real-time conversational rendering with zero UI stuttering.*
 
 https://github.com/user-attachments/assets/3cd6e81d-5aa1-4534-a139-d66eb65982b9
@@ -289,5 +289,5 @@ The codebase follows a rigorous multiplatform architecture approach, ensuring a 
   ```bash
   ./gradlew :webApp:jsBrowserDevelopmentRun
   ```
-  
+
 Open http://localhost:8080 in your preferred browser.
