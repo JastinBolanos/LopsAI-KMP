@@ -1,10 +1,10 @@
 <div align="center">
   <img src="docs/lopsai.png" alt="LopsAI Logo" width="120" />
 
-  <h1>LopsAI-KMP | Enterprise-Grade AI Dashboard</h1>
+  <h1>LopsAI-KMP | AI Conversational Client</h1>
   <h3>Multiplatform Architecture Showcase</h3>
 
-  <p><strong>High-Performance Native Android UI/UX Powered by a Multiplatform Core Prepared for iOS & Web.</strong></p>
+  <p><strong>A responsive AI conversational frontend built with Compose Multiplatform, delivering native Android and Web experiences from a shared Kotlin codebase.</strong></p>
 
 [![View Live Web Demo](https://img.shields.io/badge/View%20Live%20Web%20Demo-blue?style=for-the-badge&logo=googlechrome&logoColor=white)](https://github.com/TuUsuario/LopsAI-KMP/releases)
 [![Kotlin](https://img.shields.io/badge/Kotlin-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white)](https://kotlinlang.org/)
@@ -24,23 +24,23 @@
 
 ## 1. Project Vision & Repository Nature
 
-After a successful architectural design cycle with production-level foundations, this codebase has been surgically structured to act as an elite **Frontend & UI Architecture Showcase**.
+This codebase serves as a **Frontend & UI Architecture Showcase**, designed to explore responsive layouts, rich component hierarchies, and interactive client-side patterns for conversational AI applications.
 
-**LopsAI-KMP** is not a generic template. It establishes a "competitive moat" in multiplatform development by demonstrating that highly complex, interactive interfaces — like an AI conversational dashboard — can be delivered with flawless native fluidity on Android and Web (Wasm) today, while structurally preparing the entire visual and logical engine to scale seamlessly to iOS.
+**LopsAI-KMP** illustrates how conversational interfaces, dynamic navigation trees, and visual themes can be implemented across Android and Web environments using Compose Multiplatform. By sharing presentation state, styling systems, and layout logic within a unified Kotlin core, the project provides a coherent user experience on mobile devices and browser windows while remaining structurally prepared for iOS.
 
-The shared architecture has been strategically streamlined with cross-platform scalability in mind — ensuring hyper-fast compilation times, minimal bundle sizes, and native-grade hardware acceleration across mobile and desktop browser environments.
+The repository emphasizes clean UI component separation, lightweight client state, and responsive adaptations between compact handheld screens and widescreen desktop displays.
 
 ---
 
-## 2. Tech Stack & Technical Excellence
+## 2. Tech Stack & Technical Foundations
 
-The project is governed by the *"Write once, run natively anywhere"* paradigm, optimized for scenarios with high visual load, dynamic gradient rendering, and real-time state mutations.
+The project leverages modern multiplatform tooling to share UI components and presentation logic across supported form factors while preserving platform-native feel.
 
-* **Core & UI Framework:** Kotlin Multiplatform (KMP) & Compose Multiplatform. Drives a premium native experience on Android and Web browsers, sharing 100% of the UI design system, state handling, and navigation logic, structurally ready to scale to the Apple ecosystem.
-* **Web Optimization (Skiko / WebAssembly):** Direct canvas rendering via Skiko and WebAssembly (Wasm). Implements tailored viewport management in HTML to prevent browser font degradation, ensuring crisp vector text and sub-pixel alignment.
-* **State Management & Zero-Crash Recomposition:** Rigorous utilization of explicit `key()` bindings inside `LazyColumn` and `LazyGrid` structures. This completely eradicates view-recycling collisions during high-frequency AI message updates.
-* **Dynamic Visual Engine:** Custom `LivingWallpaperBg` implementation utilizing hardware-accelerated Compose Canvas shaders, rendering smooth ambient light glows with low GPU consumption.
-* **Adaptive Light/Dark Theming:** Fully reactive theme provider driven by Compose `CompositionLocal`, providing instant UI color mutations without screen re-instantiation.
+* **Core & UI Framework:** Kotlin Multiplatform (KMP) & Compose Multiplatform. Powers client experiences across Android and modern web browsers, sharing the UI design system, state handling, and navigation logic, structurally ready to extend to iOS.
+* **Web Rendering (Skiko / WebAssembly):** Direct canvas rendering via Skiko and WebAssembly (Wasm). Uses tailored viewport configurations in HTML to ensure crisp typography and consistent alignment across browser engines.
+* **State Management & Recomposition Stability:** Employs explicit `key()` parameters in `LazyColumn` and `LazyGrid` structures to maintain predictable scroll positions and prevent layout recalculation issues during frequent message list updates.
+* **Ambient Visual Elements:** Custom `LivingWallpaperBg` implementation utilizing Compose Canvas shaders to render subtle ambient lighting effects with efficient graphics performance.
+* **Adaptive Theme System:** Centralized light and dark theme management supported by Compose `CompositionLocal`, applying palette transitions smoothly across components without recreating views.
 
 ---
 
@@ -49,16 +49,16 @@ The project is governed by the *"Write once, run natively anywhere"* paradigm, o
     <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcHp0bDAxNXk1bG56OHp6MHU5NWp3aG95Zm9ndzNjNmh2amxpNTZmNiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/F0VCptrJteVWDeLBHD/giphy.gif" width="50" align="center" /> 
     Live Interface Demonstrations
   </h2>
-  <p><em>Experience the adaptive layout transition, live model toggling, and fluid glassmorphic UI across platforms.</em></p>
+  <p><em>Overview of the responsive layout system, model selector interactions, and cross-platform UI components.</em></p>
 </div>
 
 ### 📱 Mobile Native Experience
-*A comprehensive 59-second deep dive into the mobile application. Observe the fluid `OmniInput` expansion, seamless modal routing, instant Dark/Light mode mutations, and real-time conversational rendering with zero UI stuttering.*
+*A 59-second walkthrough of the mobile interface. Highlights the expandable `OmniInput` field, sheet-based modal navigation, instant light/dark theme switching, and real-time message stream rendering.*
 
 https://github.com/user-attachments/assets/3cd6e81d-5aa1-4534-a139-d66eb65982b9
 
 ### 🖥️ WebAssembly Experience (Wasm/JS)
-*Witness the adaptive desktop layout in action. Featuring a persistent sidebar, intelligent multi-column grids for premium tiers, and Skiko-powered canvas rendering that maintains absolute visual crispness across large widescreen viewports.*
+*Demonstration of the widescreen desktop adaptation. Features a collapsible sidebar, multi-column grids for catalog views, and Skiko canvas rendering maintaining typography sharpness across large display formats.*
 
 https://github.com/user-attachments/assets/133028d0-2532-4523-832e-e3fe9904765b
 
@@ -66,10 +66,10 @@ https://github.com/user-attachments/assets/133028d0-2532-4523-832e-e3fe9904765b
 
 ## 3. Case Study: The AI Conversational Engine & Responsive UX
 
-This module embodies a next-generation AI assistant interface, balancing deep visual customization with rendering fluidity for real-time streaming environments.
+This module showcases a modern AI conversational interface, balancing interactive tool trays with fluid rendering suited for continuous message streaming.
 
 ### Adaptive Layout & Ambient Navigation
-At its core lies a responsive navigation architecture. On compact viewports, the interface utilizes a smooth sliding navigation drawer paired with an uncluttered header. The custom `OmniInput` input box supports multi-line expanding text, quick action pills (*Brainstorm, Code, Summarize*), and quick voice input toggles.
+At the center of the application is a responsive navigation framework. On compact screens, users interact with a sliding drawer alongside a clean header bar. The custom `OmniInput` field supports multi-line text expansion, quick action prompts (*Brainstorm, Code, Summarize*), and voice input indicators.
 
 <p align="center">
   <img src="docs/01_dashboard_mobile.png" width="220" alt="Mobile Dashboard Dark"/>
@@ -80,7 +80,7 @@ At its core lies a responsive navigation architecture. On compact viewports, the
 </p>
 
 ### Model Switching, OmniInput Tools & Rich Media Rendering
-The system features a lightweight modal selector allowing users to switch models dynamically (e.g., *GPT-4o mini, GPT-5, Claude Opus*). The `OmniInput` component expands to reveal specialized AI tool triggers (*Deep Research, Web Search, Code Generation, Image Generation*), while the chat window handles inline high-resolution image attachments and structured Markdown text without UI stuttering.
+A modal selector enables users to choose between simulated model profiles (such as *GPT-4o mini, GPT-5, Claude Opus*). The `OmniInput` container expands into specialized prompt tools (*Deep Research, Web Search, Code Generation, Image Generation*), while the chat stream supports inline media attachments and structured Markdown formatting.
 
 <p align="center">
   <img src="docs/02_model_selection_dropdown.png" width="220" alt="Model Selector Menu"/>
@@ -91,7 +91,7 @@ The system features a lightweight modal selector allowing users to switch models
 </p>
 
 ### Chat History Search & Public Link Sharing
-Stateful overlay dialogs allow instant full-text filtering across current and past conversation threads grouped by time periods (*Today, Yesterday, Previous 7 Days*). Users can seamlessly generate shareable public URL links directly from any active chat session via a dedicated modal dialog.
+Dialog overlays support full-text searching across conversation threads grouped chronologically (*Today, Yesterday, Previous 7 Days*). A dedicated modal workflow demonstrates public link generation and sharing flows directly from the conversation view.
 
 <p align="center">
   <img src="docs/13_chat_history_search.png" width="220" alt="Chat History Search Modal"/>
@@ -100,7 +100,7 @@ Stateful overlay dialogs allow instant full-text filtering across current and pa
 </p>
 
 ### WebAssembly (Wasm) Architecture & Widescreen Adaptation
-The architecture scales with absolute precision to any widescreen browser environment, powered entirely by WebAssembly (Wasm) and Skiko canvas rendering. By expanding into a persistent side navigation bar and fluid multi-column grids, the interface shatters traditional DOM limitations, delivering a hyper-fluid, native-app experience directly within the web—all from a single, unified Kotlin codebase.
+The interface layout adapts gracefully to widescreen browser environments via WebAssembly (Wasm) and Skiko canvas rendering. Expanding from mobile drawers into persistent sidebar navigation and balanced multi-column grids, the client delivers an application-style experience on the desktop web from the same Kotlin UI codebase.
 
 <p align="center">
   <img src="docs/19_dashboard_web_dark.png" width="400" alt="Web Dashboard Dark"/>
@@ -134,14 +134,14 @@ The architecture scales with absolute precision to any widescreen browser enviro
 
 ## 4. Case Study: Ecosystem Management (Library, GPT Store & Settings)
 
-A unified management layer built for user customization, platform integration, and tier-based monetization.
+A consolidated client interface designed to explore personal workspace libraries, discovery catalogs, and account settings.
 
 ### Unified Settings & Cloud Connectors
-The settings architecture is split into modular tabs managed via Compose state hoisting:
-* **General:** Global theme switches (Dark/Light), code visibility toggles, and multi-language selections.
-* **Personalization & Memory:** Custom instructions and persistent memory toggles.
-* **Builder Profile:** Creator details, professional domain verifications, and public social links.
-* **Connected Apps:** Integrations with cloud providers (*Google Drive, Microsoft OneDrive*) and native hardware frameworks (*Apple Intelligence*).
+The settings section is structured into modular tabs using Compose state hoisting:
+* **General:** Theme switching (Dark/Light), code visibility toggles, and language preferences.
+* **Personalization & Memory:** Custom instructions and memory management toggles.
+* **Builder Profile:** Creator information, verified custom domains, and social profile links.
+* **Connected Apps:** Interface integrations for cloud services (*Google Drive, Microsoft OneDrive*) and platform capabilities (*Apple Intelligence*).
 
 <p align="center">
   <img src="docs/09_settings_general.png" width="210" alt="General Settings Tab"/>
@@ -154,7 +154,7 @@ The settings architecture is split into modular tabs managed via Compose state h
 </p>
 
 ### Asset Library & Custom GPT Discovery Store
-The **My Library** feature offers a grid of saved workspace environments and creative visual assets, rendering ambient background cards cleanly in both dark and light visual modes. The **GPT Store** features categorized discovery hubs (*Featured, Writing, Productivity, Research*) complete with trending creator rankings and direct launch buttons.
+The **My Library** section organizes saved workspaces and visual assets in an adaptive grid, pairing ambient gradient cards with dark and light theme styles. The **GPT Store** presents categorized discovery feeds (*Featured, Writing, Productivity, Research*) with creator profiles and direct entry actions.
 
 <p align="center">
   <img src="docs/06_library_gradients.png" width="210" alt="My Library Grid Dark"/>
@@ -167,7 +167,7 @@ The **My Library** feature offers a grid of saved workspace environments and cre
 </p>
 
 ### Responsive Monetization & Tier Upgrade Dialogs
-The premium subscription engine presents tier option cards (*LopsAI Plus, Pro, Max*) highlighting featured capabilities, custom pricing badges, and highlighted call-to-actions. Designed with responsive break-points, the dialog layout dynamically scales from vertical mobile stacks into balanced 3-column desktop wide views.
+The subscription tier dialog presents feature comparison cards (*LopsAI Plus, Pro, Max*) detailing available capabilities, pricing badges, and primary action buttons. The dialog utilizes responsive breakpoints to transition from a single-column mobile layout into an organized three-column desktop presentation.
 
 <p align="center">
   <img src="docs/08_premium_upgrade_modal.png" width="240" alt="Premium Upgrade Dark Mode"/>
@@ -242,19 +242,19 @@ graph TD
 
 ## 6. Clean Architecture & Engineering Principles
 
-The codebase follows a rigorous multiplatform architecture approach, ensuring a strict separation of concerns and maximum code reusability:
+The codebase organizes multiplatform code with clear layer boundaries to facilitate maintainability and code reuse:
 
-- **`shared/commonMain`**: The pure, immutable core and UI layer. Contains 100% of the Compose Multiplatform logic, models, and shared components (`MainRouter`, `LivingWallpaper`, `OmniInput`).
-- **`androidMain` / `iosMain`**: Native infrastructure layers strictly reserved for specific hardware implementations if needed (e.g., status bar padding).
-- **`jsMain` / `wasmJsMain`**: Highly tuned web deployment layers. Configured to leverage browser capabilities via Webpack without bloating the project with unused targets.
+- **`shared/commonMain`**: The primary UI and domain layer. Contains the Compose Multiplatform layouts, models, and shared presentation components (`MainRouter`, `LivingWallpaper`, `OmniInput`).
+- **`androidMain` / `iosMain`**: Platform-specific integration layers, utilized for platform considerations such as system bar insets and platform-specific window handling.
+- **`jsMain` / `wasmJsMain`**: Browser target configurations tuned for web deployment and canvas rendering.
 
-### Architecture & UI Golden Rules
+### Architecture & UI Guidelines
 
-- **Target Isolation**: The architecture deliberately excludes JVM/Desktop modules to hyper-focus on Mobile and Web performance, eliminating legacy image rendering bugs and reducing build times.
-- **Unidirectional Data Flow (UDF)**: State is hoisted to the highest logical level. UI components act as passive observers of state, guaranteeing predictable recompositions and side-effect-free rendering across all platforms.
-- **Data Layer Abstraction**: Even as a UI showcase, the data supply is strictly decoupled. Datasets (like `MockChatsData`) simulate network and database repositories, proving the UI is fully prepared for a plug-and-play integration with real backend APIs.
-- **DRY Principle in UI**: Components such as `SettingsRow`, `TopHeader`, and `SuggestionChips` are generic entities reused systematically throughout the application.
-- **Passive UI**: `@Composable` functions are strictly limited to rendering states and bubbling up events (*Intents*) via lambdas, maintaining an unpolluted declarative tree.
+- **Focused Platform Targets**: The architecture focuses specifically on mobile and web environments, simplifying the graphics pipeline and build targets.
+- **Unidirectional Data Flow (UDF)**: UI components act as observers of hoisted state flows, ensuring deterministic recompositions and consistent visual feedback across platforms.
+- **Decoupled Data Layer**: Presentation logic relies on repository abstractions. Fixture datasets (such as `MockChatsData`) provide local mock responses and simulate async latency, making the UI ready for direct API integration.
+- **Reusable UI Components**: Elements like `SettingsRow`, `TopHeader`, and `SuggestionChips` are built as self-contained, reusable building blocks.
+- **Declarative UI Patterns**: `@Composable` functions remain focused on rendering state and delegating user events via callbacks to associated ViewModels.
 
 ---
 
@@ -269,7 +269,7 @@ The codebase follows a rigorous multiplatform architecture approach, ensuring a 
 
 1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/JastinBolanos/LopsAI-KMP.git](https://github.com/JastinBolanos/LopsAI-KMP.git)
+   git clone https://github.com/JastinBolanos/LopsAI-KMP.git
    cd LopsAI-KMP
    ```
 **For Android:**
